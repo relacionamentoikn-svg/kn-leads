@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<!-- LEADS E CAMPANHAS · V1.0 — este arquivo vai no repositório kn-leads. NÃO é o do Recall nem o do KN Vendas. -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leads e Campanhas</title>
+<script src="config.js"></script>
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Leads KN">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="application-name" content="Leads e Campanhas">
+<meta name="description" content="Gestão de leads e campanhas promocionais — Instituto Kássila Nasser">
+<meta name="theme-color" content="#5C1A2B">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Manrope:wght@400;500;600;700;800&display=swap">
+<style>
+:root{--vinho:#5C1A2B;--vinho-2:#7A2E3F;--champ:#F4ECE2;--latao:#B08A4E;--fundo:#F7F3EE;--linha:#E7DED6;--linha-2:#F0E9E3;--txt:#2A1A1B;--txt-2:#6B5757;--verde:#1F5A3A;--verde-f:#E3EFE8;--amar:#6E5320;--amar-f:#F5EEDF;--alerta:#8E2A1E;--alerta-f:#FBEDE8}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--fundo);color:var(--txt);font-family:Manrope,system-ui,sans-serif;font-size:14px}
+a{color:var(--vinho)}
+button,input,select,textarea{font:inherit;color:inherit}
+.app{display:flex;flex-wrap:wrap;min-height:100vh}
+.side{flex:1 1 220px;max-width:100%;background:var(--vinho);color:var(--champ);padding:24px 14px;position:relative}
+.brand{font-family:'Cormorant Garamond',serif;font-size:25px;line-height:1;padding:0 10px;cursor:default;user-select:none}
+.sub{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#D9C3A0;padding:6px 10px 0}
+.grp{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#D9C3A0;padding:22px 10px 6px;font-weight:700}
+.nav button{display:flex;width:100%;align-items:center;gap:10px;padding:10px;border-radius:8px;border:0;background:transparent;color:#EBDDD0;font-weight:600;min-height:42px;cursor:pointer;text-align:left}
+.nav button:hover{background:rgba(255,255,255,.08);color:#fff}
+.nav button.on{background:var(--champ);color:var(--vinho)}
+.nav .dot{width:7px;height:7px;border-radius:2px;background:currentColor;opacity:.7}
+.quem{margin-top:22px;padding:12px 10px;border-top:1px solid rgba(255,255,255,.15);font-size:12px;color:#EBDDD0}
+.quem b{display:block;font-size:14px;color:#fff}
+.quem button{margin-top:8px;background:transparent;border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:8px;padding:6px 10px;cursor:pointer}
+.main{flex:999 1 560px;min-width:0;padding:24px 30px 48px}
+@media(max-width:820px){.side{padding:14px}.nav{display:flex;flex-wrap:wrap;gap:4px}.nav button{width:auto;flex:1 1 30%}.grp{display:none}.quem{margin-top:10px;display:flex;justify-content:space-between;align-items:center}.main{padding:16px}}
+h1{margin:4px 0 0;font-size:27px;font-weight:800;letter-spacing:-.02em}
+h2{margin:0;font-size:16px;font-weight:800}
+.lbl{font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--txt-2)}
+.topo{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:14px;margin-bottom:18px}
+.filtros{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.card{background:#fff;border:1px solid var(--linha);border-radius:12px;padding:18px;min-width:0}
+.grid{display:grid;gap:14px}
+.g-kpi{grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+.g-2{grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr))}
+.g-3{grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+.kpi .v{font-size:27px;font-weight:800;margin-top:6px;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.kpi .s{font-size:12px;color:var(--txt-2);margin-top:2px}
+.kpi.hi{background:var(--vinho);border-color:var(--vinho);color:#fff}.kpi.hi .lbl,.kpi.hi .s{color:#EBDDD0}
+.mt{margin-top:14px}.mt2{margin-top:22px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:0 16px;border-radius:10px;border:0;background:var(--vinho);color:#fff;font-weight:700;cursor:pointer;text-decoration:none;white-space:nowrap}
+.btn:hover{background:var(--vinho-2)}
+.btn2{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:0 14px;border-radius:10px;border:1px solid #D8CBC0;background:#fff;color:var(--txt);font-weight:600;cursor:pointer;text-decoration:none;white-space:nowrap}
+.btn2:hover{border-color:var(--vinho)}
+.btn-min{min-height:32px;padding:0 10px;font-size:12.5px;border-radius:8px}
+.in{width:100%;min-height:42px;padding:0 12px;border-radius:10px;border:1px solid #D8CBC0;background:#fff}
+textarea.in{padding:10px 12px;min-height:90px;resize:vertical}
+.in:focus,.btn:focus-visible,.btn2:focus-visible{outline:2px solid var(--latao);outline-offset:1px}
+.fl{display:flex;flex-direction:column;gap:5px;min-width:0}
+.fl label{font-size:12px;font-weight:700;color:var(--txt-2)}
+.chip{display:inline-flex;align-items:center;padding:3px 9px;border-radius:999px;font-size:12px;font-weight:700;background:#F1E6E3;color:var(--vinho);white-space:nowrap}
+.chip.ouro{background:var(--amar-f);color:var(--amar)}.chip.ok{background:var(--verde-f);color:var(--verde)}.chip.alerta{background:var(--alerta-f);color:var(--alerta)}.chip.cinza{background:#ECE7E3;color:#4A3A3A}.chip.forte{background:var(--vinho);color:#fff}
+.note{font-size:12px;color:var(--txt-2)}
+.tb{width:100%;border-collapse:collapse}
+.tb th{text-align:left;font-size:11px;color:var(--txt-2);font-weight:700;padding:9px 10px;border-bottom:1px solid var(--linha);text-transform:uppercase;letter-spacing:.05em;white-space:nowrap}
+.tb td{padding:11px 10px;border-bottom:1px solid var(--linha-2);white-space:nowrap}
+.tb tfoot td{font-weight:800;border-bottom:0}
+.tb tr.clic{cursor:pointer}.tb tr.clic:hover td{background:#FBF8F5}
+.r{text-align:right;font-variant-numeric:tabular-nums}
+.scroll{overflow-x:auto}
+.bar{height:10px;border-radius:5px;background:#F1E6E3;overflow:hidden}.bar i{display:block;height:100%;border-radius:5px;background:var(--vinho)}.bar.ouro i{background:var(--latao)}
+.funil-l{display:grid;grid-template-columns:140px 1fr 90px;gap:12px;align-items:center}
+.funil-l .b{height:28px;background:#F7F1EC;border-radius:6px}.funil-l .b i{display:block;height:100%;border-radius:6px;background:var(--vinho)}
+.aviso{display:flex;flex-wrap:wrap;gap:12px;align-items:center;background:var(--alerta-f);border:1px solid #E9C9BE;border-radius:12px;padding:11px 14px;font-weight:600}
+.vazio{padding:26px;text-align:center;color:var(--txt-2)}
+/* funil de leads */
+.kanban{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(188px,1fr);gap:12px;overflow-x:auto;padding-bottom:8px}
+.col{background:#EFE7DF;border-radius:12px;padding:10px;display:flex;flex-direction:column;gap:8px;min-height:120px}
+.col.alvo{outline:2px dashed var(--vinho);outline-offset:-4px}
+.col-h{display:flex;justify-content:space-between;align-items:center;padding:2px 4px}
+.lc{display:flex;flex-direction:column;gap:6px;padding:12px;background:#fff;border-radius:10px;border:1px solid var(--linha);cursor:pointer;text-align:left}
+.lc:hover{border-color:var(--vinho)}
+.lc.atrasado{border-color:var(--alerta);box-shadow:inset 4px 0 0 var(--alerta)}
+.lc .alerta{font-size:12px;font-weight:800;color:var(--alerta)}
+/* ficha */
+.dl{display:grid;grid-template-columns:120px 1fr;gap:9px 12px;margin:12px 0 0}
+.dl dt{color:var(--txt-2);font-weight:600}.dl dd{margin:0;font-weight:700;min-width:0;overflow-wrap:anywhere}
+.tl{list-style:none;margin:16px 0 0;padding:0}
+.tl li{display:grid;grid-template-columns:18px 1fr;gap:10px}
+.tl .p{display:flex;flex-direction:column;align-items:center}.tl .p span{width:11px;height:11px;border-radius:50%;background:var(--vinho);margin-top:4px}.tl .p i{flex:1;width:2px;background:var(--linha-2)}
+.tl .c{padding-bottom:16px}
+.rot{border:1px solid var(--linha);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:8px;background:#FFFDFB}
+.rot .t{font-size:13.5px;line-height:1.55;white-space:pre-line;color:#3A2B2B}
+.tabs{display:flex;flex-wrap:wrap;gap:4px;border-bottom:1px solid #E1D6CC;margin:6px 0 16px}
+.tabs button{min-height:42px;padding:0 14px;font-weight:700;color:var(--txt-2);border:0;background:transparent;border-bottom:3px solid transparent;cursor:pointer}
+.tabs button.on{color:var(--vinho);border-bottom-color:var(--vinho)}
+.sem{display:flex;align-items:flex-end;gap:10px;height:120px}
+.sem div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:5px;height:120px}
+.sem i{width:100%;max-width:56px;background:var(--vinho);border-radius:6px 6px 0 0;display:block}
+/* busca de paciente */
+.sug{position:absolute;z-index:30;left:0;right:0;top:100%;margin-top:4px;background:#fff;border:1px solid var(--linha);border-radius:12px;box-shadow:0 12px 30px rgba(40,20,20,.14);max-height:360px;overflow:auto}
+.sug button{display:flex;flex-direction:column;gap:3px;width:100%;padding:10px 12px;border:0;border-bottom:1px solid var(--linha-2);background:#fff;text-align:left;cursor:pointer}
+.sug button:hover,.sug button:focus{background:#FBF6F1}
+/* modal e avisos */
+.modal-f{position:fixed;inset:0;background:rgba(30,15,15,.45);display:none;align-items:flex-start;justify-content:center;z-index:50;padding:40px 16px;overflow:auto}
+.modal-f.on{display:flex}
+.modal{background:#fff;border-radius:16px;padding:22px;width:min(640px,100%);box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.modal h2{font-size:19px;margin-bottom:12px}
+.acoes{display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-end;margin-top:18px}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(120px);background:#2A1A1B;color:#fff;padding:12px 18px;border-radius:12px;font-weight:600;z-index:80;transition:transform .25s,opacity .25s;max-width:92vw;opacity:0;visibility:hidden}
+.toast.on{transform:translateX(-50%) translateY(0);opacity:1;visibility:visible}
+.carregando{position:fixed;inset:0;background:rgba(247,243,238,.75);display:none;align-items:center;justify-content:center;z-index:70;flex-direction:column;gap:12px;font-weight:700;color:var(--vinho)}
+.carregando.on{display:flex}
+.giro{width:34px;height:34px;border:3px solid #E7DED6;border-top-color:var(--vinho);border-radius:50%;animation:g 0.8s linear infinite}
+@keyframes g{to{transform:rotate(360deg)}}
+.esq{height:14px;border-radius:6px;background:linear-gradient(90deg,#EFE7DF,#F7F1EC,#EFE7DF);background-size:200% 100%;animation:sh 1.2s infinite}
+@keyframes sh{to{background-position:-200% 0}}
+/* entrada */
+.portao{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:var(--vinho)}
+.portao .cx{background:#fff;border-radius:18px;padding:30px;width:min(420px,100%)}
+.portao .mono{font-family:'Cormorant Garamond',serif;font-size:34px;color:var(--vinho);cursor:default;user-select:none}
+.oculto{display:none!important}
+.selo{display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:var(--amar-f);border:1px solid #E8D9B8;border-radius:10px;padding:10px 12px;font-size:13px;margin-top:10px}
+.selo.vermelho{background:var(--alerta-f);border-color:#E9C9BE}
+.link-r{display:grid;grid-template-columns:180px 1fr auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--linha-2)}
+.link-r code{font-size:12px;overflow-wrap:anywhere;color:var(--txt-2)}
+@media(max-width:620px){.link-r{grid-template-columns:1fr}.funil-l{grid-template-columns:110px 1fr 70px}}
+.rodape{margin-top:24px;font-size:11.5px;color:var(--txt-2)}
+@media print{.side,.filtros,.tabs,#cad{display:none!important}.main{padding:0}.card{break-inside:avoid}}
+</style>
+</head>
+<body>
+
+<!-- ENTRADA -->
+<div class="portao" id="portao">
+  <div class="cx">
+    <div class="mono" id="mono" title="Instituto Kássila Nasser">Kássila Nasser</div>
+    <div class="lbl" style="margin-top:4px">Leads e Campanhas</div>
+    <div id="pt-url" class="oculto mt">
+      <div class="fl"><label for="inp-url">Endereço da API (termina em /exec)</label><input id="inp-url" class="in" placeholder="https://script.google.com/macros/s/.../exec"></div>
+      <button class="btn mt" style="width:100%" onclick="salvarUrl()">Salvar endereço</button>
+    </div>
+    <div id="pt-form" class="mt2">
+      <div class="fl" id="pt-nome-bx"><label for="pt-nome">Quem é você</label><select id="pt-nome" class="in"><option value="">carregando…</option></select></div>
+      <div class="fl mt"><label for="pt-cod">Código de acesso</label><input id="pt-cod" class="in" type="password" inputmode="numeric" autocomplete="off" maxlength="8"></div>
+      <div id="pt-erro" class="note mt" style="color:var(--alerta);font-weight:700"></div>
+      <button class="btn mt" style="width:100%" id="pt-entrar">Entrar</button>
+      <p class="note mt">O mesmo nome e código do app Recall e Follow-up. Dados de pacientes protegidos pela LGPD: acesso pessoal, identificado e registrado.</p>
+    </div>
+    <p class="rodape">Desenvolvido por Decisão Consultoria · uso exclusivo do Instituto Kássila Nasser</p>
+  </div>
+</div>
+
+<!-- APLICATIVO -->
+<div class="app oculto" id="app">
+  <aside class="side">
+    <div class="brand">Kássila Nasser</div>
+    <div class="sub">Leads &amp; Campanhas</div>
+    <nav class="nav" aria-label="Menu principal" id="nav">
+      <div class="grp">CRM</div>
+      <button data-tela="painel"><span class="dot"></span>Painel</button>
+      <button data-tela="leads"><span class="dot"></span>Leads</button>
+      <div class="grp">Campanhas</div>
+      <button data-tela="campanhas"><span class="dot"></span>Campanhas</button>
+    </nav>
+    <div class="quem"><div><span class="note" style="color:#D9C3A0">Conectada como</span><b id="quem-nome">—</b><span id="quem-nivel" style="font-size:11px"></span></div><button onclick="sair()">Sair</button></div>
+  </aside>
+  <main class="main" id="main"></main>
+</div>
+
+<div class="modal-f" id="modal-f" role="dialog" aria-modal="true"><div class="modal" id="modal"></div></div>
+<div class="toast" id="toast" role="status"></div>
+<div class="carregando" id="carregando"><div class="giro"></div><div id="carregando-txt">processando, aguarde</div></div>
+
+<script>
+/* ==========================================================================
+   LEADS E CAMPANHAS · front-end · V1.0
+   Desenvolvido por Decisão Consultoria · uso exclusivo do Instituto Kássila Nasser
+   Mesmo padrão do Recall e Follow-up: página no GitHub, dados na planilha da
+   clínica via Apps Script (/exec), sessão por nome + código.
+   ========================================================================== */
+const VERSAO_TELA = 'V1.0';
+let API_URL = '';
+try { API_URL = (window.KN_LEADS_API || '').trim(); } catch (e) {}
+if (!API_URL) { try { API_URL = localStorage.getItem('kassila_leads_url') || ''; } catch (e) {} }
+
+let USUARIO = null, CTX = null, TELA = 'painel';
+const F = { painel: { periodo: 'MES' }, leads: { visao: 'FUNIL', busca: '', campanha: 'TODAS', fonte: 'TODAS', responsavel: 'TODAS' } };
+const CACHE = {};
+const el = id => document.getElementById(id);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const brl = v => (v === '' || v == null) ? '—' : Number(v || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: Number(v) % 1 ? 2 : 0 });
+const brl2 = v => (v === '' || v == null) ? '—' : Number(v || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+const pct = v => (v === '' || v == null) ? '—' : (Number(v || 0) * 100).toLocaleString('pt-BR', { maximumFractionDigits: 1 }) + '%';
+const num = v => (v === '' || v == null) ? '—' : Number(v || 0).toLocaleString('pt-BR');
+const xr = v => (v === '' || v == null || !Number(v)) ? '—' : Number(v).toLocaleString('pt-BR', { maximumFractionDigits: 1 }) + 'x';
+const gestao = () => USUARIO && USUARIO.nivel === 'GESTAO';
+const rot = (tipo, v) => { const a = (CTX && CTX.listas && CTX.listas[tipo]) || []; const x = a.find(i => i.valor === v); return x ? x.rotulo : (v || ''); };
+const opcoes = (tipo, sel, vazio) => (vazio !== undefined ? `<option value="">${esc(vazio)}</option>` : '') + ((CTX && CTX.listas[tipo]) || []).map(i => `<option value="${esc(i.valor)}"${i.valor === sel ? ' selected' : ''}>${esc(i.rotulo)}</option>`).join('');
+const ROT_ETAPA = { NOVO: 'Novo · sem resposta', CONVERSA: 'Em conversa', ORCAMENTO: 'Orçamento enviado', AGENDADO: 'Agendado', FECHADO: 'Fechado', PERDIDO: 'Perdido' };
+const COR_ETAPA = { NOVO: 'alerta', CONVERSA: '', ORCAMENTO: 'ouro', AGENDADO: '', FECHADO: 'ok', PERDIDO: 'cinza' };
+function hojeBR(){ const d = new Date(); return d.toLocaleDateString('pt-BR'); }
+function paraISO(br){ const m = String(br || '').match(/^(\d{2})\/(\d{2})\/(\d{4})/); return m ? `${m[3]}-${m[2]}-${m[1]}` : ''; }
+function paraBR(iso){ const m = String(iso || '').match(/^(\d{4})-(\d{2})-(\d{2})/); return m ? `${m[3]}/${m[2]}/${m[1]}` : ''; }
+function soDig(s){ return String(s || '').replace(/\D/g, ''); }
+
+/* ---------- ponte com a planilha ---------- */
+const PRAZO_MS = 45000;
+async function comPrazo(url, opcoes){
+  if (typeof AbortController === 'undefined') return fetch(url, opcoes || {});
+  const ctrl = new AbortController(); const t = setTimeout(() => ctrl.abort(), PRAZO_MS);
+  try { return await fetch(url, Object.assign({}, opcoes || {}, { signal: ctrl.signal })); } finally { clearTimeout(t); }
+}
+const GRAVAM = { salvarLead:1, atualizarLead:1, moverEtapa:1, registrarInteracao:1, salvarCampanha:1, salvarOferta:1, excluirOferta:1, salvarRoteiro:1, excluirRoteiro:1, salvarCusto:1, excluirCusto:1, encerrarTrava:1 };
+const EM_VOO = {};
+async function api(acao, params){
+  if (GRAVAM[acao]){
+    let k = acao; try { k += JSON.stringify(params || {}); } catch (e) {}
+    if (EM_VOO[k]) return EM_VOO[k];
+    carregando(true);
+    const p = apiBruta(acao, params).finally(() => { delete EM_VOO[k]; if (!Object.keys(EM_VOO).length) carregando(false); Object.keys(CACHE).forEach(c => delete CACHE[c]); });
+    EM_VOO[k] = p; return p;
+  }
+  return apiBruta(acao, params);
+}
+async function apiBruta(acao, params){
+  if (!API_URL) throw new Error('Endereço da API não configurado.');
+  const corpo = Object.assign({ acao }, params || {});
+  try { const s = JSON.parse(localStorage.getItem('leads_sessao') || 'null'); if (s && s.codigo) { corpo.sessao_nome = s.nome; corpo.sessao_codigo = s.codigo; } } catch (e) {}
+  let j;
+  try {
+    const r = await comPrazo(API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(corpo), redirect: 'follow' });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    j = await r.json();
+  } catch (err) {
+    if (GRAVAM[acao]) throw new Error(String(err && err.name) === 'AbortError' ? 'A planilha demorou para responder. Confira se o registro entrou antes de repetir.' : (err.message || String(err)));
+    const end = API_URL + '?' + new URLSearchParams(corpo).toString();
+    if (end.length > 1800) throw err;
+    const r2 = await comPrazo(end, {});
+    if (!r2.ok) throw new Error('HTTP ' + r2.status);
+    j = await r2.json();
+  }
+  const d = j && j.dados !== undefined ? j.dados : j;
+  if (d && d.reautenticar){ try { localStorage.removeItem('leads_sessao'); } catch (e) {} USUARIO = null; abrirPortao(d.erro); throw new Error(d.erro || 'Entre de novo.'); }
+  if (d && d.erro) throw new Error(d.erro);
+  return d;
+}
+function salvarUrl(){ const v = el('inp-url').value.trim(); if (!v) return; try { localStorage.setItem('kassila_leads_url', v); } catch (e) {} API_URL = v; iniciar(); }
+
+/* ---------- avisos ---------- */
+function toast(m){ const t = el('toast'); t.textContent = m; t.classList.add('on'); clearTimeout(window.__t); window.__t = setTimeout(() => t.classList.remove('on'), 3800); }
+function falhar(e){ toast('Não deu certo: ' + (e && e.message ? e.message : e)); }
+function carregando(on, txt){ el('carregando').classList.toggle('on', !!on); el('carregando-txt').textContent = txt || 'processando, aguarde'; }
+function abrirModal(html){ el('modal').innerHTML = html; el('modal-f').classList.add('on'); const f = el('modal').querySelector('input,select,textarea'); if (f) setTimeout(() => f.focus(), 30); }
+function fecharModal(){ el('modal-f').classList.remove('on'); el('modal').innerHTML = ''; }
+el('modal-f').addEventListener('click', ev => { if (ev.target.id === 'modal-f') fecharModal(); });
+document.addEventListener('keydown', ev => { if (ev.key === 'Escape' && el('modal-f').classList.contains('on')) fecharModal(); });
+function esqueleto(n){ return `<div class="card">${Array.from({ length: n || 4 }, () => '<div class="esq" style="margin:12px 0"></div>').join('')}</div>`; }
+function falhaBloco(e, refazer){ el('main').innerHTML = `<div class="card vazio"><b>Não foi possível carregar.</b><p>${esc(e && e.message ? e.message : e)}</p><button class="btn" id="bt-refazer">Tentar de novo</button></div>`; el('bt-refazer').onclick = refazer; }
+
+/* ---------- entrada ---------- */
+let toquesMono = 0, modoTecnico = false;
+function abrirPortao(erro){
+  el('app').classList.add('oculto'); el('portao').classList.remove('oculto');
+  if (!API_URL){ el('pt-url').classList.remove('oculto'); el('pt-form').classList.add('oculto'); return; }
+  el('pt-url').classList.add('oculto'); el('pt-form').classList.remove('oculto');
+  el('pt-erro').textContent = erro || '';
+  const g = (() => { try { return JSON.parse(localStorage.getItem('leads_porta') || 'null'); } catch (e) { return null; } })();
+  if (g && g.usuarios) pintarNomes(g.usuarios);
+  apiBruta('autorizados').then(a => { pintarNomes(a.usuarios || []); try { localStorage.setItem('leads_porta', JSON.stringify({ usuarios: a.usuarios })); } catch (e) {} })
+    .catch(e => { el('pt-erro').textContent = 'Sem conexão com a planilha: ' + e.message; });
+}
+function pintarNomes(us){
+  const ult = (() => { try { return localStorage.getItem('leads_ultimo_nome') || ''; } catch (e) { return ''; } })();
+  el('pt-nome').innerHTML = '<option value="">Escolha seu nome</option>' + us.map(u => `<option${u.nome === ult ? ' selected' : ''}>${esc(u.nome)}</option>`).join('');
+}
+el('mono').addEventListener('click', () => { if (++toquesMono >= 5){ modoTecnico = true; el('pt-nome-bx').classList.add('oculto'); toast('Entrada técnica: só o código.'); } });
+el('pt-cod').addEventListener('keydown', ev => { if (ev.key === 'Enter') entrar(); });
+el('pt-entrar').onclick = entrar;
+async function entrar(){
+  const nome = modoTecnico ? '' : el('pt-nome').value, codigo = el('pt-cod').value.trim();
+  if (!modoTecnico && !nome){ el('pt-erro').textContent = 'Escolha seu nome.'; return; }
+  if (codigo.length < 4){ el('pt-erro').textContent = 'Digite o código de acesso.'; return; }
+  el('pt-erro').textContent = ''; carregando(true, 'entrando');
+  try {
+    const r = await apiBruta('entrar', { nome, codigo });
+    if (!r.ok){ el('pt-erro').textContent = r.erro || 'Não conferiu.'; return; }
+    try { localStorage.setItem('leads_sessao', JSON.stringify({ nome: r.usuario.nome, codigo })); if (nome) localStorage.setItem('leads_ultimo_nome', nome); } catch (e) {}
+    USUARIO = r.usuario; el('pt-cod').value = '';
+    await abrirApp();
+  } catch (e) { el('pt-erro').textContent = e.message; } finally { carregando(false); }
+}
+function sair(){ try { localStorage.removeItem('leads_sessao'); } catch (e) {} USUARIO = null; CTX = null; abrirPortao(); }
+async function abrirApp(){
+  CTX = await api('contexto');
+  USUARIO = CTX.usuario;
+  el('portao').classList.add('oculto'); el('app').classList.remove('oculto');
+  el('quem-nome').textContent = USUARIO.nome;
+  el('quem-nivel').textContent = gestao() ? 'Gestão comercial' : 'Atendimento';
+  el('nav').querySelectorAll('button').forEach(b => b.onclick = () => ir(b.dataset.tela));
+  const h = (location.hash || '').replace('#', '');
+  ir(h.startsWith('lead=') ? 'lead' : (h.startsWith('campanha=') ? 'campanha' : (h || 'painel')), h.split('=')[1]);
+}
+function ir(tela, arg){
+  TELA = tela;
+  el('nav').querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.tela === tela || (tela === 'lead' && b.dataset.tela === 'leads') || ((tela === 'campanha' || tela === 'resultado') && b.dataset.tela === 'campanhas')));
+  const hash = arg ? tela + '=' + arg : tela;
+  if (location.hash !== '#' + hash) history.replaceState(null, '', '#' + hash);
+  window.scrollTo(0, 0);
+  if (tela === 'painel') return telaPainel();
+  if (tela === 'leads') return telaLeads();
+  if (tela === 'lead') return telaLead(arg);
+  if (tela === 'campanhas') return telaCampanhas();
+  if (tela === 'campanha') return telaCampanha(arg);
+  if (tela === 'resultado') return telaResultado(arg);
+  telaPainel();
+}
+async function iniciar(){
+  if (!API_URL) return abrirPortao();
+  let s = null; try { s = JSON.parse(localStorage.getItem('leads_sessao') || 'null'); } catch (e) {}
+  if (!s) return abrirPortao();
+  carregando(true, 'abrindo');
+  try { await abrirApp(); } catch (e) { abrirPortao(e.message); } finally { carregando(false); }
+}
+
+/* ==========================================================================
+   PAINEL
+   ========================================================================== */
+function periodoDatas(p){
+  const h = new Date(), d = n => n.toLocaleDateString('pt-BR');
+  if (p.periodo === 'MES') return { de: d(new Date(h.getFullYear(), h.getMonth(), 1)), ate: d(h) };
+  if (p.periodo === 'MES_ANT') return { de: d(new Date(h.getFullYear(), h.getMonth() - 1, 1)), ate: d(new Date(h.getFullYear(), h.getMonth(), 0)) };
+  if (p.periodo === '90') return { de: d(new Date(h.getFullYear(), h.getMonth(), h.getDate() - 89)), ate: d(h) };
+  if (p.periodo === 'ANO') return { de: d(new Date(h.getFullYear(), 0, 1)), ate: d(h) };
+  return { de: p.de || '', ate: p.ate || '' };
+}
+function filtrosComuns(alvo, f){
+  const camps = (CTX.campanhas || []).map(c => `<option value="${esc(c.id)}"${f.campanha === c.id ? ' selected' : ''}>${esc(c.nome)}</option>`).join('');
+  return `<select class="in" style="width:auto" data-f="campanha" aria-label="Campanha"><option value="TODAS">Todas as campanhas</option><option value="SEM"${f.campanha === 'SEM' ? ' selected' : ''}>Sem campanha</option>${camps}</select>
+    <select class="in" style="width:auto" data-f="fonte" aria-label="Fonte"><option value="TODAS">Todas as fontes</option>${opcoes('FONTE', f.fonte)}</select>
+    ${gestao() ? `<select class="in" style="width:auto" data-f="responsavel" aria-label="Responsável"><option value="TODAS">Toda a equipe</option>${(CTX.equipe || []).map(n => `<option${f.responsavel === n ? ' selected' : ''}>${esc(n)}</option>`).join('')}</select>` : ''}`;
+}
+function ligarFiltros(raiz, f, recarregar){
+  raiz.querySelectorAll('[data-f]').forEach(s => s.onchange = () => { f[s.dataset.f] = s.value; recarregar(); });
+}
+async function telaPainel(){
+  const f = F.painel, per = periodoDatas(f);
+  el('main').innerHTML = `<div class="topo"><div><div class="lbl" id="pn-sub">${esc(per.de)} a ${esc(per.ate)}</div><h1>Painel de Leads</h1></div>
+    <div class="filtros" id="pn-f">
+      <select class="in" style="width:auto" data-f="periodo" aria-label="Período">
+        ${[['MES', 'Mês atual'], ['MES_ANT', 'Mês anterior'], ['90', 'Últimos 90 dias'], ['ANO', 'Ano'], ['LIVRE', 'Escolher datas']].map(o => `<option value="${o[0]}"${f.periodo === o[0] ? ' selected' : ''}>${o[1]}</option>`).join('')}
+      </select>
+      ${f.periodo === 'LIVRE' ? `<input type="date" class="in" style="width:auto" data-f="de_iso" value="${esc(paraISO(f.de))}" aria-label="De"><input type="date" class="in" style="width:auto" data-f="ate_iso" value="${esc(paraISO(f.ate))}" aria-label="Até">` : ''}
+      ${filtrosComuns('pn', f)}
+      <button class="btn" onclick="novoLead()">+ Novo lead</button>
+    </div></div><div id="pn-c">${esqueleto(6)}</div>`;
+  el('pn-f').querySelectorAll('[data-f]').forEach(s => s.onchange = () => {
+    if (s.dataset.f === 'de_iso') f.de = paraBR(s.value); else if (s.dataset.f === 'ate_iso') f.ate = paraBR(s.value); else f[s.dataset.f] = s.value;
+    telaPainel();
+  });
+  const params = Object.assign({}, f, per);
+  const ch = 'pn' + JSON.stringify(params);
+  try {
+    const d = CACHE[ch] || await api('painel', params); CACHE[ch] = d;
+    if (TELA === 'painel') pintarPainel(d);
+  } catch (e) { falhaBloco(e, telaPainel); }
+}
+function pintarPainel(d){
+  const k = d.kpis, meta = d.meta_resposta_min;
+  const kpis = [
+    ['Leads novos', num(k.leads), k.investimento ? 'CPL ' + brl2(k.cpl) : 'no período'],
+    ['Em conversa', num(k.conversa), pct(k.taxa_resposta) + ' responderam'],
+    ['Orçamentos', num(k.orcamentos), pct(k.leads ? k.orcamentos / k.leads : 0) + ' dos leads'],
+    ['Fechamentos', num(k.fechados), 'conversão ' + pct(k.conversao)],
+    ['Receita gerada', brl(k.receita), 'ticket médio ' + brl(k.ticket)],
+    ['1ª resposta', k.resposta_min === '' ? '—' : k.resposta_min + ' min', 'mediana · meta ' + meta + ' min']
+  ];
+  const al = d.alertas;
+  const temAl = al.sem_resposta || al.follow || al.acao;
+  const fun = d.funil, base = fun[0].qtd || 1;
+  let maior = 0, ondeMaior = '';
+  for (let i = 1; i < fun.length; i++){ const q = fun[i - 1].qtd ? 1 - fun[i].qtd / fun[i - 1].qtd : 0; if (q > maior){ maior = q; ondeMaior = fun[i - 1].etapa.toLowerCase() + ' → ' + fun[i].etapa.toLowerCase(); } }
+  el('pn-c').innerHTML = `
+    <div class="grid g-kpi">${kpis.map(x => `<div class="card kpi"><div class="lbl">${x[0]}</div><div class="v">${x[1]}</div><div class="s">${esc(x[2])}</div></div>`).join('')}</div>
+    ${temAl ? `<div class="aviso mt"><span class="chip forte">Alerta</span>
+      ${al.sem_resposta ? `<span>${al.sem_resposta} lead(s) sem 1ª resposta além do prazo</span>` : ''}
+      ${al.follow ? `<span>· ${al.follow} sem follow-up</span>` : ''}${al.acao ? `<span>· ${al.acao} com próxima ação vencida</span>` : ''}
+      <a href="#leads" onclick="ir('leads');return false" style="margin-left:auto;font-weight:800">Ver no funil</a></div>` : ''}
+    <div class="grid g-2 mt">
+      <section class="card"><div style="display:flex;justify-content:space-between;align-items:baseline"><h2>Funil de conversão</h2><span class="note">% sobre os leads de entrada</span></div>
+        <div style="display:flex;flex-direction:column;gap:12px;margin-top:16px">${fun.map(x => `<div class="funil-l"><span style="font-weight:600">${esc(x.etapa)}</span><div class="b"><i style="width:${Math.max(2, x.qtd / base * 100)}%"></i></div><span class="r"><b>${num(x.qtd)}</b> <span class="note">${pct(x.pct)}</span></span></div>`).join('')}</div>
+        ${ondeMaior ? `<p class="note" style="margin:14px 0 0">Maior perda: ${esc(ondeMaior)} (−${pct(maior)})</p>` : ''}</section>
+      <section class="card"><div style="display:flex;justify-content:space-between;align-items:baseline"><h2>O que os leads perguntam</h2><span class="note">perguntas registradas</span></div>
+        ${d.perguntas.length ? `<div style="display:flex;flex-direction:column;gap:12px;margin-top:16px">${d.perguntas.slice(0, 8).map(q => `<div><div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-weight:600">${esc(q.rotulo)}</span><b>${pct(q.pct)} <span class="note">(${q.qtd})</span></b></div><div class="bar ouro"><i style="width:${q.pct * 100}%"></i></div></div>`).join('')}</div>` : '<div class="vazio">Nenhuma pergunta registrada no período.</div>'}</section>
+    </div>
+    <section class="card mt"><div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px"><h2>Desempenho por fonte de entrada</h2><span class="note">CPL = investimento lançado na fonte ÷ leads da fonte</span></div>
+      <div class="scroll mt"><table class="tb"><thead><tr><th>Fonte</th><th class="r">Leads</th><th>Participação</th><th class="r">Orçaram</th><th class="r">Fecharam</th><th class="r">Conversão</th><th class="r">Receita</th><th class="r">Investimento</th><th class="r">CPL</th></tr></thead>
+      <tbody>${d.fontes.map(s => `<tr><td style="font-weight:700">${esc(s.rotulo)}</td><td class="r">${num(s.leads)}</td><td style="min-width:140px"><div class="bar"><i style="width:${k.leads ? s.leads / k.leads * 100 : 0}%"></i></div></td><td class="r">${num(s.orcaram)}</td><td class="r">${num(s.fecharam)}</td><td class="r"><b>${pct(s.conversao)}</b></td><td class="r">${brl(s.receita)}</td><td class="r">${s.investimento ? brl(s.investimento) : '—'}</td><td class="r">${s.cpl ? brl2(s.cpl) : '—'}</td></tr>`).join('') || '<tr><td colspan="9" class="vazio">Sem leads no período.</td></tr>'}</tbody>
+      ${d.fontes.length ? `<tfoot><tr><td>Total</td><td class="r">${num(k.leads)}</td><td></td><td class="r">${num(k.orcamentos)}</td><td class="r">${num(k.fechados)}</td><td class="r">${pct(k.conversao)}</td><td class="r">${brl(k.receita)}</td><td class="r">${k.investimento ? brl(k.investimento) : '—'}</td><td class="r">${k.cpl ? brl2(k.cpl) : '—'}</td></tr></tfoot>` : ''}</table></div></section>
+    <div class="grid g-2 mt">
+      <section class="card"><h2>Procedimentos de interesse</h2><div class="scroll"><table class="tb mt"><thead><tr><th>Procedimento</th><th class="r">Leads</th><th class="r">Fechou</th><th class="r">Ticket médio</th></tr></thead>
+        <tbody>${d.procedimentos.map(p => `<tr><td style="font-weight:600">${esc(p.procedimento)}</td><td class="r">${num(p.leads)}</td><td class="r">${num(p.fecharam)}</td><td class="r">${p.ticket ? brl(p.ticket) : '—'}</td></tr>`).join('') || '<tr><td colspan="4" class="vazio">—</td></tr>'}</tbody></table></div></section>
+      <section class="card"><div style="display:flex;justify-content:space-between;align-items:baseline"><h2>Campanhas ativas</h2><a href="#campanhas" onclick="ir('campanhas');return false" style="font-weight:700">Todas</a></div>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-top:14px">${d.campanhas.map(c => `<button class="lc" onclick="ir('${gestao() ? 'resultado' : 'campanha'}','${esc(c.id)}')" style="display:grid;grid-template-columns:1fr auto;gap:4px 12px">
+          <b style="font-size:15px">${esc(c.nome)}</b><span class="chip">${c.roas ? 'ROAS ' + xr(c.roas) : 'até ' + esc(c.data_fim)}</span>
+          <span class="note">${num(c.leads)} leads · ${num(c.fecharam)} fechamentos${c.investimento ? ' · invest. ' + brl(c.investimento) : ''}</span><b class="r">${brl(c.receita)}</b></button>`).join('') || '<div class="vazio">Nenhuma campanha ativa.</div>'}</div></section>
+    </div>
+    ${d.equipe && d.equipe.length ? `<section class="card mt"><h2>Desempenho por responsável</h2><div class="scroll"><table class="tb mt"><thead><tr><th>Responsável</th><th class="r">Leads</th><th class="r">Fecharam</th><th class="r">Conversão</th><th class="r">Receita</th><th class="r">1ª resposta (mediana)</th></tr></thead>
+      <tbody>${d.equipe.map(e => `<tr><td style="font-weight:700">${esc(e.nome)}</td><td class="r">${num(e.leads)}</td><td class="r">${num(e.fecharam)}</td><td class="r">${pct(e.conversao)}</td><td class="r">${brl(e.receita)}</td><td class="r">${e.resposta_min === '' ? '—' : e.resposta_min + ' min'}</td></tr>`).join('')}</tbody></table></div></section>` : ''}
+    <p class="rodape">Leads e Campanhas ${VERSAO_TELA} · Instituto Kássila Nasser</p>`;
+}
+
+/* ==========================================================================
+   LEADS — funil e lista
+   ========================================================================== */
+async function telaLeads(){
+  const f = F.leads;
+  el('main').innerHTML = `<div class="topo"><div><div class="lbl" id="ld-sub">carregando</div><h1>Leads</h1></div>
+    <div class="filtros" id="ld-f">
+      <div role="group" aria-label="Visualização" style="display:inline-flex;border:1px solid #D8CBC0;border-radius:10px;overflow:hidden;background:#fff">
+        ${['FUNIL', 'LISTA'].map(v => `<button type="button" data-visao="${v}" style="min-height:40px;padding:0 14px;border:0;font-weight:700;cursor:pointer;background:${f.visao === v ? 'var(--vinho)' : 'transparent'};color:${f.visao === v ? '#fff' : 'var(--txt-2)'}">${v === 'FUNIL' ? 'Funil' : 'Lista'}</button>`).join('')}</div>
+      <input class="in" style="width:220px" type="search" id="ld-busca" placeholder="Buscar nome ou WhatsApp" value="${esc(f.busca)}" aria-label="Buscar lead">
+      ${filtrosComuns('ld', f)}
+    </div></div>
+    <section class="card" id="cad">${formCadastroRapido()}</section>
+    <div id="ld-c" class="mt">${esqueleto(5)}</div>`;
+  el('ld-f').querySelectorAll('[data-visao]').forEach(b => b.onclick = () => { f.visao = b.dataset.visao; telaLeads(); });
+  ligarFiltros(el('ld-f'), f, () => carregarLeads());
+  let t; el('ld-busca').oninput = ev => { clearTimeout(t); t = setTimeout(() => { f.busca = ev.target.value; carregarLeads(); }, 450); };
+  ligarCadastroRapido(el('cad'));
+  carregarLeads();
+}
+async function carregarLeads(){
+  const f = F.leads, ch = 'ld' + JSON.stringify(f);
+  try {
+    const d = CACHE[ch] || await api('leads', f); CACHE[ch] = d;
+    if (TELA !== 'leads') return;
+    const abertos = d.colunas.filter(c => ['FECHADO', 'PERDIDO'].indexOf(c.etapa) === -1).reduce((s, c) => s + c.qtd, 0);
+    el('ld-sub').textContent = `${d.total} lead(s) · ${abertos} em aberto`;
+    f.visao === 'LISTA' ? pintarLista(d) : pintarFunil(d);
+  } catch (e) { el('ld-c').innerHTML = `<div class="card vazio">Não foi possível carregar: ${esc(e.message)}</div>`; }
+}
+function cartaoLead(k){
+  return `<div class="lc${k.alerta ? ' atrasado' : ''}" draggable="true" data-id="${esc(k.id)}" data-etapa="${esc(k.etapa)}" role="button" tabindex="0">
+    <div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline"><b style="font-size:14.5px">${esc(k.nome)}</b><span class="note">${esc(k.data_entrada.slice(0, 5))}${k.hora_entrada ? ' ' + esc(k.hora_entrada) : ''}</span></div>
+    <div style="display:flex;flex-wrap:wrap;gap:5px"><span class="chip">${esc(rot('FONTE', k.fonte))}</span>${k.campanha ? `<span class="chip ouro">${esc(k.campanha)}</span>` : ''}${k.existente ? '<span class="chip cinza">Paciente da base</span>' : ''}</div>
+    <div style="font-size:13px;color:#4A3A3A">${esc(rot('PROCEDIMENTO', k.procedimento) || '—')}${k.pergunta ? ' · ' + esc(rot('PERGUNTA', k.pergunta)) : ''}</div>
+    <div style="display:flex;justify-content:space-between;font-size:13px"><b>${k.etapa === 'FECHADO' ? brl(k.valor_fechado) : (k.valor_orcado ? brl(k.valor_orcado) : '')}</b><span class="note">${esc(k.responsavel)}</span></div>
+    ${k.etapa === 'PERDIDO' && k.motivo_perda ? `<div class="note">Motivo: ${esc(rot('MOTIVO_PERDA', k.motivo_perda))}</div>` : ''}
+    ${k.etapa === 'AGENDADO' && k.data_agendamento ? `<div class="note">Agendado para ${esc(k.data_agendamento)}</div>` : ''}
+    ${k.alerta ? `<div class="alerta">${esc(k.alerta)}</div>` : (k.proxima_acao_data ? `<div class="note">${esc(k.proxima_acao || 'Próxima ação')} · ${esc(k.proxima_acao_data)}</div>` : '')}
+  </div>`;
+}
+function pintarFunil(d){
+  el('ld-c').innerHTML = `<div class="kanban">${d.colunas.map(c => `<section class="col" data-col="${c.etapa}">
+    <div class="col-h"><h2 style="font-size:13.5px">${esc(c.rotulo)}</h2><span class="chip" style="background:#fff">${c.qtd}</span></div>
+    <div class="note" style="padding:0 4px;margin-top:-4px">${c.valor ? brl(c.valor) : (c.etapa === 'NOVO' ? 'responder em até ' + CTX.cfg.meta_resposta_min + ' min' : '&nbsp;')}</div>
+    ${c.itens.map(cartaoLead).join('') || '<div class="note" style="padding:10px 4px">—</div>'}</section>`).join('')}</div>
+    <p class="note">Arraste o cartão para mudar a etapa (no computador) ou abra a ficha. Borda vermelha = prazo de resposta ou follow-up estourado. Fechado e Perdido mostram o mês corrente.</p>`;
+  const cont = el('ld-c');
+  cont.querySelectorAll('.lc').forEach(c => {
+    c.onclick = () => ir('lead', c.dataset.id);
+    c.onkeydown = ev => { if (ev.key === 'Enter') ir('lead', c.dataset.id); };
+    c.ondragstart = ev => { ev.dataTransfer.setData('text/plain', c.dataset.id + '|' + c.dataset.etapa); };
+  });
+  cont.querySelectorAll('.col').forEach(col => {
+    col.ondragover = ev => { ev.preventDefault(); col.classList.add('alvo'); };
+    col.ondragleave = () => col.classList.remove('alvo');
+    col.ondrop = ev => { ev.preventDefault(); col.classList.remove('alvo'); const [id, de] = ev.dataTransfer.getData('text/plain').split('|'); if (id && de !== col.dataset.col) mudarEtapa(id, col.dataset.col, () => carregarLeads()); };
+  });
+}
+function pintarLista(d){
+  const itens = [].concat(...d.colunas.map(c => c.itens));
+  el('ld-c').innerHTML = `<section class="card"><div class="scroll"><table class="tb"><thead><tr><th>Entrada</th><th>Nome</th><th>Etapa</th><th>Fonte</th><th>Campanha</th><th>Interesse</th><th>Responsável</th><th class="r">Valor</th><th>Situação</th></tr></thead>
+    <tbody>${itens.map(k => `<tr class="clic" data-id="${esc(k.id)}"><td>${esc(k.data_entrada)} ${esc(k.hora_entrada)}</td><td style="font-weight:700">${esc(k.nome)}</td><td><span class="chip ${COR_ETAPA[k.etapa]}">${esc(ROT_ETAPA[k.etapa])}</span></td><td>${esc(rot('FONTE', k.fonte))}</td><td>${esc(k.campanha || '—')}</td><td>${esc(rot('PROCEDIMENTO', k.procedimento) || '—')}</td><td>${esc(k.responsavel)}</td><td class="r">${k.etapa === 'FECHADO' ? brl(k.valor_fechado) : (k.valor_orcado ? brl(k.valor_orcado) : '—')}</td><td>${k.alerta ? `<b style="color:var(--alerta)">${esc(k.alerta)}</b>` : ''}</td></tr>`).join('') || '<tr><td colspan="9" class="vazio">Nenhum lead com estes filtros.</td></tr>'}</tbody></table></div></section>`;
+  el('ld-c').querySelectorAll('tr.clic').forEach(r => r.onclick = () => ir('lead', r.dataset.id));
+}
+
+/* ---------- cadastro rápido com busca no Cadastro Único ---------- */
+function formCadastroRapido(){
+  const camps = (CTX.campanhas || []).filter(c => c.status === 'ATIVA');
+  return `<div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px"><h2>Cadastro rápido de lead</h2><span class="note">Digite o nome ou o WhatsApp: a base da clínica é conferida antes de gravar</span></div>
+    <div class="grid mt" style="grid-template-columns:repeat(auto-fit,minmax(170px,1fr));align-items:end">
+      <div class="fl" style="position:relative"><label for="q-nome">Nome completo</label><input id="q-nome" class="in" autocomplete="off" placeholder="Nome e sobrenome"><div id="q-sug" class="sug oculto"></div></div>
+      <div class="fl"><label for="q-tel">WhatsApp</label><input id="q-tel" class="in" inputmode="tel" placeholder="(44) 9____-____"></div>
+      <div class="fl"><label for="q-fonte">Fonte</label><select id="q-fonte" class="in">${opcoes('FONTE', '', 'Escolha')}</select></div>
+      <div class="fl"><label for="q-camp">Campanha</label><select id="q-camp" class="in"><option value="">Sem campanha</option>${camps.map(c => `<option value="${esc(c.id)}">${esc(c.nome)}</option>`).join('')}</select></div>
+      <div class="fl"><label for="q-proc">Interesse</label><select id="q-proc" class="in">${opcoes('PROCEDIMENTO', '', 'Escolha')}</select></div>
+      <div class="fl"><label for="q-perg">1ª pergunta</label><select id="q-perg" class="in">${opcoes('PERGUNTA', '', 'Nenhuma')}</select></div>
+    </div>
+    <div id="q-pac" class="mt"></div>
+    <details class="mt"><summary class="note" style="cursor:pointer;font-weight:700">Mais detalhes (mensagem, Instagram, anúncio, cidade)</summary>
+      <div class="grid mt" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
+        <div class="fl" style="grid-column:1/-1"><label for="q-msg">Primeira mensagem da paciente</label><input id="q-msg" class="in" placeholder="Cole aqui. O código (VER-IGADS) do link de rastreio preenche campanha e fonte."></div>
+        <div class="fl"><label for="q-ig">Instagram</label><input id="q-ig" class="in" placeholder="@usuario"></div>
+        <div class="fl"><label for="q-anu">Anúncio / post</label><input id="q-anu" class="in"></div>
+        <div class="fl"><label for="q-cid">Cidade</label><input id="q-cid" class="in"></div>
+        <div class="fl"><label for="q-canal">Canal de entrada</label><select id="q-canal" class="in">${opcoes('CANAL', 'WHATSAPP')}</select></div>
+        ${gestao() ? `<div class="fl"><label for="q-resp">Responsável</label><select id="q-resp" class="in"><option value="">Eu mesma</option>${(CTX.equipe || []).map(n => `<option>${esc(n)}</option>`).join('')}</select></div>` : ''}
+      </div></details>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:flex-end;margin-top:12px">
+      <label style="display:flex;gap:8px;align-items:center;font-weight:600"><input type="checkbox" id="q-resp1"> Já respondi a paciente</label>
+      <button class="btn" id="q-salvar">Salvar lead</button></div>`;
+}
+function ligarCadastroRapido(raiz){
+  let escolhida = null, t;
+  const pintarEscolha = () => {
+    const bx = raiz.querySelector('#q-pac');
+    if (!escolhida){ bx.innerHTML = ''; return; }
+    const r = escolhida.recall || {}, tv = escolhida.trava, la = escolhida.lead_aberto;
+    let sit = '';
+    if (r.situacao === 'ACOMPANHAMENTO') sit = `No Acompanhamento do Recall${r.dono ? ' com <b>' + esc(r.dono) + '</b>' : ''}`;
+    else if (r.situacao === 'FILA') sit = 'Na fila do Recall (sem contato em andamento)';
+    else if (r.situacao === 'FINALIZADA') sit = 'Finalizada no Recall';
+    else sit = 'Cadastrada no ERP, sem carteira no Recall';
+    bx.innerHTML = `<div class="selo${(tv && tv.responsavel !== USUARIO.nome) || (r.situacao === 'ACOMPANHAMENTO' && r.dono && r.dono !== USUARIO.nome) || la ? ' vermelho' : ''}">
+      <b>Paciente da base · Nº ${esc(escolhida.cod)}</b><span>${esc(escolhida.nome)}${escolhida.nasc ? ' · nasc. ' + esc(escolhida.nasc) : ''}</span><span>·</span><span>${sit}</span>
+      ${tv ? `<span class="chip alerta">Trava: ${esc(tv.campanha)} · ${esc(tv.responsavel)} até ${esc(tv.ate)}</span>` : ''}
+      ${la ? `<span class="chip alerta">Lead aberto com ${esc(la.responsavel)}</span> <a href="#" data-abrir="${esc(la.id)}">abrir</a>` : ''}
+      <span class="note" style="flex-basis:100%">Paciente da base só entra no Leads por campanha ativa. Fora disso, o atendimento segue pelo Recall.</span>
+      <button class="btn2 btn-min" id="q-limpa">Não é ela — paciente nova</button></div>`;
+    bx.querySelector('#q-limpa').onclick = () => { escolhida = null; pintarEscolha(); };
+    const ab = bx.querySelector('[data-abrir]'); if (ab) ab.onclick = ev => { ev.preventDefault(); ir('lead', ab.dataset.abrir); };
+  };
+  const buscar = async q => {
+    const sug = raiz.querySelector('#q-sug');
+    if (String(q).trim().length < 3){ sug.classList.add('oculto'); return; }
+    try {
+      const r = await api('buscarPaciente', { q });
+      if (!r.itens.length){ sug.innerHTML = '<div class="note" style="padding:12px">Nenhum cadastro com esse nome ou telefone. Será lançada como paciente nova.</div>'; sug.classList.remove('oculto'); return; }
+      sug.innerHTML = r.itens.map((i, n) => `<button type="button" data-n="${n}"><span style="display:flex;justify-content:space-between;gap:8px"><b>${esc(i.nome)}</b><span class="note">Nº ${esc(i.cod)}</span></span>
+        <span class="note">${i.nasc ? 'nasc. ' + esc(i.nasc) + ' · ' : ''}${i.tel_final ? 'tel. final ' + esc(i.tel_final) + ' · ' : ''}${esc(i.cidade || '')}</span>
+        <span style="display:flex;flex-wrap:wrap;gap:5px">${i.recall && i.recall.situacao === 'ACOMPANHAMENTO' ? `<span class="chip alerta">Acompanhamento${i.recall.dono ? ' · ' + esc(i.recall.dono) : ''}</span>` : ''}${i.recall && i.recall.situacao === 'FILA' ? '<span class="chip cinza">Fila do Recall</span>' : ''}${i.trava ? `<span class="chip alerta">Trava: ${esc(i.trava.campanha)}</span>` : ''}${i.lead_aberto ? `<span class="chip ouro">Lead aberto · ${esc(i.lead_aberto.responsavel)}</span>` : ''}</span></button>`).join('') +
+        '<button type="button" data-n="-1"><b>Nenhuma destas — paciente nova</b></button>';
+      sug.classList.remove('oculto');
+      sug.querySelectorAll('button').forEach(b => b.onclick = () => {
+        const n = Number(b.dataset.n); sug.classList.add('oculto');
+        if (n < 0){ escolhida = null; pintarEscolha(); return; }
+        escolhida = r.itens[n];
+        raiz.querySelector('#q-nome').value = escolhida.nome;
+        if (escolhida.telefones && escolhida.telefones[0] && !raiz.querySelector('#q-tel').value) raiz.querySelector('#q-tel').value = escolhida.telefones[0];
+        if (escolhida.cidade && raiz.querySelector('#q-cid')) raiz.querySelector('#q-cid').value = escolhida.cidade;
+        pintarEscolha();
+      });
+    } catch (e) { sug.classList.add('oculto'); }
+  };
+  raiz.querySelector('#q-nome').oninput = ev => { escolhida = null; pintarEscolha(); clearTimeout(t); t = setTimeout(() => buscar(ev.target.value), 450); };
+  raiz.querySelector('#q-tel').onblur = ev => { if (!escolhida && soDig(ev.target.value).length >= 10) buscar(soDig(ev.target.value)); };
+  raiz.querySelector('#q-nome').onblur = () => setTimeout(() => raiz.querySelector('#q-sug').classList.add('oculto'), 250);
+  raiz.querySelector('#q-msg') && (raiz.querySelector('#q-msg').oninput = ev => {
+    const m = String(ev.target.value).match(/\(([A-Z0-9]{2,12})-([A-Z0-9]{2,12})\)/i); if (!m) return;
+    const c = (CTX.campanhas || []).find(x => String(x.codigo || '').toUpperCase() === m[1].toUpperCase()); if (c) raiz.querySelector('#q-camp').value = c.id;
+    const fo = raiz.querySelector('#q-fonte'); if ([...fo.options].some(o => o.value === m[2].toUpperCase())) fo.value = m[2].toUpperCase();
+  });
+  raiz.querySelector('#q-salvar').onclick = async () => {
+    const v = id => (raiz.querySelector(id) || {}).value || '';
+    const p = { nome: v('#q-nome'), telefone: v('#q-tel'), fonte: v('#q-fonte'), id_campanha: v('#q-camp'), procedimento_interesse: v('#q-proc'),
+      primeira_pergunta: v('#q-perg'), primeira_mensagem: v('#q-msg'), instagram: v('#q-ig'), anuncio: v('#q-anu'), cidade: v('#q-cid'),
+      canal_entrada: v('#q-canal') || 'WHATSAPP', responsavel: v('#q-resp'), ja_respondido: raiz.querySelector('#q-resp1').checked ? 'SIM' : 'NAO',
+      cod: escolhida ? escolhida.cod : '' };
+    if (!p.nome.trim() || p.nome.trim().split(/\s+/).length < 2) return toast('Informe nome e sobrenome.');
+    if (soDig(p.telefone).length < 10) return toast('Informe o WhatsApp com DDD.');
+    if (!p.fonte) return toast('Escolha a fonte de entrada.');
+    try {
+      const r = await api('salvarLead', p);
+      if (r.lead_existente){ toast(r.aviso || 'Já existe lead aberto.'); return ir('lead', r.id); }
+      fecharModal();
+      toast(r.existente ? 'Lead lançado · paciente da base, contato registrado no Recall' : 'Lead salvo');
+      ir('lead', r.id);
+    } catch (e) { falhar(e); }
+  };
+}
+function novoLead(){ abrirModal(`<h2>Novo lead</h2><div id="cad-m">${formCadastroRapido()}</div><div class="acoes"><button class="btn2" onclick="fecharModal()">Fechar</button></div>`); ligarCadastroRapido(el('cad-m')); }
+
+/* ---------- mudança de etapa ---------- */
+function mudarEtapa(id, para, depois, lead){
+  const precisa = { ORCAMENTO: 1, AGENDADO: 1, FECHADO: 1, PERDIDO: 1 };
+  const exec = async extra => {
+    try { await api('moverEtapa', Object.assign({ id, etapa: para }, extra || {})); fecharModal(); toast('Etapa: ' + ROT_ETAPA[para]); depois && depois(); }
+    catch (e) { falhar(e); }
+  };
+  if (!precisa[para]) return exec({});
+  const hoje = paraISO(hojeBR());
+  let corpo = '';
+  if (para === 'ORCAMENTO') corpo = `<div class="grid" style="grid-template-columns:1fr 1fr"><div class="fl"><label for="e-valor">Valor orçado</label><input id="e-valor" class="in" inputmode="decimal" placeholder="R$" value="${lead && lead.valor_orcado ? esc(lead.valor_orcado) : ''}"></div>
+    <div class="fl"><label for="e-data">Data</label><input id="e-data" type="date" class="in" value="${hoje}"></div><div class="fl"><label for="e-num">Nº orçamento no ERP (opcional)</label><input id="e-num" class="in"></div>
+    <div class="fl"><label for="e-prox">Follow-up em</label><input id="e-prox" type="date" class="in"></div></div>`;
+  if (para === 'AGENDADO') corpo = `<div class="fl"><label for="e-data">Data do agendamento</label><input id="e-data" type="date" class="in" value="${hoje}"></div><p class="note">O horário em si continua sendo marcado no ERP e na Agenda do Recall.</p>`;
+  if (para === 'FECHADO') corpo = `<div class="grid" style="grid-template-columns:1fr 1fr"><div class="fl"><label for="e-valor">Valor fechado</label><input id="e-valor" class="in" inputmode="decimal" placeholder="R$" value="${lead && lead.valor_orcado ? esc(lead.valor_orcado) : ''}"></div>
+    <div class="fl"><label for="e-data">Data do fechamento</label><input id="e-data" type="date" class="in" value="${hoje}"></div>
+    <div class="fl" style="grid-column:1/-1"><label for="e-proc">Procedimentos fechados</label><input id="e-proc" class="in" placeholder="Ex.: ICE CONTOURN pacote 3 áreas"></div>
+    <div class="fl"><label for="e-num">Nº orçamento no ERP</label><input id="e-num" class="in"></div></div><p class="note">O orçamento aprovado no ERP, ao chegar ao KN Vendas, recebe a observação da campanha automaticamente.</p>`;
+  if (para === 'PERDIDO') corpo = `<div class="fl"><label for="e-mot">Motivo da perda</label><select id="e-mot" class="in">${opcoes('MOTIVO_PERDA', '', 'Escolha')}</select></div><div class="fl mt"><label for="e-obs">Observação</label><textarea id="e-obs" class="in"></textarea></div>`;
+  abrirModal(`<h2>Mover para: ${esc(ROT_ETAPA[para])}</h2>${corpo}<div class="acoes"><button class="btn2" onclick="fecharModal()">Cancelar</button><button class="btn" id="e-ok">Confirmar</button></div>`);
+  el('e-ok').onclick = () => {
+    const g = i => el(i) ? el(i).value : '';
+    if (para === 'PERDIDO' && !g('e-mot')) return toast('Escolha o motivo.');
+    if (para === 'FECHADO' && !(Number(String(g('e-valor')).replace(/\./g, '').replace(',', '.')) > 0)) return toast('Informe o valor fechado.');
+    exec({ valor: g('e-valor'), data: paraBR(g('e-data')), num_orcamento: g('e-num'), procedimentos: g('e-proc'), motivo: g('e-mot'), observacao: g('e-obs'), proxima_acao_data: paraBR(g('e-prox')), proxima_acao: g('e-prox') ? 'Follow-up do orçamento' : '' });
+  };
+}
+
+/* ==========================================================================
+   FICHA DO LEAD
+   ========================================================================== */
+async function telaLead(id){
+  if (!id) return ir('leads');
+  el('main').innerHTML = `<a href="#leads" onclick="ir('leads');return false" style="font-weight:700;text-decoration:none">← Voltar para Leads</a><div class="mt">${esqueleto(8)}</div>`;
+  try { const d = await api('lead', { id }); if (TELA === 'lead') pintarLead(d); } catch (e) { falhaBloco(e, () => telaLead(id)); }
+}
+function primeiroNome(n){ const p = String(n || '').trim().split(/\s+/)[0] || ''; return p.charAt(0).toUpperCase() + p.slice(1).toLowerCase(); }
+function preencherTexto(t, l){
+  return String(t || '').replace(/\[NOME\]/gi, primeiroNome(l.nome)).replace(/\[VALOR\]/gi, l.valor_orcado ? brl2(l.valor_orcado) : '[VALOR]')
+    .replace(/\[PROCEDIMENTO\]/gi, rot('PROCEDIMENTO', l.procedimento_interesse) || '[PROCEDIMENTO]');
+}
+function linkWhats(tel, texto){ const d = soDig(tel); return 'https://wa.me/' + (d.length <= 11 ? '55' + d : d) + (texto ? '?text=' + encodeURIComponent(texto) : ''); }
+function pintarLead(d){
+  const l = d.lead, ini = (l.nome || '').split(/\s+/).filter(Boolean).slice(0, 2).map(x => x[0]).join('').toUpperCase();
+  const etapasBt = ['NOVO', 'CONVERSA', 'ORCAMENTO', 'AGENDADO', 'FECHADO'].filter(e => e !== l.etapa);
+  const r = d.recall, tv = d.trava;
+  el('main').innerHTML = `<a href="#leads" onclick="ir('leads');return false" style="font-weight:700;text-decoration:none">← Voltar para Leads</a>
+  <div class="topo mt" style="align-items:center">
+    <div style="display:flex;gap:14px;align-items:center"><div aria-hidden="true" style="width:54px;height:54px;border-radius:50%;background:var(--vinho);color:var(--champ);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:19px">${esc(ini)}</div>
+      <div><h1 style="font-size:26px">${esc(l.nome)}</h1><div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px"><span class="chip forte">${esc(ROT_ETAPA[l.etapa])}</span><span class="chip">${esc(l.fonte_rotulo)}</span>${l.campanha ? `<span class="chip ouro">${esc(l.campanha)}</span>` : ''}${l.temperatura ? `<span class="chip">${esc(rot('TEMPERATURA', l.temperatura))}</span>` : ''}${l.paciente_existente === 'SIM' ? `<span class="chip cinza">Paciente da base${l.cod_paciente ? ' · Nº ' + esc(l.cod_paciente) : ''}</span>` : '<span class="chip ok">Paciente nova</span>'}</div></div></div>
+    <div class="filtros">
+      <a class="btn2" href="${linkWhats(l.telefone_norm || l.telefone)}" target="_blank" rel="noopener" id="bt-zap">WhatsApp</a>
+      <a class="btn2" href="tel:+55${esc(soDig(l.telefone_norm || l.telefone))}">Ligar</a>
+      ${l.etapa !== 'PERDIDO' ? `<button class="btn2" id="bt-perdido">Marcar como perdido</button>` : ''}
+      <select class="in" style="width:auto" id="bt-etapa" aria-label="Mover etapa"><option value="">Mover etapa…</option>${etapasBt.map(e => `<option value="${e}">${esc(ROT_ETAPA[e])}</option>`).join('')}</select>
+    </div></div>
+  ${l.alerta ? `<div class="aviso">${esc(l.alerta)}</div>` : ''}
+  ${tv ? `<div class="selo"><b>Trava ativa no Recall</b><span>Campanha ${esc(tv.campanha)} · ${esc(tv.responsavel)} até ${esc(tv.ate)}. Nenhuma outra colaboradora contata esta paciente pelo Recall até essa data.</span>${gestao() ? `<button class="btn2 btn-min" id="bt-trava">Encerrar trava</button>` : ''}</div>` : ''}
+  ${r && r.situacao && r.situacao !== 'SEM_CARTEIRA' ? `<div class="selo"><b>No Recall:</b><span>${r.situacao === 'ACOMPANHAMENTO' ? 'Acompanhamento' + (r.dono ? ' com ' + esc(r.dono) : '') : (r.situacao === 'FILA' ? 'fila ' + esc(String(r.faixa || '').toLowerCase()) : 'finalizada')}${r.ultimo ? ' · último contato ' + esc(r.ultimo) : ''}</span></div>` : ''}
+  <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:16px;align-items:flex-start">
+    <div style="flex:1 1 280px;display:flex;flex-direction:column;gap:14px;min-width:0">
+      <section class="card"><div style="display:flex;justify-content:space-between;align-items:baseline"><h2>Dados do lead</h2><button class="btn2 btn-min" id="bt-editar">Editar</button></div>
+        <dl class="dl"><dt>WhatsApp</dt><dd>${esc(l.telefone)}</dd>${l.instagram ? `<dt>Instagram</dt><dd>${esc(l.instagram)}</dd>` : ''}${l.email ? `<dt>E-mail</dt><dd>${esc(l.email)}</dd>` : ''}
+        <dt>Cidade</dt><dd>${esc(l.cidade || '—')}</dd><dt>Entrada</dt><dd>${esc(l.data_entrada)} · ${esc(l.hora_entrada)}</dd><dt>Canal</dt><dd>${esc(l.canal_rotulo)}</dd>
+        ${l.anuncio ? `<dt>Anúncio</dt><dd>${esc(l.anuncio)}</dd>` : ''}<dt>Campanha</dt><dd>${l.id_campanha ? `<a href="#" id="lk-camp">${esc(l.campanha)}</a>` : '—'}</dd>
+        <dt>Interesse</dt><dd>${esc(rot('PROCEDIMENTO', l.procedimento_interesse) || '—')}</dd><dt>Responsável</dt><dd>${esc(l.responsavel)}</dd>
+        <dt>1ª resposta</dt><dd>${l.minutos_1a_resposta === '' ? 'ainda não respondida' : esc(l.minutos_1a_resposta) + ' min'}</dd>
+        ${l.primeira_mensagem ? `<dt>1ª mensagem</dt><dd style="font-weight:500">“${esc(l.primeira_mensagem)}”</dd>` : ''}
+        ${l.observacao ? `<dt>Observação</dt><dd style="font-weight:500">${esc(l.observacao)}</dd>` : ''}</dl></section>
+      <section class="card"><h2>Perguntas registradas</h2><p class="note" style="margin:6px 0 10px">Alimentam o ranking “O que os leads perguntam”</p>
+        <div style="display:flex;flex-wrap:wrap;gap:6px">${d.perguntas.map(p => `<span class="chip">${esc(p.rotulo)}</span>`).join('') || '<span class="note">Nenhuma ainda.</span>'}</div>
+        <button class="btn2 mt" style="width:100%" id="bt-perg">+ Registrar pergunta</button></section>
+    </div>
+    <section class="card" style="flex:2.2 1 420px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline"><h2>Histórico de atendimento</h2><span class="note">${d.interacoes.length} registro(s)</span></div>
+      <div class="grid mt" style="grid-template-columns:repeat(auto-fit,minmax(140px,1fr));align-items:end">
+        <div class="fl"><label for="n-tipo">Tipo</label><select id="n-tipo" class="in"><option value="MENSAGEM">Mensagem enviada</option><option value="LIGACAO">Ligação</option><option value="RESPOSTA">Resposta da paciente</option><option value="NOTA">Anotação</option></select></div>
+        <div class="fl"><label for="n-canal">Canal</label><select id="n-canal" class="in">${opcoes('CANAL', 'WHATSAPP')}</select></div>
+        <div class="fl"><label for="n-prox">Próxima ação em</label><input id="n-prox" type="date" class="in"></div>
+        <div class="fl"><label for="n-temp">Temperatura</label><select id="n-temp" class="in">${opcoes('TEMPERATURA', l.temperatura, '—')}</select></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr auto;gap:10px;margin-top:10px;align-items:end"><div class="fl"><label for="n-txt">O que aconteceu</label><input id="n-txt" class="in" placeholder="Ex.: enviei valores; pediu para pensar até quarta"></div><button class="btn" id="bt-reg">Registrar</button></div>
+      <ol class="tl">${d.interacoes.map(x => `<li><div class="p"><span style="background:${x.tipo === 'PERGUNTA' ? 'var(--latao)' : (x.tipo === 'ENTRADA' ? '#BFB2A8' : 'var(--vinho)')}"></span><i></i></div><div class="c">
+        <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:baseline"><b>${esc(rotuloTipo(x))}</b><span class="note">${esc(x.data_hora)} · ${esc(x.autor)}${x.canal ? ' · ' + esc(rot('CANAL', x.canal)) : ''}</span></div>
+        ${x.texto ? `<div style="margin-top:4px;line-height:1.5;color:#4A3A3A">${esc(x.texto)}</div>` : ''}${x.pergunta_rotulo ? `<div style="margin-top:6px"><span class="chip ouro">${esc(x.pergunta_rotulo)}</span></div>` : ''}${x.valor ? `<div class="note">${brl2(x.valor)}</div>` : ''}</div></li>`).join('')}</ol>
+    </section>
+    <div style="flex:1.4 1 300px;display:flex;flex-direction:column;gap:14px;min-width:0">
+      <section class="card"><div style="display:flex;justify-content:space-between;align-items:baseline"><h2>Textos prontos</h2>${l.id_campanha ? '<span class="note">da campanha + gerais</span>' : '<span class="note">gerais</span>'}</div>
+        <p class="note" style="margin:6px 0 10px">Abre o WhatsApp com o texto preenchido e registra o uso no histórico</p>
+        <div style="display:flex;flex-direction:column;gap:8px">${d.roteiros.map((r2, n) => `<button class="btn2" data-rot="${n}" style="justify-content:space-between;width:100%;white-space:normal;text-align:left;min-height:44px"><span>${esc(r2.titulo)}${r2.geral ? ' <span class="note">· geral</span>' : ''}</span><span class="note">${r2.usos_lead ? 'usado aqui' : 'usado ' + r2.usos + 'x'}</span></button>`).join('') || '<span class="note">Nenhum roteiro cadastrado.</span>'}</div></section>
+      ${d.ofertas.length ? `<section class="card"><h2>Ofertas da campanha</h2><table class="tb mt"><tbody>${d.ofertas.map(o => `<tr><td style="white-space:normal">${esc(o.procedimento)}<div class="note">${esc(o.condicao || '')}</div></td><td class="r"><b>${brl(o.preco_campanha)}</b>${o.preco_tabela ? `<div class="note" style="text-decoration:line-through">${brl(o.preco_tabela)}</div>` : ''}</td></tr>`).join('')}</tbody></table>${d.campanha && d.campanha.regras ? `<p class="note" style="margin:10px 0 0"><b>Regras:</b> ${esc(d.campanha.regras)}</p>` : ''}</section>` : ''}
+      <section class="card"><h2>Orçamento e fechamento</h2><dl class="dl">
+        <dt>Valor orçado</dt><dd>${l.valor_orcado ? brl2(l.valor_orcado) : '—'}</dd>${l.data_orcamento ? `<dt>Data</dt><dd>${esc(l.data_orcamento)}</dd>` : ''}
+        ${l.num_orcamento_erp ? `<dt>Nº no ERP</dt><dd>${esc(l.num_orcamento_erp)}</dd>` : ''}${l.data_agendamento ? `<dt>Agendado</dt><dd>${esc(l.data_agendamento)}</dd>` : ''}
+        ${l.etapa === 'FECHADO' ? `<dt>Fechado</dt><dd>${brl2(l.valor_fechado)} em ${esc(l.data_fechamento)}</dd><dt>Procedimentos</dt><dd>${esc(l.procedimentos_fechados || '—')}</dd>` : ''}
+        ${l.etapa === 'PERDIDO' ? `<dt>Perdido</dt><dd>${esc(rot('MOTIVO_PERDA', l.motivo_perda))} em ${esc(l.data_perda)}</dd>` : ''}</dl></section>
+      <section class="card" style="background:#FBF6EE"><h2>Próxima ação</h2><div style="font-weight:700;margin-top:8px">${l.proxima_acao_data ? esc(l.proxima_acao || 'Retornar') + ' · ' + esc(l.proxima_acao_data) : 'Nenhuma marcada'}</div><div class="note">Responsável: ${esc(l.responsavel)}</div></section>
+    </div>
+  </div>
+  <p class="rodape">Ao fechar, o orçamento aprovado no ERP leva a campanha para o KN Vendas; a paciente segue para Agenda e Recall.</p>`;
+  const recarregar = () => telaLead(l.id_lead);
+  el('bt-etapa').onchange = ev => { const v = ev.target.value; ev.target.value = ''; if (v) mudarEtapa(l.id_lead, v, recarregar, l); };
+  if (el('bt-perdido')) el('bt-perdido').onclick = () => mudarEtapa(l.id_lead, 'PERDIDO', recarregar, l);
+  if (el('lk-camp')) el('lk-camp').onclick = ev => { ev.preventDefault(); ir('campanha', l.id_campanha); };
+  if (el('bt-trava')) el('bt-trava').onclick = async () => { if (!confirm('Encerrar a trava? A paciente volta a poder ser contatada por qualquer colaboradora no Recall.')) return; try { await api('encerrarTrava', { id_trava: tv.id }); toast('Trava encerrada'); recarregar(); } catch (e) { falhar(e); } };
+  el('bt-reg').onclick = async () => {
+    const txt = el('n-txt').value.trim(); if (!txt) return toast('Descreva o que aconteceu.');
+    try { await api('registrarInteracao', { id: l.id_lead, tipo: el('n-tipo').value, canal: el('n-canal').value, texto: txt, proxima_acao_data: paraBR(el('n-prox').value), temperatura: el('n-temp').value }); toast('Registrado'); recarregar(); } catch (e) { falhar(e); }
+  };
+  el('bt-perg').onclick = () => {
+    abrirModal(`<h2>Registrar pergunta</h2><div class="fl"><label for="p-tipo">Tipo de pergunta</label><select id="p-tipo" class="in">${opcoes('PERGUNTA', '', 'Escolha')}</select></div><div class="fl mt"><label for="p-txt">Como ela perguntou (opcional)</label><input id="p-txt" class="in"></div><div class="acoes"><button class="btn2" onclick="fecharModal()">Cancelar</button><button class="btn" id="p-ok">Registrar</button></div>`);
+    el('p-ok').onclick = async () => { if (!el('p-tipo').value) return toast('Escolha o tipo.'); try { await api('registrarInteracao', { id: l.id_lead, tipo: 'PERGUNTA', pergunta: el('p-tipo').value, texto: el('p-txt').value }); fecharModal(); toast('Pergunta registrada'); recarregar(); } catch (e) { falhar(e); } };
+  };
+  el('main').querySelectorAll('[data-rot]').forEach(b => b.onclick = () => {
+    const r2 = d.roteiros[Number(b.dataset.rot)], texto = preencherTexto(r2.texto, l);
+    abrirModal(`<h2>${esc(r2.titulo)}</h2>${r2.quando_usar ? `<p class="note">Quando usar: ${esc(r2.quando_usar)}</p>` : ''}<textarea id="r-txt" class="in" style="min-height:180px">${esc(texto)}</textarea>
+      <div class="acoes"><button class="btn2" onclick="fecharModal()">Cancelar</button><button class="btn2" id="r-copiar">Copiar</button><button class="btn" id="r-zap">Abrir no WhatsApp</button></div>`);
+    const usar = async (abrir) => {
+      const t = el('r-txt').value;
+      if (abrir) window.open(linkWhats(l.telefone_norm || l.telefone, t), '_blank', 'noopener');
+      else { try { await navigator.clipboard.writeText(t); } catch (e) {} }
+      try { await api('registrarInteracao', { id: l.id_lead, tipo: 'ROTEIRO', canal: 'WHATSAPP', texto: 'Texto pronto: ' + r2.titulo, id_roteiro: r2.id_roteiro }); } catch (e) { falhar(e); }
+      fecharModal(); toast(abrir ? 'WhatsApp aberto · uso registrado' : 'Copiado · uso registrado'); recarregar();
+    };
+    el('r-zap').onclick = () => usar(true); el('r-copiar').onclick = () => usar(false);
+  });
+  el('bt-editar').onclick = () => editarLead(l, recarregar);
+}
+function rotuloTipo(x){
+  return ({ ENTRADA: 'Lead criado', RESPOSTA: 'Resposta', MENSAGEM: 'Mensagem enviada', LIGACAO: 'Ligação', NOTA: 'Anotação', PERGUNTA: 'Pergunta registrada', ROTEIRO: 'Texto pronto usado',
+    ETAPA: 'Etapa: ' + (ROT_ETAPA[x.etapa_para] || x.etapa_para) })[x.tipo] || x.tipo;
+}
+function editarLead(l, depois){
+  const camps = (CTX.campanhas || []).filter(c => c.status === 'ATIVA' || c.id === l.id_campanha);
+  abrirModal(`<h2>Editar lead</h2><div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
+    <div class="fl"><label for="x-nome">Nome</label><input id="x-nome" class="in" value="${esc(l.nome)}"></div>
+    <div class="fl"><label for="x-tel">WhatsApp</label><input id="x-tel" class="in" value="${esc(l.telefone)}"></div>
+    <div class="fl"><label for="x-email">E-mail</label><input id="x-email" class="in" value="${esc(l.email)}"></div>
+    <div class="fl"><label for="x-ig">Instagram</label><input id="x-ig" class="in" value="${esc(l.instagram)}"></div>
+    <div class="fl"><label for="x-cid">Cidade</label><input id="x-cid" class="in" value="${esc(l.cidade)}"></div>
+    <div class="fl"><label for="x-fonte">Fonte</label><select id="x-fonte" class="in">${opcoes('FONTE', l.fonte)}</select></div>
+    <div class="fl"><label for="x-camp">Campanha</label><select id="x-camp" class="in"><option value="">Sem campanha</option>${camps.map(c => `<option value="${esc(c.id)}"${c.id === l.id_campanha ? ' selected' : ''}>${esc(c.nome)}</option>`).join('')}</select></div>
+    <div class="fl"><label for="x-proc">Interesse</label><select id="x-proc" class="in">${opcoes('PROCEDIMENTO', l.procedimento_interesse, '—')}</select></div>
+    <div class="fl"><label for="x-anu">Anúncio</label><input id="x-anu" class="in" value="${esc(l.anuncio)}"></div>
+    <div class="fl"><label for="x-valor">Valor orçado</label><input id="x-valor" class="in" value="${esc(l.valor_orcado || '')}"></div>
+    <div class="fl"><label for="x-num">Nº orçamento ERP</label><input id="x-num" class="in" value="${esc(l.num_orcamento_erp)}"></div>
+    ${gestao() ? `<div class="fl"><label for="x-resp">Responsável</label><select id="x-resp" class="in">${(CTX.equipe || []).map(n => `<option${n === l.responsavel ? ' selected' : ''}>${esc(n)}</option>`).join('')}</select></div>` : ''}
+    <div class="fl" style="grid-column:1/-1"><label for="x-obs">Observação</label><textarea id="x-obs" class="in">${esc(l.observacao)}</textarea></div></div>
+    <div class="acoes"><button class="btn2" onclick="fecharModal()">Cancelar</button><button class="btn" id="x-ok">Salvar</button></div>`);
+  el('x-ok').onclick = async () => {
+    const g = i => el(i) ? el(i).value : undefined;
+    const dados = { nome: g('x-nome'), telefone: g('x-tel'), email: g('x-email'), instagram: g('x-ig'), cidade: g('x-cid'), fonte: g('x-fonte'), id_campanha: g('x-camp'),
+      procedimento_interesse: g('x-proc'), anuncio: g('x-anu'), valor_orcado: g('x-valor'), num_orcamento_erp: g('x-num'), observacao: g('x-obs') };
+    if (gestao()) dados.responsavel = g('x-resp');
+    try { await api('atualizarLead', { id: l.id_lead, dados: JSON.stringify(dados) }); fecharModal(); toast('Lead atualizado'); depois(); } catch (e) { falhar(e); }
+  };
+}
+
+/* ==========================================================================
+   CAMPANHAS
+   ========================================================================== */
+const COR_ST = { ATIVA: 'ok', PLANEJADA: 'ouro', ENCERRADA: 'cinza', CANCELADA: 'cinza' };
+async function telaCampanhas(){
+  el('main').innerHTML = `<div class="topo"><div><div class="lbl" id="cp-sub">carregando</div><h1>Campanhas</h1></div><div class="filtros">${gestao() ? '<button class="btn" id="bt-nova">+ Nova campanha</button>' : ''}</div></div><div id="cp-c">${esqueleto(6)}</div>`;
+  if (el('bt-nova')) el('bt-nova').onclick = () => formCampanha(null);
+  try { const d = await api('campanhas'); if (TELA === 'campanhas') pintarCampanhas(d); } catch (e) { falhaBloco(e, telaCampanhas); }
+}
+function pintarCampanhas(d){
+  const t = d.totais;
+  el('cp-sub').textContent = `${t.qtd} campanha(s) cadastrada(s)`;
+  el('cp-c').innerHTML = `<div class="grid g-kpi">${[['Investido', brl(t.investimento), 'custos lançados'], ['Leads de campanhas', num(t.leads), t.cpl ? 'CPL médio ' + brl2(t.cpl) : '—'], ['Fechamentos', num(t.fecharam), 'conversão ' + pct(t.conversao)], ['Receita atribuída', brl(t.receita), 'ticket médio ' + brl(t.ticket)], ['ROAS médio', xr(t.roas), 'receita ÷ investimento']]
+      .map(x => `<div class="card kpi"><div class="lbl">${x[0]}</div><div class="v">${x[1]}</div><div class="s">${x[2]}</div></div>`).join('')}</div>
+    <section class="card mt" style="padding:6px"><div class="scroll"><table class="tb"><thead><tr><th>Campanha</th><th>Status</th><th>Período</th><th>Trava até</th><th class="r">Investimento</th><th class="r">Leads</th><th class="r">CPL</th><th class="r">Fechou</th><th class="r">Conversão</th><th class="r">Receita</th><th class="r">ROAS</th><th></th></tr></thead>
+    <tbody>${d.campanhas.map(c => `<tr class="clic" data-id="${esc(c.id)}"><td><b>${esc(c.nome)}</b><div class="note">${c.codigo ? 'código ' + esc(c.codigo) + ' · ' : ''}${c.meta_leads ? 'meta ' + c.meta_leads + ' leads' : ''}${c.meta_receita ? ' · ' + brl(c.meta_receita) : ''}</div></td>
+      <td><span class="chip ${COR_ST[c.status]}">${esc(c.status.charAt(0) + c.status.slice(1).toLowerCase())}</span></td><td>${esc(c.data_inicio)} – ${esc(c.data_fim)}</td><td>${esc(c.trava_ate)}</td>
+      <td class="r">${c.investimento ? brl(c.investimento) : '—'}</td><td class="r">${num(c.leads)}</td><td class="r">${c.cpl ? brl2(c.cpl) : '—'}</td><td class="r">${num(c.fecharam)}</td><td class="r">${pct(c.conversao)}</td><td class="r"><b>${brl(c.receita)}</b></td><td class="r"><b>${xr(c.roas)}</b></td>
+      <td>${gestao() ? `<a href="#" data-res="${esc(c.id)}" style="font-weight:700">Resultado</a>` : ''}</td></tr>`).join('') || '<tr><td colspan="12" class="vazio">Nenhuma campanha cadastrada.</td></tr>'}</tbody></table></div></section>
+    <div class="grid g-3 mt"><section class="card"><h2>Como cada número é calculado</h2><dl class="dl" style="grid-template-columns:110px 1fr;font-size:13px">
+      <dt>Investimento</dt><dd style="font-weight:500">soma dos custos realizados lançados na campanha</dd><dt>CPL</dt><dd style="font-weight:500">investimento ÷ leads com a campanha indicada</dd>
+      <dt>Receita</dt><dd style="font-weight:500">fechamentos registrados no app, conferidos com o KN Vendas</dd><dt>ROAS</dt><dd style="font-weight:500">receita ÷ investimento</dd></dl></section>
+      <section class="card" style="background:#FBF6EE"><h2>Ciclo de uma campanha</h2><ol style="margin:12px 0 0;padding-left:20px;line-height:1.9"><li>Briefing: objetivo, público, período, metas, verba e trava</li><li>Ofertas: procedimentos, preços, condições e vagas</li><li>Roteiros: boas-vindas, explicações e respostas prontas</li><li>Links de rastreio por canal</li><li>Leads entram já com a campanha</li><li>Custos lançados ao longo da campanha</li><li>Resultado: cruzamento automático</li></ol></section></div>`;
+  el('cp-c').querySelectorAll('tr.clic').forEach(r => r.onclick = ev => { if (ev.target.dataset.res) { ev.preventDefault(); return ir('resultado', ev.target.dataset.res); } ir('campanha', r.dataset.id); });
+}
+
+/* ---------- briefing ---------- */
+let ABA_CP = 'briefing';
+async function telaCampanha(id){
+  if (!id) return ir('campanhas');
+  el('main').innerHTML = `<a href="#campanhas" onclick="ir('campanhas');return false" style="font-weight:700;text-decoration:none">← Campanhas</a><div class="mt">${esqueleto(8)}</div>`;
+  try { const d = await api('campanha', { id }); if (TELA === 'campanha') pintarCampanha(d); } catch (e) { falhaBloco(e, () => telaCampanha(id)); }
+}
+function pintarCampanha(d){
+  const c = d.campanha, G = gestao();
+  const abas = [['briefing', 'Briefing'], ['ofertas', 'Ofertas'], ['roteiros', 'Roteiros e respostas'], ['links', 'Links de rastreio']].concat(G ? [['custos', 'Custos']] : []);
+  if (!abas.some(a => a[0] === ABA_CP)) ABA_CP = 'briefing';
+  el('main').innerHTML = `<a href="#campanhas" onclick="ir('campanhas');return false" style="font-weight:700;text-decoration:none">← Campanhas</a>
+    <div class="topo mt"><div><div style="display:flex;gap:8px;align-items:center"><span class="chip ${COR_ST[c.status]}">${esc(c.status.charAt(0) + c.status.slice(1).toLowerCase())}</span><span class="note">${esc(c.data_inicio)} – ${esc(c.data_fim)}${d.dia ? ' · dia ' + d.dia.atual + ' de ' + d.dia.total : ''} · ${d.leads} lead(s)</span></div><h1>${esc(c.nome)}</h1></div>
+      <div class="filtros">${G ? `<button class="btn2" id="bt-dup">Duplicar campanha</button><button class="btn2" id="bt-res">Resultado</button><button class="btn" id="bt-edit">Editar briefing</button>` : ''}<button class="btn2" onclick="window.print()">Imprimir</button></div></div>
+    <nav class="tabs" aria-label="Seções">${abas.map(a => `<button data-aba="${a[0]}" class="${ABA_CP === a[0] ? 'on' : ''}">${a[1]}</button>`).join('')}</nav><div id="cp-aba"></div>`;
+  el('main').querySelectorAll('[data-aba]').forEach(b => b.onclick = () => { ABA_CP = b.dataset.aba; pintarCampanha(d); });
+  if (G){ el('bt-edit').onclick = () => formCampanha(c); el('bt-res').onclick = () => ir('resultado', c.id_campanha); el('bt-dup').onclick = () => formCampanha(Object.assign({}, c, { id_campanha: '', nome: c.nome + ' (cópia)', codigo_rastreio: '', duplicar_de: c.id_campanha })); }
+  const box = el('cp-aba'), recarregar = () => telaCampanha(c.id_campanha);
+  const campo = (rotulo, v) => `<div class="fl"><label>${rotulo}</label><div style="min-height:42px;padding:10px 12px;border-radius:10px;border:1px solid var(--linha);background:#FCFAF7;line-height:1.45;white-space:pre-line">${esc(v || '—')}</div></div>`;
+  if (ABA_CP === 'briefing') box.innerHTML = `<section class="card"><h2>Dados e metas</h2>
+    <div class="grid mt" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">${campo('Período', c.data_inicio + ' a ' + c.data_fim)}${campo('Trava de contato no Recall até', c.trava_ate || c.data_fim)}${campo('Responsável', c.responsavel)}${campo('Canais', c.canais)}${campo('Código de rastreio', c.codigo_rastreio)}${campo('Meta de leads', c.meta_leads)}${campo('Meta de fechamentos', c.meta_fechamentos)}${campo('Meta de receita', c.meta_receita === '' ? '' : brl(c.meta_receita))}${campo('Verba prevista', c.verba_prevista === '' ? '' : brl(c.verba_prevista))}</div>
+    <div class="grid mt" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">${campo('Objetivo', c.objetivo)}${campo('Público-alvo', c.publico)}${campo('Mensagem central', c.mensagem_central)}${campo('Regras de comunicação', c.regras_comunicacao)}</div>
+    ${c.observacao ? `<div class="mt">${campo('Observação', c.observacao)}</div>` : ''}</section>`;
+  if (ABA_CP === 'ofertas') {
+    box.innerHTML = `<section class="card"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px"><h2>Procedimentos ofertados</h2>${G ? '<button class="btn2" id="of-nova">+ Adicionar procedimento</button>' : ''}</div>
+      <div class="scroll mt"><table class="tb"><thead><tr><th>Procedimento</th><th class="r">Preço tabela</th><th class="r">Preço campanha</th><th class="r">Desconto</th><th>Condição</th><th class="r">Vagas</th><th class="r">Vendidas</th><th>Ocupação</th>${G ? '<th></th>' : ''}</tr></thead>
+      <tbody>${d.ofertas.map((o, n) => { const desc = o.preco_tabela && o.preco_campanha ? 1 - o.preco_campanha / o.preco_tabela : 0; const oc = o.vagas ? Math.min(1, o.vendidas / o.vagas) : 0;
+        return `<tr><td style="font-weight:700;white-space:normal">${esc(o.procedimento)}</td><td class="r" style="color:var(--txt-2);text-decoration:line-through">${o.preco_tabela ? brl(o.preco_tabela) : '—'}</td><td class="r"><b>${brl(o.preco_campanha)}</b></td><td class="r">${desc ? '−' + pct(desc) : '—'}</td><td style="white-space:normal">${esc(o.condicao || '—')}</td><td class="r">${o.vagas || '—'}</td><td class="r">${num(o.vendidas)}</td><td style="min-width:120px">${o.vagas ? `<div class="bar"><i style="width:${oc * 100}%"></i></div>` : ''}</td>${G ? `<td><button class="btn2 btn-min" data-of="${n}">Editar</button></td>` : ''}</tr>`; }).join('') || `<tr><td colspan="9" class="vazio">Nenhum procedimento cadastrado.</td></tr>`}</tbody></table></div>
+      <p class="note">“Vendidas” conta os leads fechados desta campanha com o procedimento.</p></section>`;
+    if (G){ el('of-nova').onclick = () => formOferta(c, null, recarregar); box.querySelectorAll('[data-of]').forEach(b => b.onclick = () => formOferta(c, d.ofertas[Number(b.dataset.of)], recarregar)); }
+  }
+  if (ABA_CP === 'roteiros') {
+    box.innerHTML = `<section class="card"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px"><h2>Roteiros, explicações e respostas prontas</h2>${G ? '<button class="btn2" id="rt-novo">+ Novo texto</button>' : ''}</div>
+      <p class="note" style="margin:6px 0 0">[NOME], [VALOR] e [PROCEDIMENTO] são preenchidos com os dados do lead · cada uso fica registrado no histórico</p>
+      <div class="grid g-3 mt">${d.roteiros.map((r, n) => `<article class="rot"><div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline"><b>${esc(r.titulo)}</b><span class="chip">${esc(rot('CATEGORIA_ROTEIRO', r.categoria) || r.categoria || '—')}</span></div>
+        ${r.quando_usar ? `<div class="note">Quando usar: ${esc(r.quando_usar)}</div>` : ''}<div class="t">${esc(r.texto)}</div>
+        <div style="display:flex;gap:8px;margin-top:auto;align-items:center"><button class="btn2 btn-min" data-copia="${n}">Copiar</button>${G ? `<button class="btn2 btn-min" data-rt="${n}">Editar</button>` : ''}<span class="note" style="margin-left:auto">usado ${r.usos}x</span></div></article>`).join('') || '<div class="vazio">Nenhum texto cadastrado para esta campanha.</div>'}</div>
+      <p class="note">Os textos gerais (sem campanha) aparecem em todos os leads e são cadastrados na aba Roteiros da planilha ou criando um texto sem campanha.</p></section>`;
+    box.querySelectorAll('[data-copia]').forEach(b => b.onclick = async () => { try { await navigator.clipboard.writeText(d.roteiros[Number(b.dataset.copia)].texto); toast('Copiado'); } catch (e) { toast('Não foi possível copiar.'); } });
+    if (G){ el('rt-novo').onclick = () => formRoteiro(c, null, recarregar); box.querySelectorAll('[data-rt]').forEach(b => b.onclick = () => formRoteiro(c, d.roteiros[Number(b.dataset.rt)], recarregar)); }
+  }
+  if (ABA_CP === 'links') {
+    const num = (CTX.cfg && CTX.cfg.whatsapp_clinica) || '';
+    const cod = c.codigo_rastreio || '';
+    box.innerHTML = `<section class="card"><h2>Links de rastreio por canal</h2>
+      <p class="note" style="margin:6px 0 12px">Cada link abre o WhatsApp da clínica com uma mensagem que termina no código <b>(${esc(cod || 'COD')}-FONTE)</b>. Ao colar a primeira mensagem no cadastro do lead, campanha e fonte são preenchidas sozinhas.</p>
+      ${!num ? '<div class="aviso">Preencha <b>whatsapp_clinica</b> na aba Config da planilha de Leads para gerar os links.</div>' : ''}${!cod ? '<div class="aviso mt">Esta campanha não tem código de rastreio. Edite o briefing e preencha um código curto (ex.: VER).</div>' : ''}
+      ${num && cod ? (CTX.listas.FONTE || []).map(f => { const msg = `Olá! Quero saber mais sobre ${c.nome} (${cod}-${f.valor})`; const link = 'https://wa.me/55' + num + '?text=' + encodeURIComponent(msg);
+        return `<div class="link-r"><b>${esc(f.rotulo)}</b><code>${esc(link)}</code><button class="btn2 btn-min" data-link="${esc(link)}">Copiar</button></div>`; }).join('') : ''}</section>`;
+    box.querySelectorAll('[data-link]').forEach(b => b.onclick = async () => { try { await navigator.clipboard.writeText(b.dataset.link); toast('Link copiado'); } catch (e) { toast('Não foi possível copiar.'); } });
+  }
+  if (ABA_CP === 'custos' && G) {
+    const t = d.custos_total;
+    box.innerHTML = `<section class="card"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px"><h2>Custos e investimentos</h2>
+      <div style="display:flex;gap:18px;flex-wrap:wrap"><span>Verba <b>${brl(t.verba)}</b></span><span>Previsto <b>${brl(t.previsto)}</b></span><span>Realizado <b>${brl(t.realizado)}</b></span><span>Saldo <b style="color:${t.saldo < 0 ? 'var(--alerta)' : 'inherit'}">${brl(t.saldo)}</b></span></div></div>
+      <div class="grid mt" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr));align-items:end;background:#FBF6EE;padding:14px;border-radius:10px">
+        <div class="fl"><label for="cu-cat">Categoria</label><select id="cu-cat" class="in">${opcoes('CATEGORIA_CUSTO', '', 'Escolha')}</select></div>
+        <div class="fl"><label for="cu-desc">Descrição / fornecedor</label><input id="cu-desc" class="in" placeholder="Ex.: Meta Ads — novembro"></div>
+        <div class="fl"><label for="cu-fonte">Canal (para o CPL)</label><select id="cu-fonte" class="in"><option value="">Comum à campanha</option>${opcoes('FONTE', '')}</select></div>
+        <div class="fl"><label for="cu-prev">Previsto</label><input id="cu-prev" class="in" inputmode="decimal" placeholder="R$"></div>
+        <div class="fl"><label for="cu-real">Realizado</label><input id="cu-real" class="in" inputmode="decimal" placeholder="R$"></div>
+        <div class="fl"><label for="cu-data">Data</label><input id="cu-data" type="date" class="in" value="${paraISO(hojeBR())}"></div>
+        <div class="fl"><label for="cu-comp">Comprovante (link)</label><input id="cu-comp" class="in" placeholder="link do Drive"></div>
+        <button class="btn" id="cu-ok">Lançar custo</button></div>
+      <div class="scroll mt"><table class="tb"><thead><tr><th>Categoria</th><th>Descrição</th><th>Canal</th><th class="r">Previsto</th><th class="r">Realizado</th><th class="r">Variação</th><th>Data</th><th>Comprovante</th><th></th></tr></thead>
+      <tbody>${d.custos.map(x => `<tr><td style="font-weight:700">${esc(x.categoria_rotulo)}</td><td style="white-space:normal">${esc(x.descricao)}</td><td>${esc(x.fonte_rotulo)}</td><td class="r">${x.valor_previsto ? brl(x.valor_previsto) : '—'}</td><td class="r"><b>${x.valor_realizado ? brl(x.valor_realizado) : '—'}</b></td>
+        <td class="r">${x.valor_previsto && x.valor_realizado ? (x.valor_realizado - x.valor_previsto > 0 ? '+ ' : '') + brl(x.valor_realizado - x.valor_previsto) : '—'}</td><td>${esc(x.data)}</td><td>${x.comprovante ? `<a href="${esc(x.comprovante)}" target="_blank" rel="noopener">abrir</a>` : '—'}</td><td><button class="btn2 btn-min" data-excl="${esc(x.id_custo)}">Excluir</button></td></tr>`).join('') || '<tr><td colspan="9" class="vazio">Nenhum custo lançado.</td></tr>'}</tbody>
+      ${d.custos.length ? `<tfoot><tr><td colspan="3">Total</td><td class="r">${brl(t.previsto)}</td><td class="r">${brl(t.realizado)}</td><td class="r">${brl(t.realizado - t.previsto)}</td><td colspan="3"></td></tr></tfoot>` : ''}</table></div>
+      <p class="note">Custo com canal entra no CPL daquele canal; “comum à campanha” entra só no total (produção, brindes, evento).</p></section>`;
+    el('cu-ok').onclick = async () => {
+      const dados = { id_campanha: c.id_campanha, categoria: el('cu-cat').value, descricao: el('cu-desc').value, fonte: el('cu-fonte').value, valor_previsto: el('cu-prev').value, valor_realizado: el('cu-real').value, data: paraBR(el('cu-data').value), comprovante: el('cu-comp').value };
+      if (!dados.categoria) return toast('Escolha a categoria.');
+      try { await api('salvarCusto', { dados: JSON.stringify(dados) }); toast('Custo lançado'); recarregar(); } catch (e) { falhar(e); }
+    };
+    box.querySelectorAll('[data-excl]').forEach(b => b.onclick = async () => { if (!confirm('Excluir este custo?')) return; try { await api('excluirCusto', { id: b.dataset.excl }); toast('Excluído'); recarregar(); } catch (e) { falhar(e); } });
+  }
+}
+function formCampanha(c, depois){
+  c = c || {};
+  const v = k => esc(c[k] === undefined ? '' : c[k]);
+  abrirModal(`<h2>${c.id_campanha ? 'Editar briefing' : (c.duplicar_de ? 'Duplicar campanha' : 'Nova campanha')}</h2>
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr))">
+      <div class="fl" style="grid-column:1/-1"><label for="c-nome">Nome</label><input id="c-nome" class="in" value="${v('nome')}"></div>
+      <div class="fl"><label for="c-ini">Início</label><input id="c-ini" type="date" class="in" value="${paraISO(c.data_inicio)}"></div>
+      <div class="fl"><label for="c-fim">Fim</label><input id="c-fim" type="date" class="in" value="${paraISO(c.data_fim)}"></div>
+      <div class="fl"><label for="c-trava">Trava no Recall até</label><input id="c-trava" type="date" class="in" value="${paraISO(c.trava_ate)}"></div>
+      <div class="fl"><label for="c-cod">Código de rastreio</label><input id="c-cod" class="in" maxlength="8" value="${v('codigo_rastreio')}" placeholder="Ex.: VER"></div>
+      <div class="fl"><label for="c-resp">Responsável</label><input id="c-resp" class="in" value="${v('responsavel')}"></div>
+      <div class="fl"><label for="c-canais">Canais</label><input id="c-canais" class="in" value="${v('canais')}" placeholder="Meta Ads, influenciadora…"></div>
+      <div class="fl"><label for="c-ml">Meta de leads</label><input id="c-ml" class="in" inputmode="numeric" value="${v('meta_leads')}"></div>
+      <div class="fl"><label for="c-mf">Meta de fechamentos</label><input id="c-mf" class="in" inputmode="numeric" value="${v('meta_fechamentos')}"></div>
+      <div class="fl"><label for="c-mr">Meta de receita (R$)</label><input id="c-mr" class="in" inputmode="decimal" value="${v('meta_receita')}"></div>
+      <div class="fl"><label for="c-verba">Verba prevista (R$)</label><input id="c-verba" class="in" inputmode="decimal" value="${v('verba_prevista')}"></div>
+      <div class="fl"><label for="c-st">Status</label><select id="c-st" class="in"><option value="">Automático pelas datas</option>${['PLANEJADA', 'ENCERRADA', 'CANCELADA'].map(s => `<option${String(c.status_manual || '') === s ? ' selected' : ''}>${s}</option>`).join('')}</select></div>
+      <div class="fl" style="grid-column:1/-1"><label for="c-obj">Objetivo</label><textarea id="c-obj" class="in" style="min-height:64px">${v('objetivo')}</textarea></div>
+      <div class="fl" style="grid-column:1/-1"><label for="c-pub">Público-alvo</label><textarea id="c-pub" class="in" style="min-height:64px">${v('publico')}</textarea></div>
+      <div class="fl" style="grid-column:1/-1"><label for="c-msg">Mensagem central</label><textarea id="c-msg" class="in" style="min-height:64px">${v('mensagem_central')}</textarea></div>
+      <div class="fl" style="grid-column:1/-1"><label for="c-reg">Regras de comunicação</label><textarea id="c-reg" class="in" style="min-height:64px">${v('regras_comunicacao')}</textarea></div>
+    </div><p class="note">A trava vale para pacientes da base lançadas nesta campanha: até essa data, nenhuma outra colaboradora as contata pelo Recall. Em branco, vale o fim da campanha.</p>
+    <div class="acoes"><button class="btn2" onclick="fecharModal()">Cancelar</button><button class="btn" id="c-ok">Salvar</button></div>`);
+  el('c-ok').onclick = async () => {
+    const g = i => el(i).value;
+    const dados = { id_campanha: c.id_campanha || '', duplicar_de: c.duplicar_de || '', nome: g('c-nome'), data_inicio: paraBR(g('c-ini')), data_fim: paraBR(g('c-fim')), trava_ate: paraBR(g('c-trava')),
+      codigo_rastreio: g('c-cod'), responsavel: g('c-resp'), canais: g('c-canais'), meta_leads: g('c-ml'), meta_fechamentos: g('c-mf'), meta_receita: g('c-mr'), verba_prevista: g('c-verba'),
+      status: g('c-st'), objetivo: g('c-obj'), publico: g('c-pub'), mensagem_central: g('c-msg'), regras_comunicacao: g('c-reg') };
+    try { const r = await api('salvarCampanha', { dados: JSON.stringify(dados) }); fecharModal(); toast('Campanha salva'); CTX = await api('contexto'); ir('campanha', r.id); } catch (e) { falhar(e); }
+  };
+}
+function formOferta(c, o, depois){
+  o = o || {};
+  abrirModal(`<h2>${o.id_oferta ? 'Editar' : 'Adicionar'} procedimento</h2><div class="grid" style="grid-template-columns:1fr 1fr">
+    <div class="fl" style="grid-column:1/-1"><label for="o-proc">Procedimento</label><input id="o-proc" class="in" value="${esc(o.procedimento || '')}"></div>
+    <div class="fl"><label for="o-pt">Preço de tabela</label><input id="o-pt" class="in" inputmode="decimal" value="${esc(o.preco_tabela || '')}"></div>
+    <div class="fl"><label for="o-pc">Preço da campanha</label><input id="o-pc" class="in" inputmode="decimal" value="${esc(o.preco_campanha || '')}"></div>
+    <div class="fl"><label for="o-cond">Condição de pagamento</label><input id="o-cond" class="in" value="${esc(o.condicao || '')}"></div>
+    <div class="fl"><label for="o-vagas">Vagas</label><input id="o-vagas" class="in" inputmode="numeric" value="${esc(o.vagas || '')}"></div></div>
+    <div class="acoes">${o.id_oferta ? '<button class="btn2" id="o-del" style="margin-right:auto">Excluir</button>' : ''}<button class="btn2" onclick="fecharModal()">Cancelar</button><button class="btn" id="o-ok">Salvar</button></div>`);
+  el('o-ok').onclick = async () => {
+    const dados = { id_oferta: o.id_oferta || '', id_campanha: c.id_campanha, procedimento: el('o-proc').value, preco_tabela: el('o-pt').value, preco_campanha: el('o-pc').value, condicao: el('o-cond').value, vagas: el('o-vagas').value };
+    try { await api('salvarOferta', { dados: JSON.stringify(dados) }); fecharModal(); toast('Oferta salva'); depois(); } catch (e) { falhar(e); }
+  };
+  if (el('o-del')) el('o-del').onclick = async () => { if (!confirm('Excluir este procedimento da campanha?')) return; try { await api('excluirOferta', { id: o.id_oferta }); fecharModal(); depois(); } catch (e) { falhar(e); } };
+}
+function formRoteiro(c, r, depois){
+  r = r || {};
+  abrirModal(`<h2>${r.id_roteiro ? 'Editar' : 'Novo'} texto pronto</h2><div class="grid" style="grid-template-columns:1fr 1fr">
+    <div class="fl"><label for="t-tit">Título</label><input id="t-tit" class="in" value="${esc(r.titulo || '')}"></div>
+    <div class="fl"><label for="t-cat">Categoria</label><select id="t-cat" class="in">${opcoes('CATEGORIA_ROTEIRO', r.categoria || 'ABERTURA')}</select></div>
+    <div class="fl" style="grid-column:1/-1"><label for="t-qd">Quando usar</label><input id="t-qd" class="in" value="${esc(r.quando_usar || '')}"></div>
+    <div class="fl" style="grid-column:1/-1"><label for="t-txt">Texto</label><textarea id="t-txt" class="in" style="min-height:160px">${esc(r.texto || '')}</textarea></div>
+    <label style="grid-column:1/-1;display:flex;gap:8px;align-items:center"><input type="checkbox" id="t-geral"${r.id_roteiro && !r.id_campanha ? ' checked' : ''}> Texto geral (aparece em todos os leads, de qualquer campanha)</label></div>
+    <p class="note">Use [NOME], [VALOR] e [PROCEDIMENTO] para preencher com os dados do lead.</p>
+    <div class="acoes">${r.id_roteiro ? '<button class="btn2" id="t-del" style="margin-right:auto">Excluir</button>' : ''}<button class="btn2" onclick="fecharModal()">Cancelar</button><button class="btn" id="t-ok">Salvar</button></div>`);
+  el('t-ok').onclick = async () => {
+    const dados = { id_roteiro: r.id_roteiro || '', id_campanha: el('t-geral').checked ? '' : c.id_campanha, titulo: el('t-tit').value, categoria: el('t-cat').value, quando_usar: el('t-qd').value, texto: el('t-txt').value, ativo: 'SIM' };
+    try { await api('salvarRoteiro', { dados: JSON.stringify(dados) }); fecharModal(); toast('Texto salvo'); depois(); } catch (e) { falhar(e); }
+  };
+  if (el('t-del')) el('t-del').onclick = async () => { if (!confirm('Excluir este texto?')) return; try { await api('excluirRoteiro', { id: r.id_roteiro }); fecharModal(); depois(); } catch (e) { falhar(e); } };
+}
+
+/* ==========================================================================
+   RESULTADO DA CAMPANHA
+   ========================================================================== */
+async function telaResultado(id){
+  if (!id) return ir('campanhas');
+  el('main').innerHTML = `<a href="#campanhas" onclick="ir('campanhas');return false" style="font-weight:700;text-decoration:none">← Campanhas</a><div class="mt">${esqueleto(8)}</div>`;
+  try { const d = await api('resultado', { id }); if (TELA === 'resultado') pintarResultado(d); } catch (e) { falhaBloco(e, () => telaResultado(id)); }
+}
+function pintarResultado(d){
+  const c = d.campanha, k = d.kpis, enc = c.status === 'ENCERRADA';
+  const kp = [['Investimento', brl(k.investimento), k.verba_prevista ? pct(k.investimento / k.verba_prevista) + ' da verba' : 'custos realizados'], ['Leads', num(k.leads), 'entraram pela campanha'], ['CPL', k.cpl ? brl2(k.cpl) : '—', 'custo por lead'],
+    ['Fechamentos', num(k.fechados), 'conversão ' + pct(k.conversao)], ['Receita', brl(k.receita), 'fechamentos registrados'], ['Ticket médio', brl(k.ticket), 'por fechamento'], ['CAC', k.cac ? brl2(k.cac) : '—', 'custo por paciente'], ['ROAS', xr(k.roas), k.roas ? 'cada R$ 1 gerou ' + brl2(k.roas) : 'receita ÷ investimento', 1]];
+  const base = d.funil[0].qtd || 1, maxS = Math.max(1, ...d.semanas.map(s => s.leads));
+  const cf = d.conferencia || {};
+  el('main').innerHTML = `<a href="#" id="lk-brief" style="font-weight:700;text-decoration:none">← Briefing da campanha</a>
+    <div class="topo mt"><div><div class="lbl">Resultado ${enc ? 'final' : 'parcial'} · ${esc(c.data_inicio)} a ${esc(c.data_fim)}${d.dia.total ? ' · dia ' + d.dia.atual + ' de ' + d.dia.total : ''}</div><h1>${esc(c.nome)}</h1></div><div class="filtros"><button class="btn2" onclick="window.print()">Imprimir / PDF</button></div></div>
+    <div class="grid g-kpi">${kp.map(x => `<div class="card kpi${x[3] ? ' hi' : ''}"><div class="lbl">${x[0]}</div><div class="v">${x[1]}</div><div class="s">${esc(x[2])}</div></div>`).join('')}</div>
+    <div class="grid g-2 mt">
+      <section class="card"><h2>Meta × realizado</h2>${d.metas.length ? `<div style="display:flex;flex-direction:column;gap:14px;margin-top:16px">${d.metas.map(m => `<div><div style="display:flex;justify-content:space-between;margin-bottom:5px"><b>${esc(m.nome)}</b><span><b>${m.dinheiro ? brl(m.real) : num(m.real)}</b> <span class="note">de ${m.dinheiro ? brl(m.meta) : num(m.meta)} · ${pct(m.real / m.meta)}</span></span></div><div class="bar"><i style="width:${Math.min(100, m.real / m.meta * 100)}%"></i></div></div>`).join('')}</div>` : '<div class="vazio">Metas não preenchidas no briefing.</div>'}
+        ${d.projecao ? `<p class="note" style="margin:14px 0 0">Projeção no ritmo atual: ${num(d.projecao.leads)} leads e ${brl(d.projecao.receita)} · faltam ${d.projecao.faltam} dia(s)</p>` : ''}</section>
+      <section class="card"><h2>Funil da campanha</h2><div style="display:flex;flex-direction:column;gap:10px;margin-top:16px">${d.funil.map(x => `<div class="funil-l"><span style="font-weight:600">${esc(x.etapa)}</span><div class="b"><i style="width:${Math.max(2, x.qtd / base * 100)}%;background:var(--latao)"></i></div><span class="r"><b>${num(x.qtd)}</b> <span class="note">${pct(x.pct)}</span></span></div>`).join('')}</div>
+        ${d.semanas.length ? `<div class="lbl mt2">Leads por semana</div><div class="sem mt" role="img" aria-label="Leads por semana">${d.semanas.map(s => `<div><b style="font-size:12px">${s.leads}</b><i style="height:${Math.max(3, s.leads / maxS * 80)}px"></i><span class="note">${esc(s.semana)}</span></div>`).join('')}</div>` : ''}</section>
+    </div>
+    <section class="card mt"><div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px"><h2>Resultado por canal</h2><span class="note">CAC = investimento ÷ fechamentos · ROAS = receita ÷ investimento</span></div>
+      <div class="scroll mt"><table class="tb"><thead><tr><th>Canal</th><th class="r">Investimento</th><th class="r">Leads</th><th class="r">CPL</th><th class="r">Fechou</th><th class="r">Conversão</th><th class="r">Receita</th><th class="r">CAC</th><th class="r">ROAS</th></tr></thead>
+      <tbody>${d.canais.map(x => `<tr><td style="font-weight:700">${esc(x.rotulo)}</td><td class="r">${x.investimento ? brl(x.investimento) : '—'}</td><td class="r">${num(x.leads)}</td><td class="r">${x.cpl ? brl2(x.cpl) : '—'}</td><td class="r">${num(x.fecharam)}</td><td class="r">${pct(x.conversao)}</td><td class="r"><b>${brl(x.receita)}</b></td><td class="r">${x.cac ? brl2(x.cac) : '—'}</td><td class="r"><b>${xr(x.roas)}</b></td></tr>`).join('')}
+        ${d.comum ? `<tr><td style="font-weight:700">Custos comuns (produção, brindes)</td><td class="r">${brl(d.comum)}</td><td colspan="7" class="note">entram no total da campanha</td></tr>` : ''}</tbody>
+      <tfoot><tr><td>Total</td><td class="r">${brl(k.investimento)}</td><td class="r">${num(k.leads)}</td><td class="r">${k.cpl ? brl2(k.cpl) : '—'}</td><td class="r">${num(k.fechados)}</td><td class="r">${pct(k.conversao)}</td><td class="r">${brl(k.receita)}</td><td class="r">${k.cac ? brl2(k.cac) : '—'}</td><td class="r">${xr(k.roas)}</td></tr></tfoot></table></div></section>
+    <div class="grid g-3 mt">
+      <section class="card"><h2>Vendas por procedimento</h2><table class="tb mt"><thead><tr><th>Procedimento</th><th class="r">Qtd</th><th class="r">Receita</th><th class="r">Ticket</th></tr></thead><tbody>${d.vendas.map(v => `<tr><td style="font-weight:700;white-space:normal">${esc(v.procedimento)}</td><td class="r">${v.qtd}</td><td class="r">${brl(v.receita)}</td><td class="r">${brl(v.ticket)}</td></tr>`).join('') || '<tr><td colspan="4" class="vazio">Sem fechamentos.</td></tr>'}</tbody></table></section>
+      <section class="card"><h2>Motivos de perda</h2>${d.perdas.length ? `<div style="display:flex;flex-direction:column;gap:11px;margin-top:14px">${d.perdas.map(p => `<div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-weight:600">${esc(p.motivo)}</span><b>${pct(p.pct)} <span class="note">(${p.qtd})</span></b></div><div class="bar"><i style="width:${p.pct * 100}%"></i></div></div>`).join('')}</div>` : '<div class="vazio">Nenhum lead perdido.</div>'}</section>
+      <section class="card" style="background:#FBF6EE"><h2>Resultado financeiro</h2><table style="width:100%;border-collapse:collapse;margin-top:12px">
+        <tr><td style="padding:9px 0;border-bottom:1px solid #EADFD3">Receita gerada</td><td class="r" style="border-bottom:1px solid #EADFD3;font-weight:700">${brl(d.financeiro.receita)}</td></tr>
+        <tr><td style="padding:9px 0;border-bottom:1px solid #EADFD3">(−) Investimento da campanha</td><td class="r" style="border-bottom:1px solid #EADFD3">${brl(d.financeiro.investimento)}</td></tr>
+        <tr><td style="padding:9px 0;font-weight:800">Resultado após marketing</td><td class="r" style="font-weight:800;font-size:17px">${brl(d.financeiro.resultado)}</td></tr></table>
+        <div class="note mt">ROI sobre o investimento: ${k.investimento ? pct(k.roi) : '—'}</div></section>
+    </div>
+    <section class="card mt"><h2>Conferência com o KN Vendas</h2>
+      ${cf.ligado ? `<p class="note" style="margin:6px 0 12px">${num(cf.orcamentos)} orçamento(s) aprovado(s) marcados com a campanha no KN Vendas · ${brl(cf.valor_vendas)} em venda do comercial</p>
+        <div class="grid g-2"><div><div class="lbl">Fechado no app sem orçamento no KN Vendas (${cf.fechado_sem_orcamento.length})</div>${cf.fechado_sem_orcamento.map(x => `<div style="padding:8px 0;border-bottom:1px solid var(--linha-2)"><a href="#" data-lead="${esc(x.id)}"><b>${esc(x.nome)}</b></a> · ${brl(x.valor)} · ${esc(x.data)} · ${esc(x.responsavel || '')}</div>`).join('') || '<p class="note">Nenhum. Tudo conferido.</p>'}</div>
+        <div><div class="lbl">Orçamento marcado sem fechamento no app (${cf.orcamento_sem_fechamento.length})</div>${cf.orcamento_sem_fechamento.map(x => `<div style="padding:8px 0;border-bottom:1px solid var(--linha-2)"><b>${esc(x.paciente)}</b> · ORÇ ${esc(x.num)} · ${brl(x.valor)} · ${esc(x.data)}</div>`).join('') || '<p class="note">Nenhum.</p>'}</div></div>`
+        : `<p class="note">${esc(cf.aviso || 'A conferência aparece quando o ID da planilha do KN Vendas é preenchido na Config do Leads.')}</p>`}</section>
+    <p class="rodape">Números a partir dos registros do app de Leads e dos custos lançados na campanha.</p>`;
+  el('lk-brief').onclick = ev => { ev.preventDefault(); ir('campanha', c.id); };
+  el('main').querySelectorAll('[data-lead]').forEach(a => a.onclick = ev => { ev.preventDefault(); ir('lead', a.dataset.lead); });
+}
+
+/* ---------- PWA ---------- */
+if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js').catch(() => {}); }); }
+window.addEventListener('hashchange', () => { if (!USUARIO) return; const h = location.hash.replace('#', ''); const [t, a] = h.split('='); if (t && (t !== TELA || a)) ir(t, a); });
+iniciar();
+</script>
+</body>
+</html>
