@@ -8,4 +8,4 @@
  *
  * Deixando em branco, o app pergunta a URL na primeira abertura e guarda no navegador.
  */
-window.KN_LEADS_API = '';
+window.KN_LEADS_API = 'https://script.google.com/macros/s/AKfycbxdIvEEdDel2dp5UHMynPUs4JbzCUkqkAsTtfr5DsMpY7xmt0FVR6sMkWn8JG1H4G7L/exec';
