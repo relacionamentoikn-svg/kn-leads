@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<!-- LEADS E CAMPANHAS · V1.0 — este arquivo vai no repositório kn-leads. NÃO é o do Recall nem o do KN Vendas. -->
+<!-- LEADS E CAMPANHAS · V1.1 — este arquivo vai no repositório kn-leads. NÃO é o do Recall nem o do KN Vendas. -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Leads e Campanhas</title>
@@ -17,9 +17,14 @@
 <meta name="description" content="Gestão de leads e campanhas promocionais — Instituto Kássila Nasser">
 <meta name="theme-color" content="#5C1A2B">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Manrope:wght@400;500;600;700;800&display=swap">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Manrope:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="preconnect" href="https://script.google.com">
+<link rel="preconnect" href="https://script.googleusercontent.com">
 <style>
-:root{--vinho:#5C1A2B;--vinho-2:#7A2E3F;--champ:#F4ECE2;--latao:#B08A4E;--fundo:#F7F3EE;--linha:#E7DED6;--linha-2:#F0E9E3;--txt:#2A1A1B;--txt-2:#6B5757;--verde:#1F5A3A;--verde-f:#E3EFE8;--amar:#6E5320;--amar-f:#F5EEDF;--alerta:#8E2A1E;--alerta-f:#FBEDE8}
+:root{--vinho:#5C1A2B;--vinho-2:#7A2E3F;--champ:#F4ECE2;--latao:#B08A4E;--fundo:#F7F3EE;--linha:#E7DED6;--linha-2:#F0E9E3;--txt:#2A1A1B;--txt-2:#6B5757;--verde:#1F5A3A;--verde-f:#E3EFE8;--amar:#6E5320;--amar-f:#F5EEDF;--alerta:#8E2A1E;--alerta-f:#FBEDE8;
+  /* tipo de paciente: cor do cartão */
+  --t-nova:#2E7A55;--t-nova-f:#E5F2EA;--t-rec:#30648C;--t-rec-f:#E4EDF5;--t-fu:#A8711C;--t-fu-f:#F7ECD8}
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--fundo);color:var(--txt);font-family:Manrope,system-ui,sans-serif;font-size:14px}
 a{color:var(--vinho)}
@@ -78,14 +83,78 @@ textarea.in{padding:10px 12px;min-height:90px;resize:vertical}
 .aviso{display:flex;flex-wrap:wrap;gap:12px;align-items:center;background:var(--alerta-f);border:1px solid #E9C9BE;border-radius:12px;padding:11px 14px;font-weight:600}
 .vazio{padding:26px;text-align:center;color:var(--txt-2)}
 /* funil de leads */
-.kanban{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(188px,1fr);gap:12px;overflow-x:auto;padding-bottom:8px}
+.kanban{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(228px,1fr);gap:12px;overflow-x:auto;padding-bottom:8px}
 .col{background:#EFE7DF;border-radius:12px;padding:10px;display:flex;flex-direction:column;gap:8px;min-height:120px}
 .col.alvo{outline:2px dashed var(--vinho);outline-offset:-4px}
 .col-h{display:flex;justify-content:space-between;align-items:center;padding:2px 4px}
-.lc{display:flex;flex-direction:column;gap:6px;padding:12px;background:#fff;border-radius:10px;border:1px solid var(--linha);cursor:pointer;text-align:left}
-.lc:hover{border-color:var(--vinho)}
-.lc.atrasado{border-color:var(--alerta);box-shadow:inset 4px 0 0 var(--alerta)}
+.lc{display:flex;flex-direction:column;gap:7px;padding:11px 12px 11px 13px;background:#fff;border-radius:10px;border:1px solid var(--linha);border-left:5px solid var(--tc,#D8CBC0);cursor:pointer;text-align:left;min-width:0;transition:box-shadow .15s,transform .15s}
+.lc:hover{box-shadow:0 6px 18px rgba(60,30,30,.10);transform:translateY(-1px)}
+.lc.t-NOVA{--tc:var(--t-nova);--tf:var(--t-nova-f)}.lc.t-RECALL{--tc:var(--t-rec);--tf:var(--t-rec-f)}.lc.t-FOLLOWUP{--tc:var(--t-fu);--tf:var(--t-fu-f)}
+.lc.atrasado{border-top-color:#E3B4A8;border-right-color:#E3B4A8;border-bottom-color:#E3B4A8;background:#FFFAF8}
 .lc .alerta{font-size:12px;font-weight:800;color:var(--alerta)}
+.lc-top{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;align-items:start}
+.lc-nome{font-size:14.5px;font-weight:800;line-height:1.25;overflow-wrap:anywhere;margin:0}
+.lc-hora{font-size:11.5px;color:var(--txt-2);text-align:right;white-space:nowrap;line-height:1.35;font-variant-numeric:tabular-nums}
+.lc-chips{display:flex;flex-wrap:wrap;gap:5px;min-width:0}
+.lc-chips .chip{max-width:100%;overflow:hidden;text-overflow:ellipsis;display:inline-block}
+.lc-int{font-size:13px;color:#4A3A3A;line-height:1.35;overflow-wrap:anywhere}
+.lc-pe{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:13px;min-width:0}
+.lc-pe .note{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lc.movendo{opacity:.55}
+.tp{display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:999px;font-size:11.5px;font-weight:800;background:var(--tf,#EEE);color:var(--tc,#555);white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
+.tp::before{content:'';width:7px;height:7px;border-radius:50%;background:currentColor;flex:none}
+.tp.t-NOVA{--tc:var(--t-nova);--tf:var(--t-nova-f)}.tp.t-RECALL{--tc:var(--t-rec);--tf:var(--t-rec-f)}.tp.t-FOLLOWUP{--tc:var(--t-fu);--tf:var(--t-fu-f)}
+.legenda{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;margin:16px 0 12px;font-size:12.5px;color:var(--txt-2)}
+.btn:disabled,.btn2:disabled{opacity:.45;cursor:default;pointer-events:none}
+@media(max-width:820px){.so-pc{display:none!important}}
+.legenda b{color:var(--txt);font-weight:700}
+.cron{font-size:12px;font-weight:800;font-variant-numeric:tabular-nums;color:var(--t-nova)}
+.cron.atencao{color:var(--t-fu)}.cron.estourou{color:var(--alerta)}
+/* campos com padrão de moeda, data e telefone */
+.in-pref{position:relative}
+.in-pref>span{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--txt-2);font-weight:700;pointer-events:none;font-size:13.5px}
+.in-pref>.in{padding-left:40px;font-variant-numeric:tabular-nums}
+.in-suf{position:relative}
+.in-suf>span{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--txt-2);font-weight:600;pointer-events:none;font-size:13px}
+.in-suf>.in{padding-right:56px;font-variant-numeric:tabular-nums}
+.in-data{position:relative}
+.in-data>.in{padding-right:44px;font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.in-data .cal{position:absolute;right:4px;top:50%;transform:translateY(-50%);width:36px;height:34px;border:0;border-radius:8px;background:transparent;color:var(--txt-2);cursor:pointer;display:flex;align-items:center;justify-content:center}
+.in-data .cal:hover{background:#F4EDE6;color:var(--vinho)}
+.in-data .cal-nat{position:absolute;right:0;bottom:0;width:1px;height:1px;opacity:0;border:0;padding:0;pointer-events:none}
+.in.erro{border-color:var(--alerta);box-shadow:0 0 0 3px rgba(142,42,30,.12)}
+/* cadastro rápido: o nome ganha espaço */
+.cad-grid{display:grid;gap:12px 14px;align-items:end;grid-template-columns:minmax(260px,2.3fr) minmax(170px,1.25fr) repeat(4,minmax(150px,1fr))}
+@media(max-width:1380px){.cad-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.cad-grid .c-nome{grid-column:span 2}.cad-grid .c-tel{grid-column:span 2}}
+@media(max-width:700px){.cad-grid{grid-template-columns:1fr 1fr}.cad-grid .c-nome,.cad-grid .c-tel{grid-column:1/-1}}
+@media(max-width:420px){.cad-grid{grid-template-columns:1fr}}
+/* sincronização */
+.sinc{display:flex;align-items:center;gap:7px;margin-top:10px;font-size:11.5px;color:#D9C3A0}
+.sinc i{width:7px;height:7px;border-radius:50%;background:#8FC3A2;flex:none}
+.sinc.ativo i{background:#E9CF9E;animation:pulso 1s ease-in-out infinite}
+@keyframes pulso{50%{opacity:.25}}
+/* configurações */
+.cfg-grupo{display:flex;flex-direction:column}
+.cfg-l{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(200px,1fr) auto;gap:10px 18px;align-items:center;padding:14px 0;border-bottom:1px solid var(--linha-2)}
+.cfg-l:last-child{border-bottom:0}
+.cfg-l .aj{font-size:12.5px;color:var(--txt-2);margin-top:3px;line-height:1.45}
+@media(max-width:760px){.cfg-l{grid-template-columns:1fr}}
+.it-l{display:grid;grid-template-columns:30px minmax(0,1fr) 120px 92px 76px;gap:8px 10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--linha-2)}
+.it-l .cod{font-size:11px;color:var(--txt-2);font-family:'IBM Plex Mono',monospace;overflow:hidden;text-overflow:ellipsis}
+.it-l.inativo .in{color:#9A8B8B;background:#FAF7F4}
+@media(max-width:700px){.it-l{grid-template-columns:30px 1fr 84px}.it-l .cod,.it-l .uso{display:none}}
+.mv{display:flex;flex-direction:column}.mv button{border:0;background:transparent;cursor:pointer;color:var(--txt-2);height:18px;line-height:1;font-size:12px}.mv button:hover{color:var(--vinho)}
+.sw{position:relative;display:inline-flex;align-items:center;gap:8px;cursor:pointer;font-size:12.5px;font-weight:700;color:var(--txt-2)}
+.sw input{appearance:none;-webkit-appearance:none;width:38px;height:22px;border-radius:999px;background:#D8CBC0;position:relative;cursor:pointer;margin:0;transition:background .15s;flex:none}
+.sw input::after{content:'';position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:left .15s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.sw input:checked{background:var(--t-nova)}.sw input:checked::after{left:19px}
+.int-c{display:grid;grid-template-columns:14px minmax(0,1fr);gap:4px 12px;padding:16px;border:1px solid var(--linha);border-radius:12px;background:#fff}
+.int-c .st{width:12px;height:12px;border-radius:50%;margin-top:4px;background:#C9B9B0}.int-c .st.ok{background:var(--t-nova)}.int-c .st.no{background:var(--alerta)}
+.pill-tabs{display:flex;flex-wrap:wrap;gap:6px}
+.pill-tabs button{min-height:36px;padding:0 14px;border-radius:999px;border:1px solid #D8CBC0;background:#fff;font-weight:700;color:var(--txt-2);cursor:pointer}
+.pill-tabs button.on{background:var(--vinho);border-color:var(--vinho);color:#fff}
+.modal.larga{width:min(880px,100%)}
+kbd{font-family:'IBM Plex Mono',monospace;font-size:11px;border:1px solid #D8CBC0;border-bottom-width:2px;border-radius:5px;padding:0 5px;background:#fff;color:var(--txt-2)}
 /* ficha */
 .dl{display:grid;grid-template-columns:120px 1fr;gap:9px 12px;margin:12px 0 0}
 .dl dt{color:var(--txt-2);font-weight:600}.dl dd{margin:0;font-weight:700;min-width:0;overflow-wrap:anywhere}
@@ -119,10 +188,61 @@ textarea.in{padding:10px 12px;min-height:90px;resize:vertical}
 @keyframes g{to{transform:rotate(360deg)}}
 .esq{height:14px;border-radius:6px;background:linear-gradient(90deg,#EFE7DF,#F7F1EC,#EFE7DF);background-size:200% 100%;animation:sh 1.2s infinite}
 @keyframes sh{to{background-position:-200% 0}}
-/* entrada */
-.portao{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:var(--vinho)}
-.portao .cx{background:#fff;border-radius:18px;padding:30px;width:min(420px,100%)}
-.portao .mono{font-family:'Cormorant Garamond',serif;font-size:34px;color:var(--vinho);cursor:default;user-select:none}
+/* ============ TELA DE ACESSO — mesmo modelo do Recall e do KN Vendas ============
+   Painel de marca com o retrato da Dra. à esquerda, formulário à direita;
+   no celular o painel vira faixa no topo. */
+#login-tela{display:none;min-height:100vh;min-height:100dvh;grid-template-columns:1.05fr 1fr;
+  font-family:'IBM Plex Sans',Manrope,system-ui,sans-serif;color:#241E1C;background:#fff}
+#login-tela.on{display:grid}
+.lg-marca{position:relative;overflow:hidden;background:#7A2226;color:#FAF7F3;padding:56px 56px 40px;display:flex;flex-direction:column}
+.lg-foto{position:absolute;top:0;right:0;width:62%;height:100%;object-fit:cover;object-position:50% 6%}
+.lg-fade{position:absolute;top:0;right:0;width:62%;height:100%;background:linear-gradient(90deg,#7A2226 0%,rgba(122,34,38,0) 34%)}
+.lg-topo{display:flex;align-items:center;gap:14px;position:relative}
+.lg-mono{width:48px;height:48px;border-radius:50%;flex:none}
+.lg-nome{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:26px;line-height:1}
+.lg-desc-marca{font-size:11px;letter-spacing:.32em;color:#E9CF9E;margin-top:7px}
+.lg-meio{margin-top:auto;position:relative;max-width:300px}
+.lg-fio{width:48px;height:2px;background:#D7B27A;margin-bottom:20px}
+.lg-tit{margin:0;font-family:'Fraunces',Georgia,serif;font-size:44px;font-weight:500;line-height:1.05}
+.lg-desc{margin:16px 0 0;font-size:15px;line-height:1.55;color:rgba(250,247,243,.86)}
+.lg-rod{margin-top:72px;font-size:12px;line-height:1.6;color:rgba(250,247,243,.72);position:relative}
+.lg-form-box{display:flex;align-items:center;justify-content:center;padding:40px;background:#fff}
+.lg-form{width:100%;max-width:380px;display:flex;flex-direction:column;gap:14px}
+.lg-form h1{margin:0;font-family:'Fraunces',Georgia,serif;font-size:28px;font-weight:500;color:#5C1A2B;letter-spacing:0}
+.lg-sub{margin:0;font-size:14px;line-height:1.5;color:#5F6976}
+.lg-erro{display:none;margin:0;font-size:13px;font-weight:700;line-height:1.45;color:#A8281E}
+.lg-erro.on{display:block}
+.lg-rot{font-size:12px;font-weight:600;letter-spacing:.06em;color:#5F6976;margin:4px 0 -6px}
+.lg-campo{height:48px;box-sizing:border-box;width:100%;border-radius:8px;background:#F7F3EE;border:1px solid #E4DAD1;padding:0 14px;font:500 16px 'IBM Plex Sans',Manrope,sans-serif;color:#241E1C}
+.lg-campo:focus{outline:none;border-color:#5C1A2B;box-shadow:0 0 0 3px rgba(92,26,43,.14)}
+.lg-cod{font-family:'IBM Plex Mono',monospace;letter-spacing:.3em}
+.lg-lembrar{display:flex;align-items:center;gap:8px;min-height:32px;font-size:13px;font-weight:600;cursor:pointer}
+.lg-lembrar input{width:18px;height:18px;accent-color:#5C1A2B;margin:0}
+.lg-dica{margin:-6px 0 0;font-size:12px;font-style:italic;line-height:1.5;color:#7D8795}
+.lg-bt{height:50px;border:0;border-radius:8px;background:#5C1A2B;color:#fff;font:700 16px 'IBM Plex Sans',Manrope,sans-serif;cursor:pointer;margin-top:4px}
+.lg-bt:focus-visible{outline:3px solid #D7B27A;outline-offset:2px}
+.lg-bt:disabled{opacity:.6;cursor:wait}
+.lg-troca{display:none;align-self:center;background:none;border:0;padding:10px 6px;font:400 13px 'IBM Plex Sans',Manrope,sans-serif;color:#5F6976;text-decoration:underline;cursor:pointer}
+.lg-troca.on{display:block}
+.lg-troca:hover{color:#5C1A2B}
+.lg-pe{border-top:1px solid #E4DAD1;padding-top:14px;font-size:11px;line-height:1.6;color:#7D8795}
+@media(max-width:880px){
+  #login-tela.on{display:flex;flex-direction:column}
+  .lg-marca{padding:28px 22px 24px;min-height:290px;box-sizing:border-box;flex:none}
+  .lg-foto,.lg-fade{width:58%;right:-18px}
+  .lg-foto{object-position:50% 4%}
+  .lg-fade{background:linear-gradient(90deg,#7A2226 0%,rgba(122,34,38,0) 40%)}
+  .lg-mono{width:38px;height:38px}
+  .lg-nome{font-size:20px}
+  .lg-desc-marca{font-size:10px;margin-top:5px}
+  .lg-meio{max-width:190px}
+  .lg-fio,.lg-desc,.lg-rod{display:none}
+  .lg-tit{font-size:30px}
+  .lg-form-box{align-items:flex-start;padding:24px 18px}
+  .lg-form h1{font-size:25px}
+  .lg-lembrar{min-height:44px;font-size:14px}
+  .lg-troca{min-height:44px;font-size:14px}
+}
 .oculto{display:none!important}
 .selo{display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:var(--amar-f);border:1px solid #E8D9B8;border-radius:10px;padding:10px 12px;font-size:13px;margin-top:10px}
 .selo.vermelho{background:var(--alerta-f);border-color:#E9C9BE}
@@ -130,28 +250,48 @@ textarea.in{padding:10px 12px;min-height:90px;resize:vertical}
 .link-r code{font-size:12px;overflow-wrap:anywhere;color:var(--txt-2)}
 @media(max-width:620px){.link-r{grid-template-columns:1fr}.funil-l{grid-template-columns:110px 1fr 70px}}
 .rodape{margin-top:24px;font-size:11.5px;color:var(--txt-2)}
-@media print{.side,.filtros,.tabs,#cad{display:none!important}.main{padding:0}.card{break-inside:avoid}}
+@media print{.side,.filtros,.tabs,#cad,.legenda{display:none!important}.main{padding:0}.card{break-inside:avoid}}
 </style>
 </head>
 <body>
 
-<!-- ENTRADA -->
-<div class="portao" id="portao">
-  <div class="cx">
-    <div class="mono" id="mono" title="Instituto Kássila Nasser">Kássila Nasser</div>
-    <div class="lbl" style="margin-top:4px">Leads e Campanhas</div>
-    <div id="pt-url" class="oculto mt">
-      <div class="fl"><label for="inp-url">Endereço da API (termina em /exec)</label><input id="inp-url" class="in" placeholder="https://script.google.com/macros/s/.../exec"></div>
-      <button class="btn mt" style="width:100%" onclick="salvarUrl()">Salvar endereço</button>
+<!-- ===================== TELA DE ACESSO (padrão Recall / KN Vendas) ===================== -->
+<div id="login-tela">
+  <div class="lg-marca">
+    <img class="lg-foto" id="lg-foto" src="login-dra.jpg" alt="Dra. Kássila Nasser"
+         onerror="if(!this.dataset.f){this.dataset.f=1;this.src='https://relacionamentoikn-svg.github.io/kassila-app/login-dra.jpg'}else{this.style.display='none'}">
+    <div class="lg-fade"></div>
+    <div class="lg-topo">
+      <img class="lg-mono" id="lg-mono" src="icon-192.png" alt="Monograma KN">
+      <div><div class="lg-nome">Kássila Nasser</div><div class="lg-desc-marca">INSTITUTO</div></div>
     </div>
-    <div id="pt-form" class="mt2">
-      <div class="fl" id="pt-nome-bx"><label for="pt-nome">Quem é você</label><select id="pt-nome" class="in"><option value="">carregando…</option></select></div>
-      <div class="fl mt"><label for="pt-cod">Código de acesso</label><input id="pt-cod" class="in" type="password" inputmode="numeric" autocomplete="off" maxlength="8"></div>
-      <div id="pt-erro" class="note mt" style="color:var(--alerta);font-weight:700"></div>
-      <button class="btn mt" style="width:100%" id="pt-entrar">Entrar</button>
-      <p class="note mt">O mesmo nome e código do app Recall e Follow-up. Dados de pacientes protegidos pela LGPD: acesso pessoal, identificado e registrado.</p>
+    <div class="lg-meio">
+      <div class="lg-fio"></div>
+      <h2 class="lg-tit">Leads e<br>Campanhas</h2>
+      <p class="lg-desc">Entrada de pacientes novas, funil de atendimento, campanhas promocionais e o resultado de cada investimento.</p>
     </div>
-    <p class="rodape">Desenvolvido por Decisão Consultoria · uso exclusivo do Instituto Kássila Nasser</p>
+    <div class="lg-rod">Instituto Kássila Nasser<br>Uso interno e confidencial</div>
+  </div>
+  <div class="lg-form-box">
+    <form class="lg-form" id="lg-form" onsubmit="event.preventDefault();loginEntrar()" autocomplete="off">
+      <h1>Acesso restrito</h1>
+      <p class="lg-sub">Informe seu usuário e o código de acesso que você recebeu. Neste aparelho o app lembra de você: da próxima vez ele abre direto.</p>
+      <p class="lg-erro" id="lg-erro" role="alert"></p>
+      <div id="lg-url-bx" class="oculto" style="display:flex;flex-direction:column;gap:14px">
+        <label class="lg-rot" for="lg-url">ENDEREÇO DA API (TERMINA EM /exec)</label>
+        <input class="lg-campo" id="lg-url" type="url" placeholder="https://script.google.com/macros/s/…/exec" spellcheck="false">
+      </div>
+      <label class="lg-rot" for="lg-usr">USUÁRIO</label>
+      <input class="lg-campo" id="lg-usr" type="text" list="lg-lista" placeholder="Seu nome" autocapitalize="words" spellcheck="false" enterkeyhint="next">
+      <datalist id="lg-lista"></datalist>
+      <label class="lg-rot" for="lg-cod">CÓDIGO DE ACESSO</label>
+      <input class="lg-campo lg-cod" id="lg-cod" type="password" inputmode="numeric" maxlength="6" placeholder="0000" autocomplete="off" enterkeyhint="go">
+      <label class="lg-lembrar"><input type="checkbox" id="lg-lembrar" checked> Lembrar neste aparelho</label>
+      <p class="lg-dica">O mesmo usuário e código do Recall e Follow-up. Não compartilhe — as ações ficam registradas em seu nome.</p>
+      <button class="lg-bt" id="lg-bt" type="submit">Entrar</button>
+      <button class="lg-troca" id="lg-troca" type="button" onclick="loginTrocar()">Não sou eu · trocar usuário</button>
+      <div class="lg-pe">Instituto Kássila Nasser · Maringá-PR<br>Leads e Campanhas · desenvolvido por Decisão Consultoria</div>
+    </form>
   </div>
 </div>
 
@@ -166,8 +306,11 @@ textarea.in{padding:10px 12px;min-height:90px;resize:vertical}
       <button data-tela="leads"><span class="dot"></span>Leads</button>
       <div class="grp">Campanhas</div>
       <button data-tela="campanhas"><span class="dot"></span>Campanhas</button>
+      <div class="grp oculto" id="grp-sis">Sistema</div>
+      <button data-tela="config" id="nav-config" class="oculto"><span class="dot"></span>Configurações</button>
     </nav>
-    <div class="quem"><div><span class="note" style="color:#D9C3A0">Conectada como</span><b id="quem-nome">—</b><span id="quem-nivel" style="font-size:11px"></span></div><button onclick="sair()">Sair</button></div>
+    <div class="quem"><div><span class="note" style="color:#D9C3A0">Conectada como</span><b id="quem-nome">—</b><span id="quem-nivel" style="font-size:11px"></span>
+      <div class="sinc" id="sinc" title="Os dados aparecem na hora com a última versão conhecida e são conferidos com a planilha em seguida"><i></i><span id="sinc-txt">sincronizado</span></div></div><button onclick="sair()">Sair</button></div>
   </aside>
   <main class="main" id="main"></main>
 </div>
@@ -183,14 +326,13 @@ textarea.in{padding:10px 12px;min-height:90px;resize:vertical}
    Mesmo padrão do Recall e Follow-up: página no GitHub, dados na planilha da
    clínica via Apps Script (/exec), sessão por nome + código.
    ========================================================================== */
-const VERSAO_TELA = 'V1.0';
+const VERSAO_TELA = 'V1.1';
 let API_URL = '';
 try { API_URL = (window.KN_LEADS_API || '').trim(); } catch (e) {}
 if (!API_URL) { try { API_URL = localStorage.getItem('kassila_leads_url') || ''; } catch (e) {} }
 
 let USUARIO = null, CTX = null, TELA = 'painel';
 const F = { painel: { periodo: 'MES' }, leads: { visao: 'FUNIL', busca: '', campanha: 'TODAS', fonte: 'TODAS', responsavel: 'TODAS' } };
-const CACHE = {};
 const el = id => document.getElementById(id);
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const brl = v => (v === '' || v == null) ? '—' : Number(v || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: Number(v) % 1 ? 2 : 0 });
@@ -203,26 +345,98 @@ const rot = (tipo, v) => { const a = (CTX && CTX.listas && CTX.listas[tipo]) || 
 const opcoes = (tipo, sel, vazio) => (vazio !== undefined ? `<option value="">${esc(vazio)}</option>` : '') + ((CTX && CTX.listas[tipo]) || []).map(i => `<option value="${esc(i.valor)}"${i.valor === sel ? ' selected' : ''}>${esc(i.rotulo)}</option>`).join('');
 const ROT_ETAPA = { NOVO: 'Novo · sem resposta', CONVERSA: 'Em conversa', ORCAMENTO: 'Orçamento enviado', AGENDADO: 'Agendado', FECHADO: 'Fechado', PERDIDO: 'Perdido' };
 const COR_ETAPA = { NOVO: 'alerta', CONVERSA: '', ORCAMENTO: 'ouro', AGENDADO: '', FECHADO: 'ok', PERDIDO: 'cinza' };
+const TIPOS = { NOVA: 'Paciente nova', RECALL: 'Paciente da base · Recall', FOLLOWUP: 'Orçamento em aberto · Follow-up' };
+const TIPO_CURTO = { NOVA: 'Nova', RECALL: 'Recall', FOLLOWUP: 'Follow-up' };
+const tipoChip = (t, longo) => t && TIPOS[t] ? `<span class="tp t-${t}" title="${esc(TIPOS[t])}">${esc(longo ? TIPOS[t] : TIPO_CURTO[t])}</span>` : '';
 function hojeBR(){ const d = new Date(); return d.toLocaleDateString('pt-BR'); }
 function paraISO(br){ const m = String(br || '').match(/^(\d{2})\/(\d{2})\/(\d{4})/); return m ? `${m[3]}-${m[2]}-${m[1]}` : ''; }
 function paraBR(iso){ const m = String(iso || '').match(/^(\d{4})-(\d{2})-(\d{2})/); return m ? `${m[3]}/${m[2]}/${m[1]}` : ''; }
 function soDig(s){ return String(s || '').replace(/\D/g, ''); }
 
-/* ---------- ponte com a planilha ---------- */
+/* ==========================================================================
+   CAMPOS NO PADRÃO: R$, data dd/mm/aaaa, telefone e números inteiros
+   Uma delegação só no documento: qualquer campo com a classe ganha a máscara.
+   ========================================================================== */
+const ICONE_CAL = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>';
+function fmtMoedaIn(v){ if (v === '' || v == null || isNaN(Number(v)) || Number(v) === 0 && String(v).trim() === '') return ''; return Number(v).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+function campoMoeda(id, v, ph){ return `<div class="in-pref"><span>R$</span><input id="${id}" class="in moeda" inputmode="decimal" autocomplete="off" placeholder="${ph || '0,00'}" value="${esc(v === '' || v == null || Number(v) === 0 ? '' : fmtMoedaIn(v))}"></div>`; }
+function campoInteiro(id, v, unidade, ph){ const x = v === '' || v == null || !Number(v) ? '' : Number(v).toLocaleString('pt-BR'); const inp = `<input id="${id}" class="in inteiro" inputmode="numeric" autocomplete="off" placeholder="${ph || ''}" value="${esc(x)}">`; return unidade ? `<div class="in-suf">${inp}<span>${esc(unidade)}</span></div>` : inp; }
+function campoData(id, br, extra){ return `<div class="in-data"><input id="${id}" class="in data-br" inputmode="numeric" autocomplete="off" maxlength="10" placeholder="dd/mm/aaaa" value="${esc(br || '')}"${extra || ''}><button type="button" class="cal" tabindex="-1" aria-label="Abrir calendário">${ICONE_CAL}</button><input type="date" class="cal-nat" tabindex="-1" aria-hidden="true"></div>`; }
+function lerMoeda(id){ const e = el(id); if (!e) return ''; const t = String(e.value || '').replace(/[^\d,]/g, ''); if (!t) return ''; const n = Number(t.replace(/\./g, '').replace(',', '.')); return isNaN(n) ? '' : Math.round(n * 100) / 100; }
+function lerInteiro(id){ const e = el(id); if (!e) return ''; const d = soDig(e.value); return d ? Number(d) : ''; }
+function dataValida(br){ const m = String(br || '').match(/^(\d{2})\/(\d{2})\/(\d{4})$/); if (!m) return false; const d = new Date(+m[3], +m[2] - 1, +m[1]); return d.getFullYear() === +m[3] && d.getMonth() === +m[2] - 1 && d.getDate() === +m[1] && +m[3] > 1990 && +m[3] < 2100; }
+/** Lê a data no padrão dd/mm/aaaa. Campo preenchido e inválido: marca o erro e devolve null. */
+function lerData(id){ const e = el(id); if (!e) return ''; const v = String(e.value || '').trim(); if (!v) { e.classList.remove('erro'); return ''; } if (!dataValida(v)) { e.classList.add('erro'); e.focus(); toast('Data inválida: use dd/mm/aaaa.'); return null; } e.classList.remove('erro'); return v; }
+function mascarar(inp, formatar){
+  const antes = inp.value, pos = inp.selectionStart == null ? antes.length : inp.selectionStart;
+  const sig = antes.slice(0, pos).replace(/[^\d,]/g, '').length;
+  const novo = formatar(antes);
+  if (novo === antes) return;
+  inp.value = novo;
+  let k = 0, i = 0; while (i < novo.length && k < sig) { if (/[\d,]/.test(novo[i])) k++; i++; }
+  try { inp.setSelectionRange(i, i); } catch (e) {}
+}
+const fmtMoedaDigitando = t => { t = String(t).replace(/[^\d,]/g, ''); const p = t.split(','); let int = p[0].replace(/^0+(?=\d)/, ''); const dec = p.length > 1 ? p.slice(1).join('').slice(0, 2) : null; int = int.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); return (int || (dec !== null ? '0' : '')) + (dec !== null ? ',' + dec : ''); };
+const fmtInteiro = t => { const d = soDig(t).replace(/^0+(?=\d)/, ''); return d.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); };
+const fmtDataDigitando = t => { const d = soDig(t).slice(0, 8); return d.length > 4 ? d.slice(0, 2) + '/' + d.slice(2, 4) + '/' + d.slice(4) : (d.length > 2 ? d.slice(0, 2) + '/' + d.slice(2) : d); };
+const fmtTel = t => { let d = soDig(t); if (d.length > 11 && d.startsWith('55')) d = d.slice(2); d = d.slice(0, 11); if (d.length <= 2) return d ? '(' + d : ''; if (d.length <= 6) return `(${d.slice(0, 2)}) ${d.slice(2)}`; if (d.length <= 10) return `(${d.slice(0, 2)}) ${d.slice(2, 6)}-${d.slice(6)}`; return `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}`; };
+document.addEventListener('input', ev => {
+  const t = ev.target; if (!t.classList) return;
+  t.dataset.sujo = '1';
+  if (t.classList.contains('moeda')) mascarar(t, fmtMoedaDigitando);
+  else if (t.classList.contains('inteiro')) mascarar(t, fmtInteiro);
+  else if (t.classList.contains('data-br')) { mascarar(t, fmtDataDigitando); t.classList.toggle('erro', t.value.length === 10 && !dataValida(t.value)); if (t.value.length === 10 && dataValida(t.value)) t.dispatchEvent(new Event('change', { bubbles: true })); }
+  else if (t.classList.contains('tel-br')) mascarar(t, fmtTel);
+});
+document.addEventListener('focusout', ev => {
+  const t = ev.target; if (!t.classList) return;
+  if (t.classList.contains('moeda') && t.value) { const n = Number(String(t.value).replace(/\./g, '').replace(',', '.')); t.value = isNaN(n) ? '' : fmtMoedaIn(n); }
+  if (t.classList.contains('data-br') && t.value) t.classList.toggle('erro', !dataValida(t.value));
+});
+document.addEventListener('click', ev => {
+  const b = ev.target.closest && ev.target.closest('.in-data .cal'); if (!b) return;
+  ev.preventDefault();
+  const box = b.parentElement, nat = box.querySelector('.cal-nat'), txt = box.querySelector('.data-br');
+  nat.value = paraISO(txt.value) || paraISO(hojeBR());
+  try { nat.showPicker(); } catch (e) { nat.style.pointerEvents = 'auto'; nat.focus(); nat.click(); }
+});
+document.addEventListener('change', ev => {
+  const t = ev.target; if (!t.classList || !t.classList.contains('cal-nat')) return;
+  const txt = t.parentElement.querySelector('.data-br'); txt.value = paraBR(t.value); txt.classList.remove('erro'); txt.dataset.sujo = '1';
+  txt.dispatchEvent(new Event('change', { bubbles: true }));
+});
+
+/* ==========================================================================
+   SESSÃO E PONTE COM A PLANILHA
+   ========================================================================== */
+const SESS_K = 'leads_sessao';
+function sessLer(){ try { return JSON.parse(localStorage.getItem(SESS_K) || sessionStorage.getItem(SESS_K) || 'null'); } catch (e) { return null; } }
+function sessGravar(v, lembrar){ try { localStorage.removeItem(SESS_K); sessionStorage.removeItem(SESS_K); (lembrar ? localStorage : sessionStorage).setItem(SESS_K, JSON.stringify(v)); } catch (e) {} }
+function sessApagar(){ try { localStorage.removeItem(SESS_K); sessionStorage.removeItem(SESS_K); } catch (e) {} }
+
 const PRAZO_MS = 45000;
 async function comPrazo(url, opcoes){
   if (typeof AbortController === 'undefined') return fetch(url, opcoes || {});
   const ctrl = new AbortController(); const t = setTimeout(() => ctrl.abort(), PRAZO_MS);
   try { return await fetch(url, Object.assign({}, opcoes || {}, { signal: ctrl.signal })); } finally { clearTimeout(t); }
 }
-const GRAVAM = { salvarLead:1, atualizarLead:1, moverEtapa:1, registrarInteracao:1, salvarCampanha:1, salvarOferta:1, excluirOferta:1, salvarRoteiro:1, excluirRoteiro:1, salvarCusto:1, excluirCusto:1, encerrarTrava:1 };
+const GRAVAM = { salvarLead:1, atualizarLead:1, moverEtapa:1, registrarInteracao:1, salvarCampanha:1, salvarOferta:1, excluirOferta:1, salvarRoteiro:1, excluirRoteiro:1, salvarCusto:1, excluirCusto:1, encerrarTrava:1, salvarParametro:1, salvarLista:1, salvarAcesso:1, limparCache:1 };
 const EM_VOO = {};
-async function api(acao, params){
+let LEITURAS = 0;
+function sinc(on){
+  LEITURAS = Math.max(0, LEITURAS + (on ? 1 : -1));
+  const s = el('sinc'); if (!s) return;
+  s.classList.toggle('ativo', LEITURAS > 0);
+  el('sinc-txt').textContent = LEITURAS > 0 ? 'conferindo com a planilha…' : 'sincronizado · ' + new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+}
+async function api(acao, params, opt){
   if (GRAVAM[acao]){
     let k = acao; try { k += JSON.stringify(params || {}); } catch (e) {}
     if (EM_VOO[k]) return EM_VOO[k];
-    carregando(true);
-    const p = apiBruta(acao, params).finally(() => { delete EM_VOO[k]; if (!Object.keys(EM_VOO).length) carregando(false); Object.keys(CACHE).forEach(c => delete CACHE[c]); });
+    if (!(opt && opt.silencioso)) carregando(true);
+    const p = apiBruta(acao, params)
+      .then(r => { document.querySelectorAll('#main [data-sujo]').forEach(i => delete i.dataset.sujo); return r; })
+      .finally(() => { delete EM_VOO[k]; if (!Object.keys(EM_VOO).length) carregando(false); memLimpar(); });
     EM_VOO[k] = p; return p;
   }
   return apiBruta(acao, params);
@@ -230,7 +444,7 @@ async function api(acao, params){
 async function apiBruta(acao, params){
   if (!API_URL) throw new Error('Endereço da API não configurado.');
   const corpo = Object.assign({ acao }, params || {});
-  try { const s = JSON.parse(localStorage.getItem('leads_sessao') || 'null'); if (s && s.codigo) { corpo.sessao_nome = s.nome; corpo.sessao_codigo = s.codigo; } } catch (e) {}
+  const s = sessLer(); if (s && s.codigo) { corpo.sessao_nome = s.nome; corpo.sessao_codigo = s.codigo; }
   let j;
   try {
     const r = await comPrazo(API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(corpo), redirect: 'follow' });
@@ -245,67 +459,171 @@ async function apiBruta(acao, params){
     j = await r2.json();
   }
   const d = j && j.dados !== undefined ? j.dados : j;
-  if (d && d.reautenticar){ try { localStorage.removeItem('leads_sessao'); } catch (e) {} USUARIO = null; abrirPortao(d.erro); throw new Error(d.erro || 'Entre de novo.'); }
+  if (d && d.reautenticar){ sessApagar(); USUARIO = null; mostrarLogin(d.erro); throw new Error(d.erro || 'Entre de novo.'); }
   if (d && d.erro) throw new Error(d.erro);
   return d;
 }
-function salvarUrl(){ const v = el('inp-url').value.trim(); if (!v) return; try { localStorage.setItem('kassila_leads_url', v); } catch (e) {} API_URL = v; iniciar(); }
+
+/* ---------- memória da tela: abre na hora com a última versão e confere em seguida ----------
+   Dados de pacientes ficam só na sessão do navegador (somem ao fechar a janela). */
+const MEM = new Map();
+function memLer(k){
+  if (MEM.has(k)) return MEM.get(k);
+  try { const s = sessionStorage.getItem('lc:' + k); if (s){ const o = JSON.parse(s); MEM.set(k, o); return o; } } catch (e) {}
+  return null;
+}
+function memGravar(k, d){
+  const o = { d, t: Date.now() }; MEM.set(k, o);
+  const txt = JSON.stringify(o);
+  try { sessionStorage.setItem('lc:' + k, txt); }
+  catch (e) { try { Object.keys(sessionStorage).filter(x => x.startsWith('lc:')).forEach(x => sessionStorage.removeItem(x)); sessionStorage.setItem('lc:' + k, txt); } catch (e2) {} }
+}
+function memLimpar(){ MEM.clear(); try { Object.keys(sessionStorage).filter(x => x.startsWith('lc:')).forEach(x => sessionStorage.removeItem(x)); } catch (e) {} }
+/**
+ * Lê uma tela: pinta já com o que estiver na memória e, em paralelo, busca na
+ * planilha; só repinta se algo mudou. Sem nada na memória, espera a planilha.
+ */
+async function carregar(acao, params, pintar){
+  const k = acao + '|' + JSON.stringify(params || {});
+  const m = memLer(k); let pintou = false;
+  if (m && pintar){ try { pintar(m.d, true); pintou = true; } catch (e) { console.error(e); } }
+  sinc(true);
+  try {
+    const d = await api(acao, params);
+    const mudou = !m || JSON.stringify(m.d) !== JSON.stringify(d);
+    memGravar(k, d);
+    if (pintar && (mudou || !pintou)) preservandoCampos(() => pintar(d, false));
+    return d;
+  } catch (e) {
+    if (!pintou) throw e;
+    toast('Sem conexão com a planilha agora. Mostrando a última versão.');
+  } finally { sinc(false); }
+}
+/** Repintar não pode apagar o que a pessoa está digitando: guarda e devolve os campos alterados. */
+function preservandoCampos(fn){
+  const main = el('main'), salvos = [];
+  if (main) main.querySelectorAll('input[id],textarea[id],select[id]').forEach(i => { if (i.dataset.sujo) salvos.push([i.id, i.value]); });
+  const foco = document.activeElement && document.activeElement.id;
+  fn();
+  salvos.forEach(([id, v]) => { const i = el(id); if (i) { i.value = v; i.dataset.sujo = '1'; } });
+  if (foco && el(foco) && salvos.length) try { el(foco).focus(); } catch (e) {}
+}
+/** Depois de abrir a primeira tela, deixa as outras prontas em segundo plano. */
+let PRE_FEITO = false;
+function preCarregar(){
+  if (PRE_FEITO) return; PRE_FEITO = true;
+  const per = periodoDatas(F.painel);
+  const fila = [['leads', F.leads], ['campanhas', {}], ['painel', Object.assign({}, F.painel, per)]];
+  let i = 0;
+  const prox = () => {
+    if (i >= fila.length || Object.keys(EM_VOO).length) return;
+    const [a, p] = fila[i++];
+    if (memLer(a + '|' + JSON.stringify(p))) return setTimeout(prox, 50);
+    carregar(a, p, null).catch(() => {}).finally(() => setTimeout(prox, 120));
+  };
+  setTimeout(prox, 600);
+}
 
 /* ---------- avisos ---------- */
 function toast(m){ const t = el('toast'); t.textContent = m; t.classList.add('on'); clearTimeout(window.__t); window.__t = setTimeout(() => t.classList.remove('on'), 3800); }
 function falhar(e){ toast('Não deu certo: ' + (e && e.message ? e.message : e)); }
-function carregando(on, txt){ el('carregando').classList.toggle('on', !!on); el('carregando-txt').textContent = txt || 'processando, aguarde'; }
-function abrirModal(html){ el('modal').innerHTML = html; el('modal-f').classList.add('on'); const f = el('modal').querySelector('input,select,textarea'); if (f) setTimeout(() => f.focus(), 30); }
+function carregando(on, txt){ el('carregando').classList.toggle('on', !!on); el('carregando-txt').textContent = txt || 'gravando na planilha'; }
+function abrirModal(html, larga){ el('modal').className = 'modal' + (larga ? ' larga' : ''); el('modal').innerHTML = html; el('modal-f').classList.add('on'); const f = el('modal').querySelector('input:not(.cal-nat),select,textarea'); if (f) setTimeout(() => f.focus(), 30); }
 function fecharModal(){ el('modal-f').classList.remove('on'); el('modal').innerHTML = ''; }
 el('modal-f').addEventListener('click', ev => { if (ev.target.id === 'modal-f') fecharModal(); });
-document.addEventListener('keydown', ev => { if (ev.key === 'Escape' && el('modal-f').classList.contains('on')) fecharModal(); });
+document.addEventListener('keydown', ev => {
+  if (ev.key === 'Escape' && el('modal-f').classList.contains('on')) return fecharModal();
+  /* N = novo lead (fora de campos de texto) */
+  const tg = ev.target && ev.target.tagName;
+  if (USUARIO && !el('modal-f').classList.contains('on') && (ev.key === 'n' || ev.key === 'N') && !ev.ctrlKey && !ev.metaKey && !ev.altKey && !/INPUT|TEXTAREA|SELECT/.test(tg || '')) { ev.preventDefault(); novoLead(); }
+});
 function esqueleto(n){ return `<div class="card">${Array.from({ length: n || 4 }, () => '<div class="esq" style="margin:12px 0"></div>').join('')}</div>`; }
 function falhaBloco(e, refazer){ el('main').innerHTML = `<div class="card vazio"><b>Não foi possível carregar.</b><p>${esc(e && e.message ? e.message : e)}</p><button class="btn" id="bt-refazer">Tentar de novo</button></div>`; el('bt-refazer').onclick = refazer; }
 
-/* ---------- entrada ---------- */
-let toquesMono = 0, modoTecnico = false;
-function abrirPortao(erro){
-  el('app').classList.add('oculto'); el('portao').classList.remove('oculto');
-  if (!API_URL){ el('pt-url').classList.remove('oculto'); el('pt-form').classList.add('oculto'); return; }
-  el('pt-url').classList.add('oculto'); el('pt-form').classList.remove('oculto');
-  el('pt-erro').textContent = erro || '';
-  const g = (() => { try { return JSON.parse(localStorage.getItem('leads_porta') || 'null'); } catch (e) { return null; } })();
-  if (g && g.usuarios) pintarNomes(g.usuarios);
-  apiBruta('autorizados').then(a => { pintarNomes(a.usuarios || []); try { localStorage.setItem('leads_porta', JSON.stringify({ usuarios: a.usuarios })); } catch (e) {} })
-    .catch(e => { el('pt-erro').textContent = 'Sem conexão com a planilha: ' + e.message; });
+/* ==========================================================================
+   TELA DE ACESSO — mesmo comportamento do Recall e do KN Vendas
+   ========================================================================== */
+let LISTA_USR = [];
+const lgNorm = v => String(v || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/\s+/g, ' ').trim();
+function loginErro(msg){ const e = el('lg-erro'); e.textContent = msg || ''; e.classList.toggle('on', !!msg); }
+function pintarUsuarios(us){ LISTA_USR = us || []; el('lg-lista').innerHTML = LISTA_USR.map(u => `<option value="${esc(u.nome)}"></option>`).join(''); }
+function mostrarLogin(erro){
+  el('app').classList.add('oculto');
+  el('login-tela').classList.add('on');
+  el('lg-url-bx').classList.toggle('oculto', !!API_URL);
+  const usr = el('lg-usr'), cod = el('lg-cod'), bt = el('lg-bt');
+  bt.disabled = false; bt.textContent = 'Entrar';
+  const lem = (() => { try { return JSON.parse(localStorage.getItem('leads_lembrar') || 'null'); } catch (e) { return null; } })();
+  if (lem && !usr.value) { usr.value = lem.nome || ''; }
+  el('lg-troca').classList.toggle('on', !!(lem && lem.nome));
+  loginErro(erro || '');
+  try { const g = JSON.parse(localStorage.getItem('leads_porta') || 'null'); if (g && g.usuarios) pintarUsuarios(g.usuarios); } catch (e) {}
+  if (API_URL) apiBruta('autorizados').then(a => { pintarUsuarios(a.usuarios || []); try { localStorage.setItem('leads_porta', JSON.stringify({ usuarios: a.usuarios })); } catch (e) {} })
+    .catch(e => loginErro('Sem conexão com a planilha: ' + e.message));
+  setTimeout(() => { if (!API_URL) el('lg-url').focus(); else if (!usr.value) usr.focus(); else cod.focus(); }, 30);
 }
-function pintarNomes(us){
-  const ult = (() => { try { return localStorage.getItem('leads_ultimo_nome') || ''; } catch (e) { return ''; } })();
-  el('pt-nome').innerHTML = '<option value="">Escolha seu nome</option>' + us.map(u => `<option${u.nome === ult ? ' selected' : ''}>${esc(u.nome)}</option>`).join('');
+function loginTrocar(){
+  try { localStorage.removeItem('leads_lembrar'); } catch (e) {}
+  sessApagar(); el('lg-usr').value = ''; el('lg-cod').value = ''; el('lg-troca').classList.remove('on'); loginErro(''); el('lg-usr').focus();
 }
-el('mono').addEventListener('click', () => { if (++toquesMono >= 5){ modoTecnico = true; el('pt-nome-bx').classList.add('oculto'); toast('Entrada técnica: só o código.'); } });
-el('pt-cod').addEventListener('keydown', ev => { if (ev.key === 'Enter') entrar(); });
-el('pt-entrar').onclick = entrar;
-async function entrar(){
-  const nome = modoTecnico ? '' : el('pt-nome').value, codigo = el('pt-cod').value.trim();
-  if (!modoTecnico && !nome){ el('pt-erro').textContent = 'Escolha seu nome.'; return; }
-  if (codigo.length < 4){ el('pt-erro').textContent = 'Digite o código de acesso.'; return; }
-  el('pt-erro').textContent = ''; carregando(true, 'entrando');
+el('lg-usr').addEventListener('keydown', ev => { if (ev.key === 'Enter') { ev.preventDefault(); el('lg-cod').focus(); } });
+async function loginEntrar(){
+  const bt = el('lg-bt'); if (bt.disabled) return;
+  if (!API_URL){
+    const u = el('lg-url').value.trim();
+    if (!/^https:\/\/script\.google(usercontent)?\.com\/.+/.test(u)) { loginErro('Cole o endereço do App da Web do Apps Script (termina em /exec).'); return; }
+    API_URL = u; try { localStorage.setItem('kassila_leads_url', u); } catch (e) {}
+    el('lg-url-bx').classList.add('oculto');
+  }
+  const texto = el('lg-usr').value.trim(), cod = el('lg-cod').value.trim();
+  if (!texto) { loginErro('Informe seu usuário.'); el('lg-usr').focus(); return; }
+  if (!/^\d{4,6}$/.test(cod)) { loginErro('Informe os dígitos do código de acesso.'); el('lg-cod').focus(); return; }
+  /* nome da lista, sem acento e sem diferença de maiúscula; fora da lista vai assim
+     mesmo: a conta oculta (suporte) é reconhecida pelo código no servidor */
+  const q = lgNorm(texto);
+  const ach = LISTA_USR.filter(u => lgNorm(u.nome) === q);
+  const ini = ach.length ? ach : LISTA_USR.filter(u => lgNorm(u.nome).indexOf(q) === 0);
+  if (!ach.length && ini.length > 1) { loginErro('Mais de um usuário começa com "' + texto + '". Digite o nome completo.'); return; }
+  const nome = (ach[0] || ini[0] || { nome: texto }).nome;
+  loginErro(''); bt.disabled = true; bt.textContent = 'Verificando…';
   try {
-    const r = await apiBruta('entrar', { nome, codigo });
-    if (!r.ok){ el('pt-erro').textContent = r.erro || 'Não conferiu.'; return; }
-    try { localStorage.setItem('leads_sessao', JSON.stringify({ nome: r.usuario.nome, codigo })); if (nome) localStorage.setItem('leads_ultimo_nome', nome); } catch (e) {}
-    USUARIO = r.usuario; el('pt-cod').value = '';
-    await abrirApp();
-  } catch (e) { el('pt-erro').textContent = e.message; } finally { carregando(false); }
+    const r = await apiBruta('entrar', { nome, codigo: cod });
+    if (!r.ok) { loginErro(r.erro || 'Usuário ou código de acesso não conferem.'); bt.disabled = false; bt.textContent = 'Entrar'; el('lg-cod').select(); return; }
+    const lembrar = el('lg-lembrar').checked;
+    sessGravar({ nome: r.usuario.nome, codigo: cod }, lembrar);
+    try { if (lembrar && !r.usuario.oculto) localStorage.setItem('leads_lembrar', JSON.stringify({ nome: r.usuario.nome })); else localStorage.removeItem('leads_lembrar'); } catch (e) {}
+    el('lg-cod').value = '';
+    USUARIO = r.usuario;
+    if (r.contexto) guardarCtx(r.contexto);
+    await abrirApp(r.contexto);
+  } catch (e) { loginErro(e.message); bt.disabled = false; bt.textContent = 'Entrar'; }
 }
-function sair(){ try { localStorage.removeItem('leads_sessao'); } catch (e) {} USUARIO = null; CTX = null; abrirPortao(); }
-async function abrirApp(){
-  CTX = await api('contexto');
+function guardarCtx(c){
+  CTX = c;
+  try { localStorage.setItem('leads_ctx', JSON.stringify({ u: (c.usuario || {}).nome, c })); } catch (e) {}
+}
+function sair(){
+  sessApagar(); memLimpar();
+  try { localStorage.removeItem('leads_ctx'); } catch (e) {}
+  USUARIO = null; CTX = null; PRE_FEITO = false;
+  mostrarLogin();
+}
+/** Abre o app. Com o contexto em mãos, pinta na hora; senão busca antes. */
+async function abrirApp(ctxPronto){
+  if (ctxPronto) CTX = ctxPronto;
+  if (!CTX) { carregando(true, 'abrindo'); try { guardarCtx(await api('contexto')); } finally { carregando(false); } }
   USUARIO = CTX.usuario;
-  el('portao').classList.add('oculto'); el('app').classList.remove('oculto');
+  el('login-tela').classList.remove('on'); el('app').classList.remove('oculto');
   el('quem-nome').textContent = USUARIO.nome;
-  el('quem-nivel').textContent = gestao() ? 'Gestão comercial' : 'Atendimento';
+  el('quem-nivel').textContent = USUARIO.oculto ? 'Suporte técnico' : (gestao() ? 'Gestão comercial' : 'Atendimento');
+  ['grp-sis', 'nav-config'].forEach(i => el(i).classList.toggle('oculto', !gestao()));
   el('nav').querySelectorAll('button').forEach(b => b.onclick = () => ir(b.dataset.tela));
   const h = (location.hash || '').replace('#', '');
-  ir(h.startsWith('lead=') ? 'lead' : (h.startsWith('campanha=') ? 'campanha' : (h || 'painel')), h.split('=')[1]);
+  ir(h.startsWith('lead=') ? 'lead' : (h.startsWith('campanha=') ? 'campanha' : (h.startsWith('resultado=') ? 'resultado' : (h || 'painel'))), h.split('=')[1]);
+  preCarregar();
 }
 function ir(tela, arg){
+  if (tela === 'config' && !gestao()) tela = 'painel';
   TELA = tela;
   el('nav').querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.tela === tela || (tela === 'lead' && b.dataset.tela === 'leads') || ((tela === 'campanha' || tela === 'resultado') && b.dataset.tela === 'campanhas')));
   const hash = arg ? tela + '=' + arg : tela;
@@ -317,14 +635,22 @@ function ir(tela, arg){
   if (tela === 'campanhas') return telaCampanhas();
   if (tela === 'campanha') return telaCampanha(arg);
   if (tela === 'resultado') return telaResultado(arg);
+  if (tela === 'config') return telaConfig();
   telaPainel();
 }
+/** Abertura: com sessão lembrada e contexto guardado, o app aparece na hora e se confere em seguida. */
 async function iniciar(){
-  if (!API_URL) return abrirPortao();
-  let s = null; try { s = JSON.parse(localStorage.getItem('leads_sessao') || 'null'); } catch (e) {}
-  if (!s) return abrirPortao();
-  carregando(true, 'abrindo');
-  try { await abrirApp(); } catch (e) { abrirPortao(e.message); } finally { carregando(false); }
+  if (!API_URL) return mostrarLogin();
+  const s = sessLer();
+  if (!s) return mostrarLogin();
+  let g = null; try { g = JSON.parse(localStorage.getItem('leads_ctx') || 'null'); } catch (e) {}
+  if (g && g.c && g.u === s.nome) {
+    abrirApp(g.c);
+    api('contexto').then(c => { const mudou = JSON.stringify(c) !== JSON.stringify(CTX); guardarCtx(c); if (mudou) { USUARIO = c.usuario; ['grp-sis', 'nav-config'].forEach(i => el(i).classList.toggle('oculto', !gestao())); } })
+      .catch(() => {});
+    return;
+  }
+  try { await abrirApp(null); } catch (e) { mostrarLogin(e.message); }
 }
 
 /* ==========================================================================
@@ -354,20 +680,19 @@ async function telaPainel(){
       <select class="in" style="width:auto" data-f="periodo" aria-label="Período">
         ${[['MES', 'Mês atual'], ['MES_ANT', 'Mês anterior'], ['90', 'Últimos 90 dias'], ['ANO', 'Ano'], ['LIVRE', 'Escolher datas']].map(o => `<option value="${o[0]}"${f.periodo === o[0] ? ' selected' : ''}>${o[1]}</option>`).join('')}
       </select>
-      ${f.periodo === 'LIVRE' ? `<input type="date" class="in" style="width:auto" data-f="de_iso" value="${esc(paraISO(f.de))}" aria-label="De"><input type="date" class="in" style="width:auto" data-f="ate_iso" value="${esc(paraISO(f.ate))}" aria-label="Até">` : ''}
+      ${f.periodo === 'LIVRE' ? `<div style="width:150px">${campoData('pn-de', f.de, ' data-f="de_br" aria-label="De"')}</div><div style="width:150px">${campoData('pn-ate', f.ate, ' data-f="ate_br" aria-label="Até"')}</div>` : ''}
       ${filtrosComuns('pn', f)}
       <button class="btn" onclick="novoLead()">+ Novo lead</button>
     </div></div><div id="pn-c">${esqueleto(6)}</div>`;
   el('pn-f').querySelectorAll('[data-f]').forEach(s => s.onchange = () => {
-    if (s.dataset.f === 'de_iso') f.de = paraBR(s.value); else if (s.dataset.f === 'ate_iso') f.ate = paraBR(s.value); else f[s.dataset.f] = s.value;
+    if (s.dataset.f === 'de_br') { if (!dataValida(s.value)) return; f.de = s.value; }
+    else if (s.dataset.f === 'ate_br') { if (!dataValida(s.value)) return; f.ate = s.value; }
+    else { f[s.dataset.f] = s.value; if (s.value === 'LIVRE' && !f.de) { const p = periodoDatas({ periodo: 'MES' }); f.de = p.de; f.ate = p.ate; } }
     telaPainel();
   });
   const params = Object.assign({}, f, per);
-  const ch = 'pn' + JSON.stringify(params);
-  try {
-    const d = CACHE[ch] || await api('painel', params); CACHE[ch] = d;
-    if (TELA === 'painel') pintarPainel(d);
-  } catch (e) { falhaBloco(e, telaPainel); }
+  try { await carregar('painel', params, d => { if (TELA === 'painel') pintarPainel(d); }); }
+  catch (e) { falhaBloco(e, telaPainel); }
 }
 function pintarPainel(d){
   const k = d.kpis, meta = d.meta_resposta_min;
@@ -427,7 +752,8 @@ async function telaLeads(){
       ${filtrosComuns('ld', f)}
     </div></div>
     <section class="card" id="cad">${formCadastroRapido()}</section>
-    <div id="ld-c" class="mt">${esqueleto(5)}</div>`;
+    <div class="legenda" aria-label="Legenda das cores"><b>Cor do cartão:</b>${tipoChip('NOVA', true)}${tipoChip('RECALL', true)}${tipoChip('FOLLOWUP', true)}<span>· borda vermelha = prazo estourado</span><span class="so-pc" style="margin-left:auto">atalho <kbd>N</kbd> novo lead</span></div>
+    <div id="ld-c">${esqueleto(5)}</div>`;
   el('ld-f').querySelectorAll('[data-visao]').forEach(b => b.onclick = () => { f.visao = b.dataset.visao; telaLeads(); });
   ligarFiltros(el('ld-f'), f, () => carregarLeads());
   let t; el('ld-busca').oninput = ev => { clearTimeout(t); t = setTimeout(() => { f.busca = ev.target.value; carregarLeads(); }, 450); };
@@ -435,23 +761,38 @@ async function telaLeads(){
   carregarLeads();
 }
 async function carregarLeads(){
-  const f = F.leads, ch = 'ld' + JSON.stringify(f);
+  const f = F.leads;
   try {
-    const d = CACHE[ch] || await api('leads', f); CACHE[ch] = d;
-    if (TELA !== 'leads') return;
-    const abertos = d.colunas.filter(c => ['FECHADO', 'PERDIDO'].indexOf(c.etapa) === -1).reduce((s, c) => s + c.qtd, 0);
-    el('ld-sub').textContent = `${d.total} lead(s) · ${abertos} em aberto`;
-    f.visao === 'LISTA' ? pintarLista(d) : pintarFunil(d);
-  } catch (e) { el('ld-c').innerHTML = `<div class="card vazio">Não foi possível carregar: ${esc(e.message)}</div>`; }
+    await carregar('leads', f, d => {
+      if (TELA !== 'leads') return;
+      const abertos = d.colunas.filter(c => ['FECHADO', 'PERDIDO'].indexOf(c.etapa) === -1).reduce((s, c) => s + c.qtd, 0);
+      el('ld-sub').textContent = `${d.total} lead(s) · ${abertos} em aberto`;
+      f.visao === 'LISTA' ? pintarListaLeads(d) : pintarFunil(d);
+    });
+  } catch (e) { if (el('ld-c')) el('ld-c').innerHTML = `<div class="card vazio">Não foi possível carregar: ${esc(e.message)}</div>`; }
 }
+/** Minutos desde a entrada (hora de Brasília), para o cronômetro dos leads sem resposta. */
+function msEntrada(k){ const m = String(k.data_entrada || '').match(/^(\d{2})\/(\d{2})\/(\d{4})/); if (!m) return 0; const h = String(k.hora_entrada || '00:00').split(':'); return Date.UTC(+m[3], +m[2] - 1, +m[1], +h[0] + 3, +(h[1] || 0)); }
+function textoCron(ms){
+  const min = Math.max(0, Math.floor((Date.now() - ms) / 60000)), meta = (CTX && CTX.cfg && CTX.cfg.meta_resposta_min) || 15;
+  const cls = min > meta ? 'estourou' : (min >= meta * 0.6 ? 'atencao' : '');
+  const t = min < 60 ? min + ' min' : (min < 1440 ? Math.floor(min / 60) + ' h ' + String(min % 60).padStart(2, '0') : Math.floor(min / 1440) + ' dia(s)');
+  return { cls, t: 'aguardando há ' + t };
+}
+function atualizarCrons(){ document.querySelectorAll('.cron[data-ms]').forEach(c => { const x = textoCron(Number(c.dataset.ms)); c.textContent = x.t; c.className = 'cron ' + x.cls; }); }
+setInterval(atualizarCrons, 30000);
 function cartaoLead(k){
-  return `<div class="lc${k.alerta ? ' atrasado' : ''}" draggable="true" data-id="${esc(k.id)}" data-etapa="${esc(k.etapa)}" role="button" tabindex="0">
-    <div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline"><b style="font-size:14.5px">${esc(k.nome)}</b><span class="note">${esc(k.data_entrada.slice(0, 5))}${k.hora_entrada ? ' ' + esc(k.hora_entrada) : ''}</span></div>
-    <div style="display:flex;flex-wrap:wrap;gap:5px"><span class="chip">${esc(rot('FONTE', k.fonte))}</span>${k.campanha ? `<span class="chip ouro">${esc(k.campanha)}</span>` : ''}${k.existente ? '<span class="chip cinza">Paciente da base</span>' : ''}</div>
-    <div style="font-size:13px;color:#4A3A3A">${esc(rot('PROCEDIMENTO', k.procedimento) || '—')}${k.pergunta ? ' · ' + esc(rot('PERGUNTA', k.pergunta)) : ''}</div>
-    <div style="display:flex;justify-content:space-between;font-size:13px"><b>${k.etapa === 'FECHADO' ? brl(k.valor_fechado) : (k.valor_orcado ? brl(k.valor_orcado) : '')}</b><span class="note">${esc(k.responsavel)}</span></div>
+  const tipo = k.tipo || (k.existente ? 'RECALL' : 'NOVA');
+  const ms = k.etapa === 'NOVO' ? msEntrada(k) : 0, cr = ms ? textoCron(ms) : null;
+  const valor = k.etapa === 'FECHADO' ? brl(k.valor_fechado) : (k.valor_orcado ? brl(k.valor_orcado) : '');
+  return `<div class="lc t-${tipo}${k.alerta ? ' atrasado' : ''}" draggable="true" data-id="${esc(k.id)}" data-etapa="${esc(k.etapa)}" role="button" tabindex="0" aria-label="${esc(k.nome)} · ${esc(TIPOS[tipo])}">
+    <div class="lc-top"><p class="lc-nome">${esc(k.nome)}</p><span class="lc-hora">${esc(String(k.data_entrada || '').slice(0, 5))}${k.hora_entrada ? '<br>' + esc(k.hora_entrada) : ''}</span></div>
+    <div class="lc-chips">${tipoChip(tipo)}<span class="chip" title="${esc(rot('FONTE', k.fonte))}">${esc(rot('FONTE', k.fonte))}</span>${k.campanha ? `<span class="chip ouro" title="${esc(k.campanha)}">${esc(k.campanha)}</span>` : ''}</div>
+    ${k.procedimento || k.pergunta ? `<div class="lc-int">${esc(rot('PROCEDIMENTO', k.procedimento) || 'Interesse não informado')}${k.pergunta ? ' · ' + esc(rot('PERGUNTA', k.pergunta)) : ''}</div>` : ''}
+    ${valor || k.responsavel ? `<div class="lc-pe"><b>${valor}</b><span class="note">${esc(k.responsavel)}</span></div>` : ''}
     ${k.etapa === 'PERDIDO' && k.motivo_perda ? `<div class="note">Motivo: ${esc(rot('MOTIVO_PERDA', k.motivo_perda))}</div>` : ''}
     ${k.etapa === 'AGENDADO' && k.data_agendamento ? `<div class="note">Agendado para ${esc(k.data_agendamento)}</div>` : ''}
+    ${cr && !k.alerta ? `<span class="cron ${cr.cls}" data-ms="${ms}">${esc(cr.t)}</span>` : ''}
     ${k.alerta ? `<div class="alerta">${esc(k.alerta)}</div>` : (k.proxima_acao_data ? `<div class="note">${esc(k.proxima_acao || 'Próxima ação')} · ${esc(k.proxima_acao_data)}</div>` : '')}
   </div>`;
 }
@@ -470,13 +811,13 @@ function pintarFunil(d){
   cont.querySelectorAll('.col').forEach(col => {
     col.ondragover = ev => { ev.preventDefault(); col.classList.add('alvo'); };
     col.ondragleave = () => col.classList.remove('alvo');
-    col.ondrop = ev => { ev.preventDefault(); col.classList.remove('alvo'); const [id, de] = ev.dataTransfer.getData('text/plain').split('|'); if (id && de !== col.dataset.col) mudarEtapa(id, col.dataset.col, () => carregarLeads()); };
+    col.ondrop = ev => { ev.preventDefault(); col.classList.remove('alvo'); const [id, de] = ev.dataTransfer.getData('text/plain').split('|'); if (id && de !== col.dataset.col) mudarEtapa(id, col.dataset.col, () => carregarLeads(), null, true); };
   });
 }
-function pintarLista(d){
+function pintarListaLeads(d){
   const itens = [].concat(...d.colunas.map(c => c.itens));
-  el('ld-c').innerHTML = `<section class="card"><div class="scroll"><table class="tb"><thead><tr><th>Entrada</th><th>Nome</th><th>Etapa</th><th>Fonte</th><th>Campanha</th><th>Interesse</th><th>Responsável</th><th class="r">Valor</th><th>Situação</th></tr></thead>
-    <tbody>${itens.map(k => `<tr class="clic" data-id="${esc(k.id)}"><td>${esc(k.data_entrada)} ${esc(k.hora_entrada)}</td><td style="font-weight:700">${esc(k.nome)}</td><td><span class="chip ${COR_ETAPA[k.etapa]}">${esc(ROT_ETAPA[k.etapa])}</span></td><td>${esc(rot('FONTE', k.fonte))}</td><td>${esc(k.campanha || '—')}</td><td>${esc(rot('PROCEDIMENTO', k.procedimento) || '—')}</td><td>${esc(k.responsavel)}</td><td class="r">${k.etapa === 'FECHADO' ? brl(k.valor_fechado) : (k.valor_orcado ? brl(k.valor_orcado) : '—')}</td><td>${k.alerta ? `<b style="color:var(--alerta)">${esc(k.alerta)}</b>` : ''}</td></tr>`).join('') || '<tr><td colspan="9" class="vazio">Nenhum lead com estes filtros.</td></tr>'}</tbody></table></div></section>`;
+  el('ld-c').innerHTML = `<section class="card"><div class="scroll"><table class="tb"><thead><tr><th>Entrada</th><th>Nome</th><th>Tipo</th><th>Etapa</th><th>Fonte</th><th>Campanha</th><th>Interesse</th><th>Responsável</th><th class="r">Valor</th><th>Situação</th></tr></thead>
+    <tbody>${itens.map(k => `<tr class="clic" data-id="${esc(k.id)}"><td>${esc(k.data_entrada)} ${esc(k.hora_entrada)}</td><td style="font-weight:700">${esc(k.nome)}</td><td>${tipoChip(k.tipo || (k.existente ? 'RECALL' : 'NOVA'))}</td><td><span class="chip ${COR_ETAPA[k.etapa]}">${esc(ROT_ETAPA[k.etapa])}</span></td><td>${esc(rot('FONTE', k.fonte))}</td><td>${esc(k.campanha || '—')}</td><td>${esc(rot('PROCEDIMENTO', k.procedimento) || '—')}</td><td>${esc(k.responsavel)}</td><td class="r">${k.etapa === 'FECHADO' ? brl(k.valor_fechado) : (k.valor_orcado ? brl(k.valor_orcado) : '—')}</td><td>${k.alerta ? `<b style="color:var(--alerta)">${esc(k.alerta)}</b>` : ''}</td></tr>`).join('') || '<tr><td colspan="10" class="vazio">Nenhum lead com estes filtros.</td></tr>'}</tbody></table></div></section>`;
   el('ld-c').querySelectorAll('tr.clic').forEach(r => r.onclick = () => ir('lead', r.dataset.id));
 }
 
@@ -484,9 +825,9 @@ function pintarLista(d){
 function formCadastroRapido(){
   const camps = (CTX.campanhas || []).filter(c => c.status === 'ATIVA');
   return `<div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px"><h2>Cadastro rápido de lead</h2><span class="note">Digite o nome ou o WhatsApp: a base da clínica é conferida antes de gravar</span></div>
-    <div class="grid mt" style="grid-template-columns:repeat(auto-fit,minmax(170px,1fr));align-items:end">
-      <div class="fl" style="position:relative"><label for="q-nome">Nome completo</label><input id="q-nome" class="in" autocomplete="off" placeholder="Nome e sobrenome"><div id="q-sug" class="sug oculto"></div></div>
-      <div class="fl"><label for="q-tel">WhatsApp</label><input id="q-tel" class="in" inputmode="tel" placeholder="(44) 9____-____"></div>
+    <div class="cad-grid mt">
+      <div class="fl c-nome" style="position:relative"><label for="q-nome">Nome completo</label><input id="q-nome" class="in" autocomplete="off" placeholder="Nome e sobrenome da paciente"><div id="q-sug" class="sug oculto"></div></div>
+      <div class="fl c-tel"><label for="q-tel">WhatsApp</label><input id="q-tel" class="in tel-br" inputmode="tel" autocomplete="off" placeholder="(44) 99999-9999"></div>
       <div class="fl"><label for="q-fonte">Fonte</label><select id="q-fonte" class="in">${opcoes('FONTE', '', 'Escolha')}</select></div>
       <div class="fl"><label for="q-camp">Campanha</label><select id="q-camp" class="in"><option value="">Sem campanha</option>${camps.map(c => `<option value="${esc(c.id)}">${esc(c.nome)}</option>`).join('')}</select></div>
       <div class="fl"><label for="q-proc">Interesse</label><select id="q-proc" class="in">${opcoes('PROCEDIMENTO', '', 'Escolha')}</select></div>
@@ -569,29 +910,39 @@ function ligarCadastroRapido(raiz){
       const r = await api('salvarLead', p);
       if (r.lead_existente){ toast(r.aviso || 'Já existe lead aberto.'); return ir('lead', r.id); }
       fecharModal();
-      toast(r.existente ? 'Lead lançado · paciente da base, contato registrado no Recall' : 'Lead salvo');
+      toast(r.existente ? 'Lead lançado · paciente da base, contato registrado no Recall' : 'Lead salvo · paciente nova');
       ir('lead', r.id);
     } catch (e) { falhar(e); }
   };
 }
-function novoLead(){ abrirModal(`<h2>Novo lead</h2><div id="cad-m">${formCadastroRapido()}</div><div class="acoes"><button class="btn2" onclick="fecharModal()">Fechar</button></div>`); ligarCadastroRapido(el('cad-m')); }
+function novoLead(){ if (!CTX) return; abrirModal(`<h2>Novo lead</h2><div id="cad-m">${formCadastroRapido()}</div><div class="acoes"><button class="btn2" onclick="fecharModal()">Fechar</button></div>`, true); ligarCadastroRapido(el('cad-m')); }
 
 /* ---------- mudança de etapa ---------- */
-function mudarEtapa(id, para, depois, lead){
+/** Move o cartão na tela antes da planilha responder; se a gravação falhar, o funil é recarregado. */
+function moverCartaoNaTela(id, para){
+  const c = document.querySelector(`.lc[data-id="${CSS.escape(id)}"]`), col = document.querySelector(`.col[data-col="${para}"]`);
+  if (!c || !col) return;
+  c.classList.add('movendo'); c.dataset.etapa = para;
+  const ref = col.querySelector('.lc'); ref ? col.insertBefore(c, ref) : col.appendChild(c);
+  const vazio = col.querySelector(':scope > .note:last-child'); if (vazio && vazio.textContent.trim() === '—') vazio.remove();
+}
+function mudarEtapa(id, para, depois, lead, doFunil){
   const precisa = { ORCAMENTO: 1, AGENDADO: 1, FECHADO: 1, PERDIDO: 1 };
   const exec = async extra => {
-    try { await api('moverEtapa', Object.assign({ id, etapa: para }, extra || {})); fecharModal(); toast('Etapa: ' + ROT_ETAPA[para]); depois && depois(); }
-    catch (e) { falhar(e); }
+    if (doFunil) moverCartaoNaTela(id, para);
+    fecharModal();
+    try { await api('moverEtapa', Object.assign({ id, etapa: para }, extra || {}), { silencioso: !!doFunil }); toast('Etapa: ' + ROT_ETAPA[para]); depois && depois(); }
+    catch (e) { falhar(e); if (doFunil) carregarLeads(); }
   };
   if (!precisa[para]) return exec({});
-  const hoje = paraISO(hojeBR());
+  const hoje = hojeBR();
   let corpo = '';
-  if (para === 'ORCAMENTO') corpo = `<div class="grid" style="grid-template-columns:1fr 1fr"><div class="fl"><label for="e-valor">Valor orçado</label><input id="e-valor" class="in" inputmode="decimal" placeholder="R$" value="${lead && lead.valor_orcado ? esc(lead.valor_orcado) : ''}"></div>
-    <div class="fl"><label for="e-data">Data</label><input id="e-data" type="date" class="in" value="${hoje}"></div><div class="fl"><label for="e-num">Nº orçamento no ERP (opcional)</label><input id="e-num" class="in"></div>
-    <div class="fl"><label for="e-prox">Follow-up em</label><input id="e-prox" type="date" class="in"></div></div>`;
-  if (para === 'AGENDADO') corpo = `<div class="fl"><label for="e-data">Data do agendamento</label><input id="e-data" type="date" class="in" value="${hoje}"></div><p class="note">O horário em si continua sendo marcado no ERP e na Agenda do Recall.</p>`;
-  if (para === 'FECHADO') corpo = `<div class="grid" style="grid-template-columns:1fr 1fr"><div class="fl"><label for="e-valor">Valor fechado</label><input id="e-valor" class="in" inputmode="decimal" placeholder="R$" value="${lead && lead.valor_orcado ? esc(lead.valor_orcado) : ''}"></div>
-    <div class="fl"><label for="e-data">Data do fechamento</label><input id="e-data" type="date" class="in" value="${hoje}"></div>
+  if (para === 'ORCAMENTO') corpo = `<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))"><div class="fl"><label for="e-valor">Valor orçado</label>${campoMoeda('e-valor', lead && lead.valor_orcado)}</div>
+    <div class="fl"><label for="e-data">Data do orçamento</label>${campoData('e-data', hoje)}</div><div class="fl"><label for="e-num">Nº do orçamento no ERP (opcional)</label><input id="e-num" class="in" inputmode="numeric"></div>
+    <div class="fl"><label for="e-prox">Follow-up em</label>${campoData('e-prox', '')}</div></div>`;
+  if (para === 'AGENDADO') corpo = `<div class="fl" style="max-width:240px"><label for="e-data">Data do agendamento</label>${campoData('e-data', hoje)}</div><p class="note">O horário em si continua sendo marcado no ERP e na Agenda do Recall.</p>`;
+  if (para === 'FECHADO') corpo = `<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))"><div class="fl"><label for="e-valor">Valor fechado</label>${campoMoeda('e-valor', lead && lead.valor_orcado)}</div>
+    <div class="fl"><label for="e-data">Data do fechamento</label>${campoData('e-data', hoje)}</div>
     <div class="fl" style="grid-column:1/-1"><label for="e-proc">Procedimentos fechados</label><input id="e-proc" class="in" placeholder="Ex.: ICE CONTOURN pacote 3 áreas"></div>
     <div class="fl"><label for="e-num">Nº orçamento no ERP</label><input id="e-num" class="in"></div></div><p class="note">O orçamento aprovado no ERP, ao chegar ao KN Vendas, recebe a observação da campanha automaticamente.</p>`;
   if (para === 'PERDIDO') corpo = `<div class="fl"><label for="e-mot">Motivo da perda</label><select id="e-mot" class="in">${opcoes('MOTIVO_PERDA', '', 'Escolha')}</select></div><div class="fl mt"><label for="e-obs">Observação</label><textarea id="e-obs" class="in"></textarea></div>`;
@@ -599,18 +950,21 @@ function mudarEtapa(id, para, depois, lead){
   el('e-ok').onclick = () => {
     const g = i => el(i) ? el(i).value : '';
     if (para === 'PERDIDO' && !g('e-mot')) return toast('Escolha o motivo.');
-    if (para === 'FECHADO' && !(Number(String(g('e-valor')).replace(/\./g, '').replace(',', '.')) > 0)) return toast('Informe o valor fechado.');
-    exec({ valor: g('e-valor'), data: paraBR(g('e-data')), num_orcamento: g('e-num'), procedimentos: g('e-proc'), motivo: g('e-mot'), observacao: g('e-obs'), proxima_acao_data: paraBR(g('e-prox')), proxima_acao: g('e-prox') ? 'Follow-up do orçamento' : '' });
+    const valor = lerMoeda('e-valor');
+    if (para === 'FECHADO' && !(valor > 0)) return toast('Informe o valor fechado.');
+    const data = lerData('e-data'), prox = lerData('e-prox');
+    if (data === null || prox === null) return;
+    exec({ valor: valor === '' ? '' : valor, data, num_orcamento: g('e-num'), procedimentos: g('e-proc'), motivo: g('e-mot'), observacao: g('e-obs'), proxima_acao_data: prox, proxima_acao: prox ? 'Follow-up do orçamento' : '' });
   };
 }
 
 /* ==========================================================================
    FICHA DO LEAD
    ========================================================================== */
-async function telaLead(id){
+async function telaLead(id, manter){
   if (!id) return ir('leads');
-  el('main').innerHTML = `<a href="#leads" onclick="ir('leads');return false" style="font-weight:700;text-decoration:none">← Voltar para Leads</a><div class="mt">${esqueleto(8)}</div>`;
-  try { const d = await api('lead', { id }); if (TELA === 'lead') pintarLead(d); } catch (e) { falhaBloco(e, () => telaLead(id)); }
+  if (!manter) el('main').innerHTML = `<a href="#leads" onclick="ir('leads');return false" style="font-weight:700;text-decoration:none">← Voltar para Leads</a><div class="mt">${esqueleto(8)}</div>`;
+  try { await carregar('lead', { id }, d => { if (TELA === 'lead') pintarLead(d); }); } catch (e) { falhaBloco(e, () => telaLead(id)); }
 }
 function primeiroNome(n){ const p = String(n || '').trim().split(/\s+/)[0] || ''; return p.charAt(0).toUpperCase() + p.slice(1).toLowerCase(); }
 function preencherTexto(t, l){
@@ -625,7 +979,7 @@ function pintarLead(d){
   el('main').innerHTML = `<a href="#leads" onclick="ir('leads');return false" style="font-weight:700;text-decoration:none">← Voltar para Leads</a>
   <div class="topo mt" style="align-items:center">
     <div style="display:flex;gap:14px;align-items:center"><div aria-hidden="true" style="width:54px;height:54px;border-radius:50%;background:var(--vinho);color:var(--champ);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:19px">${esc(ini)}</div>
-      <div><h1 style="font-size:26px">${esc(l.nome)}</h1><div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px"><span class="chip forte">${esc(ROT_ETAPA[l.etapa])}</span><span class="chip">${esc(l.fonte_rotulo)}</span>${l.campanha ? `<span class="chip ouro">${esc(l.campanha)}</span>` : ''}${l.temperatura ? `<span class="chip">${esc(rot('TEMPERATURA', l.temperatura))}</span>` : ''}${l.paciente_existente === 'SIM' ? `<span class="chip cinza">Paciente da base${l.cod_paciente ? ' · Nº ' + esc(l.cod_paciente) : ''}</span>` : '<span class="chip ok">Paciente nova</span>'}</div></div></div>
+      <div><h1 style="font-size:26px">${esc(l.nome)}</h1><div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px"><span class="chip forte">${esc(ROT_ETAPA[l.etapa])}</span><span class="chip">${esc(l.fonte_rotulo)}</span>${l.campanha ? `<span class="chip ouro">${esc(l.campanha)}</span>` : ''}${l.temperatura ? `<span class="chip">${esc(rot('TEMPERATURA', l.temperatura))}</span>` : ''}${tipoChip(l.tipo || (l.paciente_existente === 'SIM' ? 'RECALL' : 'NOVA'), true)}${l.cod_paciente ? `<span class="chip cinza">Nº ${esc(l.cod_paciente)}</span>` : ''}</div></div></div>
     <div class="filtros">
       <a class="btn2" href="${linkWhats(l.telefone_norm || l.telefone)}" target="_blank" rel="noopener" id="bt-zap">WhatsApp</a>
       <a class="btn2" href="tel:+55${esc(soDig(l.telefone_norm || l.telefone))}">Ligar</a>
@@ -654,7 +1008,7 @@ function pintarLead(d){
       <div class="grid mt" style="grid-template-columns:repeat(auto-fit,minmax(140px,1fr));align-items:end">
         <div class="fl"><label for="n-tipo">Tipo</label><select id="n-tipo" class="in"><option value="MENSAGEM">Mensagem enviada</option><option value="LIGACAO">Ligação</option><option value="RESPOSTA">Resposta da paciente</option><option value="NOTA">Anotação</option></select></div>
         <div class="fl"><label for="n-canal">Canal</label><select id="n-canal" class="in">${opcoes('CANAL', 'WHATSAPP')}</select></div>
-        <div class="fl"><label for="n-prox">Próxima ação em</label><input id="n-prox" type="date" class="in"></div>
+        <div class="fl"><label for="n-prox">Próxima ação em</label>${campoData('n-prox', '')}</div>
         <div class="fl"><label for="n-temp">Temperatura</label><select id="n-temp" class="in">${opcoes('TEMPERATURA', l.temperatura, '—')}</select></div>
       </div>
       <div style="display:grid;grid-template-columns:1fr auto;gap:10px;margin-top:10px;align-items:end"><div class="fl"><label for="n-txt">O que aconteceu</label><input id="n-txt" class="in" placeholder="Ex.: enviei valores; pediu para pensar até quarta"></div><button class="btn" id="bt-reg">Registrar</button></div>
@@ -676,14 +1030,15 @@ function pintarLead(d){
     </div>
   </div>
   <p class="rodape">Ao fechar, o orçamento aprovado no ERP leva a campanha para o KN Vendas; a paciente segue para Agenda e Recall.</p>`;
-  const recarregar = () => telaLead(l.id_lead);
+  const recarregar = () => telaLead(l.id_lead, true);
   el('bt-etapa').onchange = ev => { const v = ev.target.value; ev.target.value = ''; if (v) mudarEtapa(l.id_lead, v, recarregar, l); };
   if (el('bt-perdido')) el('bt-perdido').onclick = () => mudarEtapa(l.id_lead, 'PERDIDO', recarregar, l);
   if (el('lk-camp')) el('lk-camp').onclick = ev => { ev.preventDefault(); ir('campanha', l.id_campanha); };
   if (el('bt-trava')) el('bt-trava').onclick = async () => { if (!confirm('Encerrar a trava? A paciente volta a poder ser contatada por qualquer colaboradora no Recall.')) return; try { await api('encerrarTrava', { id_trava: tv.id }); toast('Trava encerrada'); recarregar(); } catch (e) { falhar(e); } };
   el('bt-reg').onclick = async () => {
     const txt = el('n-txt').value.trim(); if (!txt) return toast('Descreva o que aconteceu.');
-    try { await api('registrarInteracao', { id: l.id_lead, tipo: el('n-tipo').value, canal: el('n-canal').value, texto: txt, proxima_acao_data: paraBR(el('n-prox').value), temperatura: el('n-temp').value }); toast('Registrado'); recarregar(); } catch (e) { falhar(e); }
+    const prox = lerData('n-prox'); if (prox === null) return;
+    try { await api('registrarInteracao', { id: l.id_lead, tipo: el('n-tipo').value, canal: el('n-canal').value, texto: txt, proxima_acao_data: prox, temperatura: el('n-temp').value }); el('n-txt').value = ''; delete el('n-txt').dataset.sujo; toast('Registrado'); recarregar(); } catch (e) { falhar(e); }
   };
   el('bt-perg').onclick = () => {
     abrirModal(`<h2>Registrar pergunta</h2><div class="fl"><label for="p-tipo">Tipo de pergunta</label><select id="p-tipo" class="in">${opcoes('PERGUNTA', '', 'Escolha')}</select></div><div class="fl mt"><label for="p-txt">Como ela perguntou (opcional)</label><input id="p-txt" class="in"></div><div class="acoes"><button class="btn2" onclick="fecharModal()">Cancelar</button><button class="btn" id="p-ok">Registrar</button></div>`);
@@ -710,9 +1065,9 @@ function rotuloTipo(x){
 }
 function editarLead(l, depois){
   const camps = (CTX.campanhas || []).filter(c => c.status === 'ATIVA' || c.id === l.id_campanha);
-  abrirModal(`<h2>Editar lead</h2><div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
+  abrirModal(`<h2>Editar lead</h2><div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
     <div class="fl"><label for="x-nome">Nome</label><input id="x-nome" class="in" value="${esc(l.nome)}"></div>
-    <div class="fl"><label for="x-tel">WhatsApp</label><input id="x-tel" class="in" value="${esc(l.telefone)}"></div>
+    <div class="fl"><label for="x-tel">WhatsApp</label><input id="x-tel" class="in tel-br" inputmode="tel" value="${esc(l.telefone)}"></div>
     <div class="fl"><label for="x-email">E-mail</label><input id="x-email" class="in" value="${esc(l.email)}"></div>
     <div class="fl"><label for="x-ig">Instagram</label><input id="x-ig" class="in" value="${esc(l.instagram)}"></div>
     <div class="fl"><label for="x-cid">Cidade</label><input id="x-cid" class="in" value="${esc(l.cidade)}"></div>
@@ -720,15 +1075,15 @@ function editarLead(l, depois){
     <div class="fl"><label for="x-camp">Campanha</label><select id="x-camp" class="in"><option value="">Sem campanha</option>${camps.map(c => `<option value="${esc(c.id)}"${c.id === l.id_campanha ? ' selected' : ''}>${esc(c.nome)}</option>`).join('')}</select></div>
     <div class="fl"><label for="x-proc">Interesse</label><select id="x-proc" class="in">${opcoes('PROCEDIMENTO', l.procedimento_interesse, '—')}</select></div>
     <div class="fl"><label for="x-anu">Anúncio</label><input id="x-anu" class="in" value="${esc(l.anuncio)}"></div>
-    <div class="fl"><label for="x-valor">Valor orçado</label><input id="x-valor" class="in" value="${esc(l.valor_orcado || '')}"></div>
+    <div class="fl"><label for="x-valor">Valor orçado</label>${campoMoeda('x-valor', l.valor_orcado)}</div>
     <div class="fl"><label for="x-num">Nº orçamento ERP</label><input id="x-num" class="in" value="${esc(l.num_orcamento_erp)}"></div>
     ${gestao() ? `<div class="fl"><label for="x-resp">Responsável</label><select id="x-resp" class="in">${(CTX.equipe || []).map(n => `<option${n === l.responsavel ? ' selected' : ''}>${esc(n)}</option>`).join('')}</select></div>` : ''}
     <div class="fl" style="grid-column:1/-1"><label for="x-obs">Observação</label><textarea id="x-obs" class="in">${esc(l.observacao)}</textarea></div></div>
-    <div class="acoes"><button class="btn2" onclick="fecharModal()">Cancelar</button><button class="btn" id="x-ok">Salvar</button></div>`);
+    <div class="acoes"><button class="btn2" onclick="fecharModal()">Cancelar</button><button class="btn" id="x-ok">Salvar</button></div>`, true);
   el('x-ok').onclick = async () => {
     const g = i => el(i) ? el(i).value : undefined;
     const dados = { nome: g('x-nome'), telefone: g('x-tel'), email: g('x-email'), instagram: g('x-ig'), cidade: g('x-cid'), fonte: g('x-fonte'), id_campanha: g('x-camp'),
-      procedimento_interesse: g('x-proc'), anuncio: g('x-anu'), valor_orcado: g('x-valor'), num_orcamento_erp: g('x-num'), observacao: g('x-obs') };
+      procedimento_interesse: g('x-proc'), anuncio: g('x-anu'), valor_orcado: lerMoeda('x-valor'), num_orcamento_erp: g('x-num'), observacao: g('x-obs') };
     if (gestao()) dados.responsavel = g('x-resp');
     try { await api('atualizarLead', { id: l.id_lead, dados: JSON.stringify(dados) }); fecharModal(); toast('Lead atualizado'); depois(); } catch (e) { falhar(e); }
   };
@@ -741,7 +1096,7 @@ const COR_ST = { ATIVA: 'ok', PLANEJADA: 'ouro', ENCERRADA: 'cinza', CANCELADA: 
 async function telaCampanhas(){
   el('main').innerHTML = `<div class="topo"><div><div class="lbl" id="cp-sub">carregando</div><h1>Campanhas</h1></div><div class="filtros">${gestao() ? '<button class="btn" id="bt-nova">+ Nova campanha</button>' : ''}</div></div><div id="cp-c">${esqueleto(6)}</div>`;
   if (el('bt-nova')) el('bt-nova').onclick = () => formCampanha(null);
-  try { const d = await api('campanhas'); if (TELA === 'campanhas') pintarCampanhas(d); } catch (e) { falhaBloco(e, telaCampanhas); }
+  try { await carregar('campanhas', {}, d => { if (TELA === 'campanhas') pintarCampanhas(d); }); } catch (e) { falhaBloco(e, telaCampanhas); }
 }
 function pintarCampanhas(d){
   const t = d.totais;
@@ -762,10 +1117,10 @@ function pintarCampanhas(d){
 
 /* ---------- briefing ---------- */
 let ABA_CP = 'briefing';
-async function telaCampanha(id){
+async function telaCampanha(id, manter){
   if (!id) return ir('campanhas');
-  el('main').innerHTML = `<a href="#campanhas" onclick="ir('campanhas');return false" style="font-weight:700;text-decoration:none">← Campanhas</a><div class="mt">${esqueleto(8)}</div>`;
-  try { const d = await api('campanha', { id }); if (TELA === 'campanha') pintarCampanha(d); } catch (e) { falhaBloco(e, () => telaCampanha(id)); }
+  if (!manter) el('main').innerHTML = `<a href="#campanhas" onclick="ir('campanhas');return false" style="font-weight:700;text-decoration:none">← Campanhas</a><div class="mt">${esqueleto(8)}</div>`;
+  try { await carregar('campanha', { id }, d => { if (TELA === 'campanha') pintarCampanha(d); }); } catch (e) { falhaBloco(e, () => telaCampanha(id)); }
 }
 function pintarCampanha(d){
   const c = d.campanha, G = gestao();
@@ -777,7 +1132,7 @@ function pintarCampanha(d){
     <nav class="tabs" aria-label="Seções">${abas.map(a => `<button data-aba="${a[0]}" class="${ABA_CP === a[0] ? 'on' : ''}">${a[1]}</button>`).join('')}</nav><div id="cp-aba"></div>`;
   el('main').querySelectorAll('[data-aba]').forEach(b => b.onclick = () => { ABA_CP = b.dataset.aba; pintarCampanha(d); });
   if (G){ el('bt-edit').onclick = () => formCampanha(c); el('bt-res').onclick = () => ir('resultado', c.id_campanha); el('bt-dup').onclick = () => formCampanha(Object.assign({}, c, { id_campanha: '', nome: c.nome + ' (cópia)', codigo_rastreio: '', duplicar_de: c.id_campanha })); }
-  const box = el('cp-aba'), recarregar = () => telaCampanha(c.id_campanha);
+  const box = el('cp-aba'), recarregar = () => telaCampanha(c.id_campanha, true);
   const campo = (rotulo, v) => `<div class="fl"><label>${rotulo}</label><div style="min-height:42px;padding:10px 12px;border-radius:10px;border:1px solid var(--linha);background:#FCFAF7;line-height:1.45;white-space:pre-line">${esc(v || '—')}</div></div>`;
   if (ABA_CP === 'briefing') box.innerHTML = `<section class="card"><h2>Dados e metas</h2>
     <div class="grid mt" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">${campo('Período', c.data_inicio + ' a ' + c.data_fim)}${campo('Trava de contato no Recall até', c.trava_ate || c.data_fim)}${campo('Responsável', c.responsavel)}${campo('Canais', c.canais)}${campo('Código de rastreio', c.codigo_rastreio)}${campo('Meta de leads', c.meta_leads)}${campo('Meta de fechamentos', c.meta_fechamentos)}${campo('Meta de receita', c.meta_receita === '' ? '' : brl(c.meta_receita))}${campo('Verba prevista', c.verba_prevista === '' ? '' : brl(c.verba_prevista))}</div>
@@ -819,10 +1174,10 @@ function pintarCampanha(d){
         <div class="fl"><label for="cu-cat">Categoria</label><select id="cu-cat" class="in">${opcoes('CATEGORIA_CUSTO', '', 'Escolha')}</select></div>
         <div class="fl"><label for="cu-desc">Descrição / fornecedor</label><input id="cu-desc" class="in" placeholder="Ex.: Meta Ads — novembro"></div>
         <div class="fl"><label for="cu-fonte">Canal (para o CPL)</label><select id="cu-fonte" class="in"><option value="">Comum à campanha</option>${opcoes('FONTE', '')}</select></div>
-        <div class="fl"><label for="cu-prev">Previsto</label><input id="cu-prev" class="in" inputmode="decimal" placeholder="R$"></div>
-        <div class="fl"><label for="cu-real">Realizado</label><input id="cu-real" class="in" inputmode="decimal" placeholder="R$"></div>
-        <div class="fl"><label for="cu-data">Data</label><input id="cu-data" type="date" class="in" value="${paraISO(hojeBR())}"></div>
-        <div class="fl"><label for="cu-comp">Comprovante (link)</label><input id="cu-comp" class="in" placeholder="link do Drive"></div>
+        <div class="fl"><label for="cu-prev">Previsto</label>${campoMoeda('cu-prev', '')}</div>
+        <div class="fl"><label for="cu-real">Realizado</label>${campoMoeda('cu-real', '')}</div>
+        <div class="fl"><label for="cu-data">Data</label>${campoData('cu-data', hojeBR())}</div>
+        <div class="fl"><label for="cu-comp">Comprovante (link)</label><input id="cu-comp" class="in" type="url" placeholder="link do Drive"></div>
         <button class="btn" id="cu-ok">Lançar custo</button></div>
       <div class="scroll mt"><table class="tb"><thead><tr><th>Categoria</th><th>Descrição</th><th>Canal</th><th class="r">Previsto</th><th class="r">Realizado</th><th class="r">Variação</th><th>Data</th><th>Comprovante</th><th></th></tr></thead>
       <tbody>${d.custos.map(x => `<tr><td style="font-weight:700">${esc(x.categoria_rotulo)}</td><td style="white-space:normal">${esc(x.descricao)}</td><td>${esc(x.fonte_rotulo)}</td><td class="r">${x.valor_previsto ? brl(x.valor_previsto) : '—'}</td><td class="r"><b>${x.valor_realizado ? brl(x.valor_realizado) : '—'}</b></td>
@@ -830,8 +1185,10 @@ function pintarCampanha(d){
       ${d.custos.length ? `<tfoot><tr><td colspan="3">Total</td><td class="r">${brl(t.previsto)}</td><td class="r">${brl(t.realizado)}</td><td class="r">${brl(t.realizado - t.previsto)}</td><td colspan="3"></td></tr></tfoot>` : ''}</table></div>
       <p class="note">Custo com canal entra no CPL daquele canal; “comum à campanha” entra só no total (produção, brindes, evento).</p></section>`;
     el('cu-ok').onclick = async () => {
-      const dados = { id_campanha: c.id_campanha, categoria: el('cu-cat').value, descricao: el('cu-desc').value, fonte: el('cu-fonte').value, valor_previsto: el('cu-prev').value, valor_realizado: el('cu-real').value, data: paraBR(el('cu-data').value), comprovante: el('cu-comp').value };
+      const data = lerData('cu-data'); if (data === null) return;
+      const dados = { id_campanha: c.id_campanha, categoria: el('cu-cat').value, descricao: el('cu-desc').value, fonte: el('cu-fonte').value, valor_previsto: lerMoeda('cu-prev'), valor_realizado: lerMoeda('cu-real'), data, comprovante: el('cu-comp').value };
       if (!dados.categoria) return toast('Escolha a categoria.');
+      if (!(dados.valor_previsto > 0) && !(dados.valor_realizado > 0)) return toast('Informe o valor previsto ou realizado.');
       try { await api('salvarCusto', { dados: JSON.stringify(dados) }); toast('Custo lançado'); recarregar(); } catch (e) { falhar(e); }
     };
     box.querySelectorAll('[data-excl]').forEach(b => b.onclick = async () => { if (!confirm('Excluir este custo?')) return; try { await api('excluirCusto', { id: b.dataset.excl }); toast('Excluído'); recarregar(); } catch (e) { falhar(e); } });
@@ -841,44 +1198,48 @@ function formCampanha(c, depois){
   c = c || {};
   const v = k => esc(c[k] === undefined ? '' : c[k]);
   abrirModal(`<h2>${c.id_campanha ? 'Editar briefing' : (c.duplicar_de ? 'Duplicar campanha' : 'Nova campanha')}</h2>
-    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr))">
-      <div class="fl" style="grid-column:1/-1"><label for="c-nome">Nome</label><input id="c-nome" class="in" value="${v('nome')}"></div>
-      <div class="fl"><label for="c-ini">Início</label><input id="c-ini" type="date" class="in" value="${paraISO(c.data_inicio)}"></div>
-      <div class="fl"><label for="c-fim">Fim</label><input id="c-fim" type="date" class="in" value="${paraISO(c.data_fim)}"></div>
-      <div class="fl"><label for="c-trava">Trava no Recall até</label><input id="c-trava" type="date" class="in" value="${paraISO(c.trava_ate)}"></div>
-      <div class="fl"><label for="c-cod">Código de rastreio</label><input id="c-cod" class="in" maxlength="8" value="${v('codigo_rastreio')}" placeholder="Ex.: VER"></div>
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
+      <div class="fl" style="grid-column:1/-1"><label for="c-nome">Nome</label><input id="c-nome" class="in" value="${v('nome')}" placeholder="Ex.: Black Friday Kássila Nasser 2026"></div>
+      <div class="fl"><label for="c-ini">Início</label>${campoData('c-ini', c.data_inicio)}</div>
+      <div class="fl"><label for="c-fim">Fim</label>${campoData('c-fim', c.data_fim)}</div>
+      <div class="fl"><label for="c-trava">Trava no Recall até</label>${campoData('c-trava', c.trava_ate)}</div>
+      <div class="fl"><label for="c-cod">Código de rastreio</label><input id="c-cod" class="in" maxlength="8" value="${v('codigo_rastreio')}" placeholder="Ex.: BF26" style="text-transform:uppercase;font-family:'IBM Plex Mono',monospace"></div>
       <div class="fl"><label for="c-resp">Responsável</label><input id="c-resp" class="in" value="${v('responsavel')}"></div>
       <div class="fl"><label for="c-canais">Canais</label><input id="c-canais" class="in" value="${v('canais')}" placeholder="Meta Ads, influenciadora…"></div>
-      <div class="fl"><label for="c-ml">Meta de leads</label><input id="c-ml" class="in" inputmode="numeric" value="${v('meta_leads')}"></div>
-      <div class="fl"><label for="c-mf">Meta de fechamentos</label><input id="c-mf" class="in" inputmode="numeric" value="${v('meta_fechamentos')}"></div>
-      <div class="fl"><label for="c-mr">Meta de receita (R$)</label><input id="c-mr" class="in" inputmode="decimal" value="${v('meta_receita')}"></div>
-      <div class="fl"><label for="c-verba">Verba prevista (R$)</label><input id="c-verba" class="in" inputmode="decimal" value="${v('verba_prevista')}"></div>
-      <div class="fl"><label for="c-st">Status</label><select id="c-st" class="in"><option value="">Automático pelas datas</option>${['PLANEJADA', 'ENCERRADA', 'CANCELADA'].map(s => `<option${String(c.status_manual || '') === s ? ' selected' : ''}>${s}</option>`).join('')}</select></div>
+      <div class="fl"><label for="c-ml">Meta de leads</label>${campoInteiro('c-ml', c.meta_leads, 'leads')}</div>
+      <div class="fl"><label for="c-mf">Meta de fechamentos</label>${campoInteiro('c-mf', c.meta_fechamentos, 'vendas')}</div>
+      <div class="fl"><label for="c-mr">Meta de receita</label>${campoMoeda('c-mr', c.meta_receita)}</div>
+      <div class="fl"><label for="c-verba">Verba prevista</label>${campoMoeda('c-verba', c.verba_prevista)}</div>
+      <div class="fl" style="grid-column:span 2"><label for="c-st">Status</label><select id="c-st" class="in"><option value="">Automático pelas datas (planejada → ativa → encerrada)</option>${[['PLANEJADA', 'Planejada (segurar antes do início)'], ['ENCERRADA', 'Encerrada (antecipar o fim)'], ['CANCELADA', 'Cancelada']].map(s => `<option value="${s[0]}"${String(c.status_manual || '') === s[0] ? ' selected' : ''}>${s[1]}</option>`).join('')}</select></div>
       <div class="fl" style="grid-column:1/-1"><label for="c-obj">Objetivo</label><textarea id="c-obj" class="in" style="min-height:64px">${v('objetivo')}</textarea></div>
       <div class="fl" style="grid-column:1/-1"><label for="c-pub">Público-alvo</label><textarea id="c-pub" class="in" style="min-height:64px">${v('publico')}</textarea></div>
       <div class="fl" style="grid-column:1/-1"><label for="c-msg">Mensagem central</label><textarea id="c-msg" class="in" style="min-height:64px">${v('mensagem_central')}</textarea></div>
       <div class="fl" style="grid-column:1/-1"><label for="c-reg">Regras de comunicação</label><textarea id="c-reg" class="in" style="min-height:64px">${v('regras_comunicacao')}</textarea></div>
     </div><p class="note">A trava vale para pacientes da base lançadas nesta campanha: até essa data, nenhuma outra colaboradora as contata pelo Recall. Em branco, vale o fim da campanha.</p>
-    <div class="acoes"><button class="btn2" onclick="fecharModal()">Cancelar</button><button class="btn" id="c-ok">Salvar</button></div>`);
+    <div class="acoes"><button class="btn2" onclick="fecharModal()">Cancelar</button><button class="btn" id="c-ok">Salvar</button></div>`, true);
   el('c-ok').onclick = async () => {
     const g = i => el(i).value;
-    const dados = { id_campanha: c.id_campanha || '', duplicar_de: c.duplicar_de || '', nome: g('c-nome'), data_inicio: paraBR(g('c-ini')), data_fim: paraBR(g('c-fim')), trava_ate: paraBR(g('c-trava')),
-      codigo_rastreio: g('c-cod'), responsavel: g('c-resp'), canais: g('c-canais'), meta_leads: g('c-ml'), meta_fechamentos: g('c-mf'), meta_receita: g('c-mr'), verba_prevista: g('c-verba'),
+    const ini = lerData('c-ini'), fim = lerData('c-fim'), trava = lerData('c-trava');
+    if (ini === null || fim === null || trava === null) return;
+    if (!g('c-nome').trim()) return toast('Informe o nome da campanha.');
+    if (!ini || !fim) return toast('Informe início e fim da campanha.');
+    const dados = { id_campanha: c.id_campanha || '', duplicar_de: c.duplicar_de || '', nome: g('c-nome'), data_inicio: ini, data_fim: fim, trava_ate: trava,
+      codigo_rastreio: g('c-cod'), responsavel: g('c-resp'), canais: g('c-canais'), meta_leads: lerInteiro('c-ml'), meta_fechamentos: lerInteiro('c-mf'), meta_receita: lerMoeda('c-mr'), verba_prevista: lerMoeda('c-verba'),
       status: g('c-st'), objetivo: g('c-obj'), publico: g('c-pub'), mensagem_central: g('c-msg'), regras_comunicacao: g('c-reg') };
-    try { const r = await api('salvarCampanha', { dados: JSON.stringify(dados) }); fecharModal(); toast('Campanha salva'); CTX = await api('contexto'); ir('campanha', r.id); } catch (e) { falhar(e); }
+    try { const r = await api('salvarCampanha', { dados: JSON.stringify(dados) }); fecharModal(); toast('Campanha salva'); guardarCtx(await api('contexto')); ir('campanha', r.id); } catch (e) { falhar(e); }
   };
 }
 function formOferta(c, o, depois){
   o = o || {};
   abrirModal(`<h2>${o.id_oferta ? 'Editar' : 'Adicionar'} procedimento</h2><div class="grid" style="grid-template-columns:1fr 1fr">
     <div class="fl" style="grid-column:1/-1"><label for="o-proc">Procedimento</label><input id="o-proc" class="in" value="${esc(o.procedimento || '')}"></div>
-    <div class="fl"><label for="o-pt">Preço de tabela</label><input id="o-pt" class="in" inputmode="decimal" value="${esc(o.preco_tabela || '')}"></div>
-    <div class="fl"><label for="o-pc">Preço da campanha</label><input id="o-pc" class="in" inputmode="decimal" value="${esc(o.preco_campanha || '')}"></div>
-    <div class="fl"><label for="o-cond">Condição de pagamento</label><input id="o-cond" class="in" value="${esc(o.condicao || '')}"></div>
-    <div class="fl"><label for="o-vagas">Vagas</label><input id="o-vagas" class="in" inputmode="numeric" value="${esc(o.vagas || '')}"></div></div>
+    <div class="fl"><label for="o-pt">Preço de tabela</label>${campoMoeda('o-pt', o.preco_tabela)}</div>
+    <div class="fl"><label for="o-pc">Preço da campanha</label>${campoMoeda('o-pc', o.preco_campanha)}</div>
+    <div class="fl"><label for="o-cond">Condição de pagamento</label><input id="o-cond" class="in" value="${esc(o.condicao || '')}" placeholder="Ex.: 10x sem juros"></div>
+    <div class="fl"><label for="o-vagas">Vagas</label>${campoInteiro('o-vagas', o.vagas, 'vagas')}</div></div>
     <div class="acoes">${o.id_oferta ? '<button class="btn2" id="o-del" style="margin-right:auto">Excluir</button>' : ''}<button class="btn2" onclick="fecharModal()">Cancelar</button><button class="btn" id="o-ok">Salvar</button></div>`);
   el('o-ok').onclick = async () => {
-    const dados = { id_oferta: o.id_oferta || '', id_campanha: c.id_campanha, procedimento: el('o-proc').value, preco_tabela: el('o-pt').value, preco_campanha: el('o-pc').value, condicao: el('o-cond').value, vagas: el('o-vagas').value };
+    const dados = { id_oferta: o.id_oferta || '', id_campanha: c.id_campanha, procedimento: el('o-proc').value, preco_tabela: lerMoeda('o-pt'), preco_campanha: lerMoeda('o-pc'), condicao: el('o-cond').value, vagas: lerInteiro('o-vagas') };
     try { await api('salvarOferta', { dados: JSON.stringify(dados) }); fecharModal(); toast('Oferta salva'); depois(); } catch (e) { falhar(e); }
   };
   if (el('o-del')) el('o-del').onclick = async () => { if (!confirm('Excluir este procedimento da campanha?')) return; try { await api('excluirOferta', { id: o.id_oferta }); fecharModal(); depois(); } catch (e) { falhar(e); } };
@@ -906,7 +1267,7 @@ function formRoteiro(c, r, depois){
 async function telaResultado(id){
   if (!id) return ir('campanhas');
   el('main').innerHTML = `<a href="#campanhas" onclick="ir('campanhas');return false" style="font-weight:700;text-decoration:none">← Campanhas</a><div class="mt">${esqueleto(8)}</div>`;
-  try { const d = await api('resultado', { id }); if (TELA === 'resultado') pintarResultado(d); } catch (e) { falhaBloco(e, () => telaResultado(id)); }
+  try { await carregar('resultado', { id }, d => { if (TELA === 'resultado') pintarResultado(d); }); } catch (e) { falhaBloco(e, () => telaResultado(id)); }
 }
 function pintarResultado(d){
   const c = d.campanha, k = d.kpis, enc = c.status === 'ENCERRADA';
@@ -945,6 +1306,116 @@ function pintarResultado(d){
     <p class="rodape">Números a partir dos registros do app de Leads e dos custos lançados na campanha.</p>`;
   el('lk-brief').onclick = ev => { ev.preventDefault(); ir('campanha', c.id); };
   el('main').querySelectorAll('[data-lead]').forEach(a => a.onclick = ev => { ev.preventDefault(); ir('lead', a.dataset.lead); });
+}
+
+/* ==========================================================================
+   CONFIGURAÇÕES (gestão) — parâmetros, listas, acessos e integrações
+   Tudo o que antes exigia abrir a planilha, agora no próprio app.
+   ========================================================================== */
+let ABA_CFG = 'parametros', LISTA_CFG = 'FONTE', DADOS_CFG = null;
+async function telaConfig(manter){
+  if (!manter) el('main').innerHTML = `<div class="topo"><div><div class="lbl">Sistema · gestão comercial</div><h1>Configurações</h1></div></div><div class="mt">${esqueleto(6)}</div>`;
+  try { DADOS_CFG = await api('configuracoes'); if (TELA === 'config') pintarConfig(); }
+  catch (e) { falhaBloco(e, () => telaConfig()); }
+}
+function pintarConfig(){
+  const d = DADOS_CFG;
+  const abas = [['parametros', 'Regras e prazos'], ['listas', 'Listas do app'], ['acessos', 'Acessos da equipe'], ['integracoes', 'Integrações e sistema']];
+  el('main').innerHTML = `<div class="topo"><div><div class="lbl">Sistema · gestão comercial · ${esc(d.versao)}</div><h1>Configurações</h1></div>
+      <div class="filtros"><span class="note">Alterações valem na hora para toda a equipe</span></div></div>
+    <nav class="tabs" aria-label="Seções">${abas.map(a => `<button data-cfg="${a[0]}" class="${ABA_CFG === a[0] ? 'on' : ''}">${a[1]}</button>`).join('')}</nav><div id="cfg-c"></div>`;
+  el('main').querySelectorAll('[data-cfg]').forEach(b => b.onclick = () => { ABA_CFG = b.dataset.cfg; pintarConfig(); });
+  ({ parametros: cfgParametros, listas: cfgListas, acessos: cfgAcessos, integracoes: cfgIntegracoes })[ABA_CFG]();
+}
+function cfgParametros(){
+  const grupos = {};
+  DADOS_CFG.parametros.forEach(p => (grupos[p.grupo] = grupos[p.grupo] || []).push(p));
+  const campo = p => {
+    if (p.tipo === 'int') return campoInteiro('pp-' + p.parametro, p.valor, p.unidade);
+    if (p.tipo === 'tel') return `<input id="pp-${p.parametro}" class="in tel-br" inputmode="tel" value="${esc(p.valor ? fmtTel(p.valor) : '')}" placeholder="(44) 99999-9999">`;
+    return `<input id="pp-${p.parametro}" class="in" value="${esc(p.valor)}">`;
+  };
+  el('cfg-c').innerHTML = `<div class="grid g-2">${Object.keys(grupos).map(g => `<section class="card"><h2>${esc(g)}</h2><div class="cfg-grupo mt">${grupos[g].map(p => `
+      <div class="cfg-l"><div><b>${esc(p.rotulo)}</b><div class="aj">${esc(p.ajuda)}</div></div><div>${campo(p)}</div>
+        <button class="btn2 btn-min" data-salvar="${esc(p.parametro)}" disabled>Salvar</button></div>`).join('')}</div></section>`).join('')}</div>
+    <p class="note mt">IDs das planilhas ligadas (Recall, Cadastro Único e KN Vendas) ficam só na aba Config: trocar um ID desliga integrações e é tarefa técnica.</p>`;
+  DADOS_CFG.parametros.forEach(p => {
+    const i = el('pp-' + p.parametro), b = el('cfg-c').querySelector(`[data-salvar="${p.parametro}"]`);
+    const original = i.value;
+    i.addEventListener('input', () => { b.disabled = i.value === original; b.className = i.value === original ? 'btn2 btn-min' : 'btn btn-min'; });
+    i.addEventListener('keydown', ev => { if (ev.key === 'Enter' && !b.disabled) b.click(); });
+    b.onclick = async () => {
+      const valor = p.tipo === 'int' ? lerInteiro('pp-' + p.parametro) : (p.tipo === 'tel' ? soDig(i.value) : i.value.trim());
+      try {
+        const r = await api('salvarParametro', { parametro: p.parametro, valor });
+        p.valor = r.valor; toast(p.rotulo + ' salvo');
+        try { guardarCtx(await api('contexto')); } catch (e) {}
+        cfgParametros();
+      } catch (e) { falhar(e); }
+    };
+  });
+}
+function cfgListas(){
+  const d = DADOS_CFG, nomes = d.nomes_listas;
+  const itens = (d.listas[LISTA_CFG] || []).map(x => Object.assign({}, x));
+  let sujo = false;
+  const pintar = () => {
+    el('cfg-c').innerHTML = `<section class="card"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+        <div class="pill-tabs">${Object.keys(nomes).map(k => `<button data-lista="${k}" class="${LISTA_CFG === k ? 'on' : ''}">${esc(nomes[k])}</button>`).join('')}</div></div>
+      <p class="note" style="margin:14px 0 4px">Use as setas para mudar a ordem nos menus. Item usado em leads não pode ser apagado: desligue-o para sair dos menus sem perder o histórico.</p>
+      <div id="it-lista">${itens.map((x, n) => `<div class="it-l${x.ativo ? '' : ' inativo'}">
+          <div class="mv"><button data-sobe="${n}" aria-label="Subir"${n ? '' : ' disabled'}>▲</button><button data-desce="${n}" aria-label="Descer"${n < itens.length - 1 ? '' : ' disabled'}>▼</button></div>
+          <input class="in" data-rot="${n}" value="${esc(x.rotulo)}" aria-label="Nome do item">
+          <span class="cod" title="Código gravado nos registros">${esc(x.valor || 'novo')}</span>
+          <span class="note uso">${x.uso ? x.uso + ' lead(s)' : (x.valor ? 'sem uso' : '')}</span>
+          <label class="sw"><input type="checkbox" data-ativo="${n}"${x.ativo ? ' checked' : ''}> ${x.ativo ? 'ativo' : 'oculto'}</label></div>`).join('')}</div>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;margin-top:14px">
+        <button class="btn2" id="it-novo">+ Adicionar item</button>
+        <div style="display:flex;gap:10px;align-items:center"><span class="note" id="it-st">${sujo ? 'Alterações não salvas' : ''}</span><button class="btn" id="it-salvar"${sujo ? '' : ' disabled'}>Salvar lista</button></div></div></section>`;
+    el('cfg-c').querySelectorAll('[data-lista]').forEach(b => b.onclick = () => { if (sujo && !confirm('Descartar as alterações desta lista?')) return; LISTA_CFG = b.dataset.lista; cfgListas(); });
+    el('cfg-c').querySelectorAll('[data-rot]').forEach(i => i.oninput = () => { itens[+i.dataset.rot].rotulo = i.value; marcar(); });
+    el('cfg-c').querySelectorAll('[data-ativo]').forEach(i => i.onchange = () => { itens[+i.dataset.ativo].ativo = i.checked; marcar(); pintar(); });
+    el('cfg-c').querySelectorAll('[data-sobe]').forEach(b => b.onclick = () => { const n = +b.dataset.sobe; [itens[n - 1], itens[n]] = [itens[n], itens[n - 1]]; marcar(); pintar(); });
+    el('cfg-c').querySelectorAll('[data-desce]').forEach(b => b.onclick = () => { const n = +b.dataset.desce; [itens[n + 1], itens[n]] = [itens[n], itens[n + 1]]; marcar(); pintar(); });
+    el('it-novo').onclick = () => { itens.push({ valor: '', rotulo: '', ativo: true, uso: 0 }); marcar(); pintar(); const ult = el('cfg-c').querySelectorAll('[data-rot]'); ult[ult.length - 1].focus(); };
+    el('it-salvar').onclick = async () => {
+      if (itens.some(x => !String(x.rotulo).trim())) return toast('Há item sem nome.');
+      try {
+        await api('salvarLista', { tipo: LISTA_CFG, itens: JSON.stringify(itens.map(x => ({ valor: x.valor, rotulo: x.rotulo.trim(), ativo: x.ativo }))) });
+        toast('Lista salva'); guardarCtx(await api('contexto')); telaConfig(true);
+      } catch (e) { falhar(e); }
+    };
+  };
+  const marcar = () => { sujo = true; const b = el('it-salvar'); if (b) b.disabled = false; const st = el('it-st'); if (st) st.textContent = 'Alterações não salvas'; };
+  pintar();
+}
+function cfgAcessos(){
+  const d = DADOS_CFG;
+  const nomeNivel = { GESTAO: 'Gestão', OPERACAO: 'Atendimento', NAO: 'Sem acesso' };
+  el('cfg-c').innerHTML = `<section class="card"><h2>Quem usa o Leads e Campanhas</h2>
+    <p class="note" style="margin:6px 0 0">Nome, código e termo de uso vêm do Recall e Follow-up (um cadastro só). Aqui se define o nível no Leads: <b>Gestão</b> vê tudo e edita campanhas, custos e roteiros; <b>Atendimento</b> vê só os próprios leads, sem custos.</p>
+    <div class="scroll mt"><table class="tb"><thead><tr><th>Colaboradora</th><th>Papel no Recall</th><th>Nível no Leads</th><th>Valores (R$)</th><th>Termo de uso</th></tr></thead><tbody>
+    ${d.usuarios.map((u, n) => `<tr><td style="font-weight:700">${esc(u.nome)}${u.nome === d.eu ? ' <span class="note">(você)</span>' : ''}</td><td>${esc(u.papel || '—')}</td>
+      <td><select class="in" style="width:auto;min-width:220px" data-acesso="${n}"${u.nome === d.eu ? ' disabled title="Você não altera o próprio nível"' : ''}>
+        <option value=""${!u.nivel_coluna ? ' selected' : ''}>Automático pelo papel (${esc(nomeNivel[u.nivel] || u.nivel)})</option>
+        ${['GESTAO', 'OPERACAO', 'NAO'].map(v => `<option value="${v}"${u.nivel_coluna === v ? ' selected' : ''}>${nomeNivel[v]}</option>`).join('')}</select></td>
+      <td>${u.ver_valores ? '<span class="chip ok">Vê valores</span>' : '<span class="chip cinza">Sem valores</span>'}</td>
+      <td>${u.termo_ok ? '<span class="chip ok">Aceito</span>' : '<span class="chip alerta">Pendente no Recall</span>'}</td></tr>`).join('')}</tbody></table></div>
+    <p class="note">“Valores” e o termo de uso são definidos no Recall (coluna ver_valores e aceite do termo) e valem para os dois aplicativos. A mudança de nível vale em até 10 minutos para quem já está conectada.</p></section>`;
+  el('cfg-c').querySelectorAll('[data-acesso]').forEach(s => s.onchange = async () => {
+    const u = d.usuarios[+s.dataset.acesso];
+    try { await api('salvarAcesso', { nome: u.nome, nivel: s.value }); toast('Acesso de ' + u.nome + ' atualizado'); telaConfig(true); } catch (e) { falhar(e); telaConfig(true); }
+  });
+}
+function cfgIntegracoes(){
+  const d = DADOS_CFG;
+  el('cfg-c').innerHTML = `<div class="grid g-2">${d.integracoes.map(x => `<div class="int-c"><span class="st ${x.ok ? 'ok' : 'no'}"></span>
+      <div><b>${esc(x.nome)}</b>${x.planilha ? ` <span class="note">· ${esc(x.planilha)}</span>` : ''}<div class="note" style="margin-top:4px;line-height:1.5">${esc(x.detalhe || (x.ok ? 'Ligado' : ''))}</div></div></div>`).join('')}</div>
+    <section class="card mt"><h2>Velocidade e memória do app</h2>
+      <p class="note" style="margin:8px 0 0;line-height:1.6">As telas abrem na hora com a última versão conhecida e se conferem com a planilha em segundo plano (o ponto verde no menu indica). Cada gravação renova a memória para toda a equipe. Se alguém editar a planilha à mão e a tela não mostrar a mudança, use o botão abaixo.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px"><button class="btn2" id="bt-limpar">Atualizar dados agora</button></div></section>
+    <p class="rodape">Leads e Campanhas ${esc(d.versao)} · tela ${VERSAO_TELA} · Instituto Kássila Nasser · desenvolvido por Decisão Consultoria</p>`;
+  el('bt-limpar').onclick = async () => { try { const r = await api('limparCache'); memLimpar(); toast(r.msg || 'Memória limpa'); } catch (e) { falhar(e); } };
 }
 
 /* ---------- PWA ---------- */
