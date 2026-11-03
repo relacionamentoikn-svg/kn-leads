@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<!-- LEADS E CAMPANHAS · V1.2 — este arquivo vai no repositório kn-leads. NÃO é o do Recall nem o do KN Vendas. -->
+<!-- LEADS E CAMPANHAS · V1.3 — este arquivo vai no repositório kn-leads. NÃO é o do Recall nem o do KN Vendas. -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Leads e Campanhas</title>
@@ -157,6 +157,18 @@ textarea.in{padding:10px 12px;min-height:90px;resize:vertical}
 .pill-tabs button{min-height:36px;padding:0 14px;border-radius:999px;border:1px solid #D8CBC0;background:#fff;font-weight:700;color:var(--txt-2);cursor:pointer}
 .pill-tabs button.on{background:var(--vinho);border-color:var(--vinho);color:#fff}
 .modal.larga{width:min(880px,100%)}
+.nav .ico{display:none;width:22px;height:22px;flex:none}
+.cad-grid2{display:grid;gap:12px 14px;align-items:end;grid-template-columns:minmax(0,2.4fr) repeat(5,minmax(0,1fr))}
+@media(max-width:1380px){.cad-grid2{grid-template-columns:repeat(4,minmax(0,1fr))}.cad-grid2 .c-msg{grid-column:1/-1}}
+@media(max-width:700px){.cad-grid2{grid-template-columns:1fr 1fr}}
+.cad-abrir,.so-cel{display:none}
+.et-tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:0 -14px 12px;padding:2px 14px}
+.et-tabs::-webkit-scrollbar{display:none}
+.et-tabs button{flex:none;display:inline-flex;align-items:center;gap:7px;min-height:40px;padding:0 14px;border-radius:999px;border:1px solid #D8CBC0;background:#fff;font-weight:700;color:var(--txt-2);cursor:pointer}
+.et-tabs button b{min-width:22px;height:22px;border-radius:999px;background:#F1E6E3;color:var(--vinho);font-size:12px;display:inline-flex;align-items:center;justify-content:center;padding:0 6px}
+.et-tabs button.on{background:var(--vinho);border-color:var(--vinho);color:#fff}.et-tabs button.on b{background:#fff}
+.et-lista{display:flex;flex-direction:column;gap:10px}
+
 kbd{font-family:'IBM Plex Mono',monospace;font-size:11px;border:1px solid #D8CBC0;border-bottom-width:2px;border-radius:5px;padding:0 5px;background:#fff;color:var(--txt-2)}
 /* ficha */
 .dl{display:grid;grid-template-columns:120px 1fr;gap:9px 12px;margin:12px 0 0}
@@ -254,6 +266,64 @@ kbd{font-family:'IBM Plex Mono',monospace;font-size:11px;border:1px solid #D8CBC
 @media(max-width:620px){.link-r{grid-template-columns:1fr}.funil-l{grid-template-columns:110px 1fr 70px}}
 .rodape{margin-top:24px;font-size:11.5px;color:var(--txt-2)}
 @media print{.side,.filtros,.tabs,#cad,.legenda{display:none!important}.main{padding:0}.card{break-inside:avoid}}
+/* ======================= CELULAR ======================= */
+@media(max-width:820px){
+  html,body{font-size:15px}
+  .app{display:block}
+  .side{position:sticky;top:0;z-index:40;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px;padding-top:calc(10px + env(safe-area-inset-top));box-shadow:0 4px 14px rgba(40,10,20,.18)}
+  .brand{font-size:21px;padding:0;white-space:nowrap}
+  .sub{display:none}
+  .nav{position:fixed;left:0;right:0;bottom:0;z-index:60;display:flex;gap:2px;background:#4A1522;padding:6px 6px calc(6px + env(safe-area-inset-bottom));box-shadow:0 -6px 20px rgba(0,0,0,.2)}
+  .nav .grp{display:none!important}
+  .nav button{flex:1 1 0;width:auto;min-width:0;flex-direction:column;justify-content:center;gap:3px;min-height:56px;padding:6px 2px;font-size:11px;font-weight:700;text-align:center;border-radius:12px}
+  .nav button span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
+  .nav .dot{display:none}.nav .ico{display:block}
+  .nav-cfg-l{font-size:0}.nav-cfg-l::after{content:'Ajustes';font-size:11px}
+  .quem{margin:0;padding:0;border:0;display:flex;align-items:center;gap:8px;font-size:12px}
+  .quem>div{display:flex;align-items:center;gap:8px}
+  .quem .note,#quem-nivel{display:none}
+  #quem-nome{display:block;font-size:12.5px;max-width:84px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .sinc{margin:0}.sinc span{display:none}
+  .quem .bt-at,.quem .bt-sair{margin:0;min-height:38px;padding:0 12px;font-size:13px}
+  .quem .bt-at .txt{display:none}.quem .bt-at span{font-size:17px}
+  .main{padding:14px 14px calc(88px + env(safe-area-inset-bottom))}
+  h1{font-size:23px}
+  .topo{margin-bottom:12px;gap:10px;align-items:stretch}
+  .topo>div:first-child{width:100%}
+  .filtros{flex-wrap:nowrap;overflow-x:auto;width:100%;margin:0 -14px;padding:2px 14px 6px;width:calc(100% + 28px);scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .filtros::-webkit-scrollbar{display:none}
+  .filtros>*{flex:none}
+  .filtros .in{min-width:150px;min-height:44px}
+  #ld-busca{width:190px!important}
+  .acoes-ficha{display:grid!important;grid-template-columns:1fr 1fr;gap:8px;overflow:visible!important;margin:4px 0 0!important;width:100%!important;padding:0!important}
+  .acoes-ficha>*{width:100%;min-height:46px;justify-content:center}
+  .acoes-ficha select{grid-column:1/-1}
+  .g-kpi{grid-template-columns:1fr 1fr;gap:10px}
+  .kpi{padding:13px 14px}.kpi .v{font-size:21px}.kpi .s{font-size:11.5px}
+  .card{padding:15px;border-radius:14px}
+  .grid{gap:12px}
+  .funil-l{grid-template-columns:100px 1fr 62px;gap:8px}
+  .tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:6px -14px 14px;padding:0 14px}
+  .tabs::-webkit-scrollbar{display:none}
+  .tabs button{flex:none}
+  .modal-f{padding:0;align-items:stretch}
+  .modal,.modal.larga{width:100%;min-height:100%;border-radius:0;padding:18px 16px calc(20px + env(safe-area-inset-bottom))}
+  .modal .acoes{position:sticky;bottom:0;background:#fff;margin:18px -16px 0;padding:12px 16px calc(12px + env(safe-area-inset-bottom));border-top:1px solid var(--linha)}
+  .modal .acoes .btn,.modal .acoes .btn2{flex:1}
+  .toast{bottom:calc(86px + env(safe-area-inset-bottom))}
+  .legenda{gap:6px;margin:12px 0 10px}.legenda>b,.legenda>span:not(.tp){display:none}
+  .in{min-height:46px;font-size:16px}
+  .btn,.btn2{min-height:46px}
+  .lc{padding:13px 14px 13px 15px}
+  /* cadastro: recolhido num botão; abre com todos os campos */
+  .cad-abrir{display:flex;width:100%;min-height:52px;font-size:16px}
+  #cad:not(.aberto){padding:0;border:0;background:transparent}
+  #cad:not(.aberto)>*:not(.cad-abrir){display:none!important}
+  #cad.aberto .cad-abrir{display:none}
+  .so-cel{display:inline-flex}
+  .dl{grid-template-columns:104px 1fr}
+  .link-r{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
@@ -305,16 +375,16 @@ kbd{font-family:'IBM Plex Mono',monospace;font-size:11px;border:1px solid #D8CBC
     <div class="sub">Leads &amp; Campanhas</div>
     <nav class="nav" aria-label="Menu principal" id="nav">
       <div class="grp">CRM</div>
-      <button data-tela="painel"><span class="dot"></span>Painel</button>
-      <button data-tela="leads"><span class="dot"></span>Leads</button>
+      <button data-tela="painel"><span class="dot"></span><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><span>Painel</span></button>
+      <button data-tela="leads"><span class="dot"></span><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M3 5h18l-7 8v6l-4 2v-8z"/></svg><span>Leads</span></button>
       <div class="grp">Campanhas</div>
-      <button data-tela="campanhas"><span class="dot"></span>Campanhas</button>
+      <button data-tela="campanhas"><span class="dot"></span><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10v4h3l6 4V6L6 10zM16 9a4 4 0 0 1 0 6M19 6a8 8 0 0 1 0 12"/></svg><span>Campanhas</span></button>
       <div class="grp oculto" id="grp-sis">Sistema</div>
-      <button data-tela="config" id="nav-config" class="oculto"><span class="dot"></span>Configurações</button>
+      <button data-tela="config" id="nav-config" class="oculto"><span class="dot"></span><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg><span class="nav-cfg-l">Configurações</span></button>
     </nav>
     <div class="quem"><div><span class="note" style="color:#D9C3A0">Conectada como</span><b id="quem-nome">—</b><span id="quem-nivel" style="font-size:11px"></span>
       <div class="sinc" id="sinc" title="Os dados aparecem na hora com a última versão conhecida e são conferidos com a planilha a cada minuto"><i></i><span id="sinc-txt">sincronizado</span></div>
-      <button class="bt-at" id="bt-atualizar" title="Buscar agora o que a equipe lançou (tecla F5 também funciona)"><span aria-hidden="true">↻</span> Atualizar</button></div><button onclick="sair()">Sair</button></div>
+      <button class="bt-at" id="bt-atualizar" title="Buscar agora o que a equipe lançou (tecla F5 também funciona)" aria-label="Atualizar"><span aria-hidden="true">↻</span><b class="txt"> Atualizar</b></button></div><button class="bt-sair" onclick="sair()">Sair</button></div>
   </aside>
   <main class="main" id="main"></main>
 </div>
@@ -330,7 +400,7 @@ kbd{font-family:'IBM Plex Mono',monospace;font-size:11px;border:1px solid #D8CBC
    Mesmo padrão do Recall e Follow-up: página no GitHub, dados na planilha da
    clínica via Apps Script (/exec), sessão por nome + código.
    ========================================================================== */
-const VERSAO_TELA = 'V1.2';
+const VERSAO_TELA = 'V1.3';
 let API_URL = '';
 try { API_URL = (window.KN_LEADS_API || '').trim(); } catch (e) {}
 if (!API_URL) { try { API_URL = localStorage.getItem('kassila_leads_url') || ''; } catch (e) {} }
@@ -723,7 +793,6 @@ async function telaPainel(){
       </select>
       ${f.periodo === 'LIVRE' ? `<div style="width:150px">${campoData('pn-de', f.de, ' data-f="de_br" aria-label="De"')}</div><div style="width:150px">${campoData('pn-ate', f.ate, ' data-f="ate_br" aria-label="Até"')}</div>` : ''}
       ${filtrosComuns('pn', f)}
-      <button class="btn" onclick="novoLead()">+ Novo lead</button>
     </div></div><div id="pn-c">${esqueleto(6)}</div>`;
   el('pn-f').querySelectorAll('[data-f]').forEach(s => s.onchange = () => {
     if (s.dataset.f === 'de_br') { if (!dataValida(s.value)) return; f.de = s.value; }
@@ -792,7 +861,7 @@ async function telaLeads(){
       <input class="in" style="width:220px" type="search" id="ld-busca" placeholder="Buscar nome ou WhatsApp" value="${esc(f.busca)}" aria-label="Buscar lead">
       ${filtrosComuns('ld', f)}
     </div></div>
-    <section class="card" id="cad">${formCadastroRapido()}</section>
+    <section class="card" id="cad"><button class="btn cad-abrir" type="button" onclick="el('cad').classList.add('aberto');setTimeout(()=>el('q-nome').focus(),30)">+ Cadastrar lead</button>${formCadastroRapido()}</section>
     <div class="legenda" aria-label="Legenda das cores"><b>Cor do cartão:</b>${tipoChip('NOVA', true)}${tipoChip('RECALL', true)}${tipoChip('FOLLOWUP', true)}<span>· borda vermelha = prazo estourado</span><span class="so-pc" style="margin-left:auto">atalho <kbd>N</kbd> novo lead</span></div>
     <div id="ld-c">${esqueleto(5)}</div>`;
   el('ld-f').querySelectorAll('[data-visao]').forEach(b => b.onclick = () => { f.visao = b.dataset.visao; telaLeads(); });
@@ -837,7 +906,25 @@ function cartaoLead(k){
     ${k.alerta ? `<div class="alerta">${esc(k.alerta)}</div>` : (k.proxima_acao_data ? `<div class="note">${esc(k.proxima_acao || 'Próxima ação')} · ${esc(k.proxima_acao_data)}</div>` : '')}
   </div>`;
 }
+const celular = () => window.matchMedia('(max-width:820px)').matches;
+const ROT_CURTO = { NOVO: 'Novos', CONVERSA: 'Conversa', ORCAMENTO: 'Orçamento', AGENDADO: 'Agendado', FECHADO: 'Fechado', PERDIDO: 'Perdido' };
+/** No celular o funil vira abas por etapa (com a contagem) e uma lista de cartões. */
+function pintarFunilCel(d){
+  const f = F.leads;
+  if (!f.etapaCel || !d.colunas.some(c => c.etapa === f.etapaCel)) f.etapaCel = (d.colunas.find(c => c.qtd && c.etapa !== 'FECHADO' && c.etapa !== 'PERDIDO') || d.colunas[0]).etapa;
+  const col = d.colunas.find(c => c.etapa === f.etapaCel);
+  el('ld-c').innerHTML = `<div class="et-tabs" role="tablist">${d.colunas.map(c => `<button role="tab" data-et="${c.etapa}" class="${c.etapa === f.etapaCel ? 'on' : ''}">${esc(ROT_CURTO[c.etapa])}<b>${c.qtd}</b></button>`).join('')}</div>
+    <div class="note" style="margin:-4px 0 10px">${col.valor ? brl(col.valor) + ' · ' : ''}${col.etapa === 'NOVO' ? 'responder em até ' + CTX.cfg.meta_resposta_min + ' min' : esc(ROT_ETAPA[col.etapa])}</div>
+    <div class="et-lista">${col.itens.map(cartaoLead).join('') || '<div class="card vazio">Nenhum lead nesta etapa.</div>'}</div>
+    <p class="note mt">Toque no cartão para abrir a ficha e mudar a etapa.</p>`;
+  el('ld-c').querySelectorAll('[data-et]').forEach(b => b.onclick = () => { f.etapaCel = b.dataset.et; pintarFunilCel(d); });
+  el('ld-c').querySelectorAll('.lc').forEach(c => { c.removeAttribute('draggable'); c.onclick = () => ir('lead', c.dataset.id); });
+}
+let ULT_LEADS = null;
+window.matchMedia('(max-width:820px)').addEventListener('change', () => { if (TELA === 'leads' && ULT_LEADS && F.leads.visao !== 'LISTA') pintarFunil(ULT_LEADS); });
 function pintarFunil(d){
+  ULT_LEADS = d;
+  if (celular()) return pintarFunilCel(d);
   el('ld-c').innerHTML = `<div class="kanban">${d.colunas.map(c => `<section class="col" data-col="${c.etapa}">
     <div class="col-h"><h2 style="font-size:13.5px">${esc(c.rotulo)}</h2><span class="chip" style="background:#fff">${c.qtd}</span></div>
     <div class="note" style="padding:0 4px;margin-top:-4px">${c.valor ? brl(c.valor) : (c.etapa === 'NOVO' ? 'responder em até ' + CTX.cfg.meta_resposta_min + ' min' : '&nbsp;')}</div>
@@ -865,9 +952,9 @@ function pintarListaLeads(d){
 /* ---------- cadastro rápido com busca no Cadastro Único ---------- */
 function formCadastroRapido(){
   const camps = (CTX.campanhas || []).filter(c => c.status === 'ATIVA');
-  return `<div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px"><h2>Cadastro rápido de lead</h2><span class="note">Digite o nome ou o WhatsApp: a base da clínica é conferida antes de gravar</span></div>
+  return `<div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px"><h2>Cadastro rápido de lead</h2><span class="note so-pc">Digite o nome ou o WhatsApp: a base da clínica é conferida antes de gravar</span><button type="button" class="btn2 btn-min so-cel" onclick="el('cad').classList.remove('aberto')">Fechar</button></div>
     <div class="cad-grid mt">
-      <div class="fl c-nome" style="position:relative"><label for="q-nome">Nome completo</label><input id="q-nome" class="in" autocomplete="off" placeholder="Nome e sobrenome da paciente"><div id="q-sug" class="sug oculto"></div></div>
+      <div class="fl c-nome" style="position:relative"><label for="q-nome">Nome</label><input id="q-nome" class="in" autocomplete="off" placeholder="Nome da paciente (sobrenome se souber)"><div id="q-sug" class="sug oculto"></div></div>
       <div class="fl c-tel"><label for="q-tel">WhatsApp</label><input id="q-tel" class="in tel-br" inputmode="tel" autocomplete="off" placeholder="(44) 99999-9999"></div>
       <div class="fl"><label for="q-fonte">Fonte</label><select id="q-fonte" class="in">${opcoes('FONTE', '', 'Escolha')}</select></div>
       <div class="fl"><label for="q-camp">Campanha</label><select id="q-camp" class="in"><option value="">Sem campanha</option>${camps.map(c => `<option value="${esc(c.id)}">${esc(c.nome)}</option>`).join('')}</select></div>
@@ -875,15 +962,14 @@ function formCadastroRapido(){
       <div class="fl"><label for="q-perg">1ª pergunta</label><select id="q-perg" class="in">${opcoes('PERGUNTA', '', 'Nenhuma')}</select></div>
     </div>
     <div id="q-pac" class="mt"></div>
-    <details class="mt"><summary class="note" style="cursor:pointer;font-weight:700">Mais detalhes (mensagem, Instagram, anúncio, cidade)</summary>
-      <div class="grid mt" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
-        <div class="fl" style="grid-column:1/-1"><label for="q-msg">Primeira mensagem da paciente</label><input id="q-msg" class="in" placeholder="Cole aqui. O código (VER-IGADS) do link de rastreio preenche campanha e fonte."></div>
-        <div class="fl"><label for="q-ig">Instagram</label><input id="q-ig" class="in" placeholder="@usuario"></div>
-        <div class="fl"><label for="q-anu">Anúncio / post</label><input id="q-anu" class="in"></div>
-        <div class="fl"><label for="q-cid">Cidade</label><input id="q-cid" class="in"></div>
-        <div class="fl"><label for="q-canal">Canal de entrada</label><select id="q-canal" class="in">${opcoes('CANAL', 'WHATSAPP')}</select></div>
-        ${gestao() ? `<div class="fl"><label for="q-resp">Responsável</label><select id="q-resp" class="in"><option value="">Eu mesma</option>${(CTX.equipe || []).map(n => `<option>${esc(n)}</option>`).join('')}</select></div>` : ''}
-      </div></details>
+    <div class="cad-grid2 mt">
+      <div class="fl c-msg"><label for="q-msg">Primeira mensagem da paciente <span class="note" style="font-weight:500">· opcional</span></label><input id="q-msg" class="in" placeholder="Cole o que ela escreveu. Se vier de um link de campanha, campanha e fonte se preenchem sozinhas."><span class="note" id="q-msg-st"></span></div>
+      <div class="fl"><label for="q-canal">Canal de entrada</label><select id="q-canal" class="in">${opcoes('CANAL', 'WHATSAPP')}</select></div>
+      <div class="fl"><label for="q-ig">Instagram</label><input id="q-ig" class="in" placeholder="@usuario"></div>
+      <div class="fl"><label for="q-anu">Anúncio / post</label><input id="q-anu" class="in" placeholder="Qual anúncio ou post"></div>
+      <div class="fl"><label for="q-cid">Cidade</label><input id="q-cid" class="in"></div>
+      ${gestao() ? `<div class="fl"><label for="q-resp">Responsável</label><select id="q-resp" class="in"><option value="">Eu mesma</option>${(CTX.equipe || []).map(n => `<option>${esc(n)}</option>`).join('')}</select></div>` : ''}
+    </div>
     <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:flex-end;margin-top:12px">
       <label style="display:flex;gap:8px;align-items:center;font-weight:600"><input type="checkbox" id="q-resp1"> Já respondi a paciente</label>
       <button class="btn" id="q-salvar">Salvar lead</button></div>`;
@@ -933,18 +1019,26 @@ function ligarCadastroRapido(raiz){
   raiz.querySelector('#q-nome').oninput = ev => { escolhida = null; pintarEscolha(); clearTimeout(t); t = setTimeout(() => buscar(ev.target.value), 450); };
   raiz.querySelector('#q-tel').onblur = ev => { if (!escolhida && soDig(ev.target.value).length >= 10) buscar(soDig(ev.target.value)); };
   raiz.querySelector('#q-nome').onblur = () => setTimeout(() => raiz.querySelector('#q-sug').classList.add('oculto'), 250);
+  /* Primeira mensagem: guarda o texto no histórico e, se trouxer o código do link de rastreio
+     (ex.: "(BF26-IGADS)"), preenche campanha e fonte sozinho. */
   raiz.querySelector('#q-msg') && (raiz.querySelector('#q-msg').oninput = ev => {
-    const m = String(ev.target.value).match(/\(([A-Z0-9]{2,12})-([A-Z0-9]{2,12})\)/i); if (!m) return;
+    const st = raiz.querySelector('#q-msg-st');
+    const m = String(ev.target.value).match(/\(([A-Z0-9]{2,12})-([A-Z0-9]{2,12})\)/i);
+    if (!m) { if (st) st.textContent = ''; return; }
     const c = (CTX.campanhas || []).find(x => String(x.codigo || '').toUpperCase() === m[1].toUpperCase()); if (c) raiz.querySelector('#q-camp').value = c.id;
-    const fo = raiz.querySelector('#q-fonte'); if ([...fo.options].some(o => o.value === m[2].toUpperCase())) fo.value = m[2].toUpperCase();
+    const fo = raiz.querySelector('#q-fonte'); const temF = [...fo.options].some(o => o.value === m[2].toUpperCase()); if (temF) { fo.value = m[2].toUpperCase(); fo.dispatchEvent(new Event('change')); }
+    if (st) st.textContent = c || temF ? '✓ Reconhecido: ' + [c ? 'campanha ' + c.nome : '', temF ? 'fonte ' + rot('FONTE', m[2].toUpperCase()) : ''].filter(Boolean).join(' · ') : 'Código ' + m[0] + ' não corresponde a campanha ativa.';
   });
+  /* a fonte já diz por onde ela chegou: o canal acompanha */
+  const CANAL_DA_FONTE = { WHATS: 'WHATSAPP', IGADS: 'INSTAGRAM', IGORG: 'INSTAGRAM', INFLU: 'INSTAGRAM', RECEP: 'LIGACAO', EVENTO: 'PRESENCIAL', SITE: 'WHATSAPP', GADS: 'WHATSAPP', INDIC: 'WHATSAPP' };
+  raiz.querySelector('#q-fonte').addEventListener('change', ev => { const cn = raiz.querySelector('#q-canal'); const v = CANAL_DA_FONTE[ev.target.value]; if (cn && v && [...cn.options].some(o => o.value === v)) cn.value = v; });
   raiz.querySelector('#q-salvar').onclick = async () => {
     const v = id => (raiz.querySelector(id) || {}).value || '';
     const p = { nome: v('#q-nome'), telefone: v('#q-tel'), fonte: v('#q-fonte'), id_campanha: v('#q-camp'), procedimento_interesse: v('#q-proc'),
       primeira_pergunta: v('#q-perg'), primeira_mensagem: v('#q-msg'), instagram: v('#q-ig'), anuncio: v('#q-anu'), cidade: v('#q-cid'),
       canal_entrada: v('#q-canal') || 'WHATSAPP', responsavel: v('#q-resp'), ja_respondido: raiz.querySelector('#q-resp1').checked ? 'SIM' : 'NAO',
       cod: escolhida ? escolhida.cod : '' };
-    if (!p.nome.trim() || p.nome.trim().split(/\s+/).length < 2) return toast('Informe nome e sobrenome.');
+    if (p.nome.replace(/[^A-Za-zÀ-ÿ]/g, '').length < 2) return toast('Informe o nome da paciente.');
     if (soDig(p.telefone).length < 10) return toast('Informe o WhatsApp com DDD.');
     if (!p.fonte) return toast('Escolha a fonte de entrada.');
     try {
@@ -956,7 +1050,8 @@ function ligarCadastroRapido(raiz){
     } catch (e) { falhar(e); }
   };
 }
-function novoLead(){ if (!CTX) return; abrirModal(`<h2>Novo lead</h2><div id="cad-m">${formCadastroRapido()}</div><div class="acoes"><button class="btn2" onclick="fecharModal()">Fechar</button></div>`, true); ligarCadastroRapido(el('cad-m')); }
+/** Atalho N: leva ao cadastro da tela Leads (o único lugar onde se lança lead). */
+function novoLead(){ if (!CTX) return; const foco = () => { const c = el('cad'); if (c) { c.classList.add('aberto'); const n = el('q-nome'); if (n) { n.focus(); n.scrollIntoView({ block: 'center', behavior: 'smooth' }); } } }; if (TELA !== 'leads') { ir('leads'); setTimeout(foco, 60); } else foco(); }
 
 /* ---------- mudança de etapa ---------- */
 /** Move o cartão na tela antes da planilha responder; se a gravação falhar, o funil é recarregado. */
@@ -1021,7 +1116,7 @@ function pintarLead(d){
   <div class="topo mt" style="align-items:center">
     <div style="display:flex;gap:14px;align-items:center"><div aria-hidden="true" style="width:54px;height:54px;border-radius:50%;background:var(--vinho);color:var(--champ);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:19px">${esc(ini)}</div>
       <div><h1 style="font-size:26px">${esc(l.nome)}</h1><div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px"><span class="chip forte">${esc(ROT_ETAPA[l.etapa])}</span><span class="chip">${esc(l.fonte_rotulo)}</span>${l.campanha ? `<span class="chip ouro">${esc(l.campanha)}</span>` : ''}${l.temperatura ? `<span class="chip">${esc(rot('TEMPERATURA', l.temperatura))}</span>` : ''}${tipoChip(l.tipo || (l.paciente_existente === 'SIM' ? 'RECALL' : 'NOVA'), true)}${l.cod_paciente ? `<span class="chip cinza">Nº ${esc(l.cod_paciente)}</span>` : ''}</div></div></div>
-    <div class="filtros">
+    <div class="filtros acoes-ficha">
       <a class="btn2" href="${linkWhats(l.telefone_norm || l.telefone)}" target="_blank" rel="noopener" id="bt-zap">WhatsApp</a>
       <a class="btn2" href="tel:+55${esc(soDig(l.telefone_norm || l.telefone))}">Ligar</a>
       ${l.etapa !== 'PERDIDO' ? `<button class="btn2" id="bt-perdido">Marcar como perdido</button>` : ''}
@@ -1171,7 +1266,7 @@ function pintarCampanha(d){
   if (!abas.some(a => a[0] === ABA_CP)) ABA_CP = 'briefing';
   el('main').innerHTML = `<a href="#campanhas" onclick="ir('campanhas');return false" style="font-weight:700;text-decoration:none">← Campanhas</a>
     <div class="topo mt"><div><div style="display:flex;gap:8px;align-items:center"><span class="chip ${COR_ST[c.status]}">${esc(c.status.charAt(0) + c.status.slice(1).toLowerCase())}</span><span class="note">${esc(c.data_inicio)} – ${esc(c.data_fim)}${d.dia ? ' · dia ' + d.dia.atual + ' de ' + d.dia.total : ''} · ${d.leads} lead(s)</span></div><h1>${esc(c.nome)}</h1></div>
-      <div class="filtros">${G ? `<button class="btn2" id="bt-dup">Duplicar campanha</button><button class="btn2" id="bt-res">Resultado</button><button class="btn" id="bt-edit">Editar briefing</button>` : ''}<button class="btn2" onclick="window.print()">Imprimir</button></div></div>
+      <div class="filtros acoes-ficha">${G ? `<button class="btn2" id="bt-dup">Duplicar campanha</button><button class="btn2" id="bt-res">Resultado</button><button class="btn" id="bt-edit">Editar briefing</button>` : ''}<button class="btn2" onclick="window.print()">Imprimir</button></div></div>
     <nav class="tabs" aria-label="Seções">${abas.map(a => `<button data-aba="${a[0]}" class="${ABA_CP === a[0] ? 'on' : ''}">${a[1]}</button>`).join('')}</nav><div id="cp-aba"></div>`;
   el('main').querySelectorAll('[data-aba]').forEach(b => b.onclick = () => { ABA_CP = b.dataset.aba; pintarCampanha(d); });
   if (G){ el('bt-edit').onclick = () => formCampanha(c); el('bt-res').onclick = () => ir('resultado', c.id_campanha); el('bt-dup').onclick = () => formCampanha(Object.assign({}, c, { id_campanha: '', nome: c.nome + ' (cópia)', codigo_rastreio: '', duplicar_de: c.id_campanha })); }
