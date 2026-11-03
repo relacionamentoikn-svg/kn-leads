@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<!-- LEADS E CAMPANHAS · V1.1 — este arquivo vai no repositório kn-leads. NÃO é o do Recall nem o do KN Vendas. -->
+<!-- LEADS E CAMPANHAS · V1.2 — este arquivo vai no repositório kn-leads. NÃO é o do Recall nem o do KN Vendas. -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Leads e Campanhas</title>
@@ -130,6 +130,9 @@ textarea.in{padding:10px 12px;min-height:90px;resize:vertical}
 @media(max-width:420px){.cad-grid{grid-template-columns:1fr}}
 /* sincronização */
 .sinc{display:flex;align-items:center;gap:7px;margin-top:10px;font-size:11.5px;color:#D9C3A0}
+.quem .bt-at{display:inline-flex;align-items:center;gap:6px;margin-top:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:8px;padding:6px 10px;cursor:pointer;font-weight:700;font-size:12px}
+.quem .bt-at:hover{background:rgba(255,255,255,.16)}
+.quem .bt-at.girando span{display:inline-block;animation:g .8s linear infinite}
 .sinc i{width:7px;height:7px;border-radius:50%;background:#8FC3A2;flex:none}
 .sinc.ativo i{background:#E9CF9E;animation:pulso 1s ease-in-out infinite}
 @keyframes pulso{50%{opacity:.25}}
@@ -310,7 +313,8 @@ kbd{font-family:'IBM Plex Mono',monospace;font-size:11px;border:1px solid #D8CBC
       <button data-tela="config" id="nav-config" class="oculto"><span class="dot"></span>Configurações</button>
     </nav>
     <div class="quem"><div><span class="note" style="color:#D9C3A0">Conectada como</span><b id="quem-nome">—</b><span id="quem-nivel" style="font-size:11px"></span>
-      <div class="sinc" id="sinc" title="Os dados aparecem na hora com a última versão conhecida e são conferidos com a planilha em seguida"><i></i><span id="sinc-txt">sincronizado</span></div></div><button onclick="sair()">Sair</button></div>
+      <div class="sinc" id="sinc" title="Os dados aparecem na hora com a última versão conhecida e são conferidos com a planilha a cada minuto"><i></i><span id="sinc-txt">sincronizado</span></div>
+      <button class="bt-at" id="bt-atualizar" title="Buscar agora o que a equipe lançou (tecla F5 também funciona)"><span aria-hidden="true">↻</span> Atualizar</button></div><button onclick="sair()">Sair</button></div>
   </aside>
   <main class="main" id="main"></main>
 </div>
@@ -326,7 +330,7 @@ kbd{font-family:'IBM Plex Mono',monospace;font-size:11px;border:1px solid #D8CBC
    Mesmo padrão do Recall e Follow-up: página no GitHub, dados na planilha da
    clínica via Apps Script (/exec), sessão por nome + código.
    ========================================================================== */
-const VERSAO_TELA = 'V1.1';
+const VERSAO_TELA = 'V1.2';
 let API_URL = '';
 try { API_URL = (window.KN_LEADS_API || '').trim(); } catch (e) {}
 if (!API_URL) { try { API_URL = localStorage.getItem('kassila_leads_url') || ''; } catch (e) {} }
@@ -483,13 +487,13 @@ function memLimpar(){ MEM.clear(); try { Object.keys(sessionStorage).filter(x =>
  * Lê uma tela: pinta já com o que estiver na memória e, em paralelo, busca na
  * planilha; só repinta se algo mudou. Sem nada na memória, espera a planilha.
  */
-async function carregar(acao, params, pintar){
+async function carregar(acao, params, pintar, fresco){
   const k = acao + '|' + JSON.stringify(params || {});
   const m = memLer(k); let pintou = false;
   if (m && pintar){ try { pintar(m.d, true); pintou = true; } catch (e) { console.error(e); } }
   sinc(true);
   try {
-    const d = await api(acao, params);
+    const d = await api(acao, fresco ? Object.assign({}, params, { _fresco: 1 }) : params);
     const mudou = !m || JSON.stringify(m.d) !== JSON.stringify(d);
     memGravar(k, d);
     if (pintar && (mudou || !pintou)) preservandoCampos(() => pintar(d, false));
@@ -523,6 +527,43 @@ function preCarregar(){
   };
   setTimeout(prox, 600);
 }
+
+/* ---------- ATUALIZAR: botão e automático ----------
+   Automático a cada 60 s com a janela visível e ao voltar para ela. Não atualiza com
+   janela aberta (modal), gravação em andamento ou campo sendo digitado. Só repinta se
+   algo mudou, sem voltar ao topo da página. */
+const AUTO_MS = 60000;
+let ULT_ATUAL = Date.now(), ATUALIZANDO = false;
+function digitando(){
+  const a = document.activeElement;
+  if (a && /INPUT|TEXTAREA|SELECT/.test(a.tagName) && a.closest('#main') && (a.value || a.dataset.sujo)) return true;
+  return [...document.querySelectorAll('#main [data-sujo]')].some(i => i.type !== 'checkbox' && String(i.value || '').trim());
+}
+async function atualizarTela(manual){
+  if (!USUARIO || ATUALIZANDO) return;
+  if (!manual && (el('modal-f').classList.contains('on') || Object.keys(EM_VOO).length || digitando())) return;
+  ATUALIZANDO = true; ULT_ATUAL = Date.now();
+  const b = el('bt-atualizar'); if (manual && b) b.classList.add('girando');
+  const arg = (location.hash.split('=')[1] || '');
+  try {
+    if (manual) { try { const c = await api('contexto'); guardarCtx(c); USUARIO = c.usuario; } catch (e) {} }
+    const fr = !!manual;
+    if (TELA === 'painel') await carregar('painel', Object.assign({}, F.painel, periodoDatas(F.painel)), d => { if (TELA === 'painel') pintarPainel(d); }, fr);
+    else if (TELA === 'leads') await carregarLeads(fr);
+    else if (TELA === 'lead' && arg) await carregar('lead', { id: arg }, d => { if (TELA === 'lead') pintarLead(d); }, fr);
+    else if (TELA === 'campanhas') await carregar('campanhas', {}, d => { if (TELA === 'campanhas') pintarCampanhas(d); }, fr);
+    else if (TELA === 'campanha' && arg) await carregar('campanha', { id: arg }, d => { if (TELA === 'campanha') pintarCampanha(d); }, fr);
+    else if (TELA === 'resultado' && arg) await carregar('resultado', { id: arg }, d => { if (TELA === 'resultado') pintarResultado(d); }, fr);
+    else if (TELA === 'config' && manual) await telaConfig(true);
+    if (manual) toast('Atualizado com a planilha');
+  } catch (e) { if (manual) falhar(e); }
+  finally { ATUALIZANDO = false; if (b) b.classList.remove('girando'); }
+}
+el('bt-atualizar').onclick = () => atualizarTela(true);
+setInterval(() => { if (document.visibilityState === 'visible' && Date.now() - ULT_ATUAL >= AUTO_MS - 1000) atualizarTela(false); }, 15000);
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible' && Date.now() - ULT_ATUAL > 20000) atualizarTela(false); });
+window.addEventListener('focus', () => { if (Date.now() - ULT_ATUAL > 20000) atualizarTela(false); });
+document.addEventListener('keydown', ev => { if (ev.key === 'F5' && USUARIO && !ev.ctrlKey) { ev.preventDefault(); atualizarTela(true); } });
 
 /* ---------- avisos ---------- */
 function toast(m){ const t = el('toast'); t.textContent = m; t.classList.add('on'); clearTimeout(window.__t); window.__t = setTimeout(() => t.classList.remove('on'), 3800); }
@@ -760,7 +801,7 @@ async function telaLeads(){
   ligarCadastroRapido(el('cad'));
   carregarLeads();
 }
-async function carregarLeads(){
+async function carregarLeads(fresco){
   const f = F.leads;
   try {
     await carregar('leads', f, d => {
@@ -768,7 +809,7 @@ async function carregarLeads(){
       const abertos = d.colunas.filter(c => ['FECHADO', 'PERDIDO'].indexOf(c.etapa) === -1).reduce((s, c) => s + c.qtd, 0);
       el('ld-sub').textContent = `${d.total} lead(s) · ${abertos} em aberto`;
       f.visao === 'LISTA' ? pintarListaLeads(d) : pintarFunil(d);
-    });
+    }, fresco);
   } catch (e) { if (el('ld-c')) el('ld-c').innerHTML = `<div class="card vazio">Não foi possível carregar: ${esc(e.message)}</div>`; }
 }
 /** Minutos desde a entrada (hora de Brasília), para o cronômetro dos leads sem resposta. */
@@ -996,7 +1037,8 @@ function pintarLead(d){
         <dt>Cidade</dt><dd>${esc(l.cidade || '—')}</dd><dt>Entrada</dt><dd>${esc(l.data_entrada)} · ${esc(l.hora_entrada)}</dd><dt>Canal</dt><dd>${esc(l.canal_rotulo)}</dd>
         ${l.anuncio ? `<dt>Anúncio</dt><dd>${esc(l.anuncio)}</dd>` : ''}<dt>Campanha</dt><dd>${l.id_campanha ? `<a href="#" id="lk-camp">${esc(l.campanha)}</a>` : '—'}</dd>
         <dt>Interesse</dt><dd>${esc(rot('PROCEDIMENTO', l.procedimento_interesse) || '—')}</dd><dt>Responsável</dt><dd>${esc(l.responsavel)}</dd>
-        <dt>1ª resposta</dt><dd>${l.minutos_1a_resposta === '' ? 'ainda não respondida' : esc(l.minutos_1a_resposta) + ' min'}</dd>
+        ${l.origem_lead === 'RECALL' ? `<dt>Origem</dt><dd>Vinculada à campanha pelo Recall</dd>` : ''}
+        <dt>1ª resposta</dt><dd>${l.origem_lead === 'RECALL' ? 'conversa iniciada no Recall' : (l.minutos_1a_resposta === '' ? 'ainda não respondida' : esc(l.minutos_1a_resposta) + ' min')}</dd>
         ${l.primeira_mensagem ? `<dt>1ª mensagem</dt><dd style="font-weight:500">“${esc(l.primeira_mensagem)}”</dd>` : ''}
         ${l.observacao ? `<dt>Observação</dt><dd style="font-weight:500">${esc(l.observacao)}</dd>` : ''}</dl></section>
       <section class="card"><h2>Perguntas registradas</h2><p class="note" style="margin:6px 0 10px">Alimentam o ranking “O que os leads perguntam”</p>
@@ -1025,6 +1067,7 @@ function pintarLead(d){
         <dt>Valor orçado</dt><dd>${l.valor_orcado ? brl2(l.valor_orcado) : '—'}</dd>${l.data_orcamento ? `<dt>Data</dt><dd>${esc(l.data_orcamento)}</dd>` : ''}
         ${l.num_orcamento_erp ? `<dt>Nº no ERP</dt><dd>${esc(l.num_orcamento_erp)}</dd>` : ''}${l.data_agendamento ? `<dt>Agendado</dt><dd>${esc(l.data_agendamento)}</dd>` : ''}
         ${l.etapa === 'FECHADO' ? `<dt>Fechado</dt><dd>${brl2(l.valor_fechado)} em ${esc(l.data_fechamento)}</dd><dt>Procedimentos</dt><dd>${esc(l.procedimentos_fechados || '—')}</dd>` : ''}
+        ${l.auditoria_venda ? `<dt>Auditoria</dt><dd style="font-weight:600;color:var(--verde)">${esc(l.auditoria_venda)}</dd>` : ''}
         ${l.etapa === 'PERDIDO' ? `<dt>Perdido</dt><dd>${esc(rot('MOTIVO_PERDA', l.motivo_perda))} em ${esc(l.data_perda)}</dd>` : ''}</dl></section>
       <section class="card" style="background:#FBF6EE"><h2>Próxima ação</h2><div style="font-weight:700;margin-top:8px">${l.proxima_acao_data ? esc(l.proxima_acao || 'Retornar') + ' · ' + esc(l.proxima_acao_data) : 'Nenhuma marcada'}</div><div class="note">Responsável: ${esc(l.responsavel)}</div></section>
     </div>
@@ -1264,9 +1307,9 @@ function formRoteiro(c, r, depois){
 /* ==========================================================================
    RESULTADO DA CAMPANHA
    ========================================================================== */
-async function telaResultado(id){
+async function telaResultado(id, manter){
   if (!id) return ir('campanhas');
-  el('main').innerHTML = `<a href="#campanhas" onclick="ir('campanhas');return false" style="font-weight:700;text-decoration:none">← Campanhas</a><div class="mt">${esqueleto(8)}</div>`;
+  if (!manter) el('main').innerHTML = `<a href="#campanhas" onclick="ir('campanhas');return false" style="font-weight:700;text-decoration:none">← Campanhas</a><div class="mt">${esqueleto(8)}</div>`;
   try { await carregar('resultado', { id }, d => { if (TELA === 'resultado') pintarResultado(d); }); } catch (e) { falhaBloco(e, () => telaResultado(id)); }
 }
 function pintarResultado(d){
@@ -1301,11 +1344,18 @@ function pintarResultado(d){
     <section class="card mt"><h2>Conferência com o KN Vendas</h2>
       ${cf.ligado ? `<p class="note" style="margin:6px 0 12px">${num(cf.orcamentos)} orçamento(s) aprovado(s) marcados com a campanha no KN Vendas · ${brl(cf.valor_vendas)} em venda do comercial</p>
         <div class="grid g-2"><div><div class="lbl">Fechado no app sem orçamento no KN Vendas (${cf.fechado_sem_orcamento.length})</div>${cf.fechado_sem_orcamento.map(x => `<div style="padding:8px 0;border-bottom:1px solid var(--linha-2)"><a href="#" data-lead="${esc(x.id)}"><b>${esc(x.nome)}</b></a> · ${brl(x.valor)} · ${esc(x.data)} · ${esc(x.responsavel || '')}</div>`).join('') || '<p class="note">Nenhum. Tudo conferido.</p>'}</div>
-        <div><div class="lbl">Orçamento marcado sem fechamento no app (${cf.orcamento_sem_fechamento.length})</div>${cf.orcamento_sem_fechamento.map(x => `<div style="padding:8px 0;border-bottom:1px solid var(--linha-2)"><b>${esc(x.paciente)}</b> · ORÇ ${esc(x.num)} · ${brl(x.valor)} · ${esc(x.data)}</div>`).join('') || '<p class="note">Nenhum.</p>'}</div></div>`
+        <div><div class="lbl">Venda no KN Vendas sem fechamento no app (${cf.orcamento_sem_fechamento.length})</div>${cf.orcamento_sem_fechamento.map(x => `<div style="padding:9px 0;border-bottom:1px solid var(--linha-2);display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;justify-content:space-between">
+            <span><b>${esc(x.paciente)}</b> · ORÇ ${esc(x.num)} · ${brl(x.valor)} · ${esc(x.data)}${x.lead ? `<br><span class="note">lead de ${esc(x.lead.responsavel || '—')} · ${esc(ROT_ETAPA[x.lead.etapa] || x.lead.etapa)}</span>` : '<br><span class="note">sem lead desta paciente na campanha</span>'}</span>
+            ${x.lead ? `<button class="btn btn-min" data-auditar="${esc(x.num)}" data-nome="${esc(x.paciente)}" data-valor="${esc(x.valor)}">Confirmar venda</button>` : ''}</div>`).join('') || '<p class="note">Nenhuma. Tudo conferido.</p>'}
+          ${cf.orcamento_sem_fechamento.some(x => x.lead) ? '<p class="note" style="margin-top:10px">Regra de auditoria: a venda só entra na receita da campanha depois de confirmada aqui. O lead fecha com o valor e o nº do orçamento do KN Vendas e fica registrado quem confirmou.</p>' : ''}</div></div>`
         : `<p class="note">${esc(cf.aviso || 'A conferência aparece quando o ID da planilha do KN Vendas é preenchido na Config do Leads.')}</p>`}</section>
     <p class="rodape">Números a partir dos registros do app de Leads e dos custos lançados na campanha.</p>`;
   el('lk-brief').onclick = ev => { ev.preventDefault(); ir('campanha', c.id); };
   el('main').querySelectorAll('[data-lead]').forEach(a => a.onclick = ev => { ev.preventDefault(); ir('lead', a.dataset.lead); });
+  el('main').querySelectorAll('[data-auditar]').forEach(b => b.onclick = async () => {
+    if (!confirm(`Confirmar a venda de ${b.dataset.nome} (ORÇ ${b.dataset.auditar} · ${brl2(b.dataset.valor)}) para a campanha ${c.nome}?\n\nO lead será fechado com o valor do KN Vendas e a auditoria fica registrada em seu nome.`)) return;
+    try { const r = await api('confirmarVenda', { id_campanha: c.id, num_orcamento: b.dataset.auditar }); toast('Venda confirmada · ' + r.nome + ' · ' + brl2(r.valor)); telaResultado(c.id, true); } catch (e) { falhar(e); }
+  });
 }
 
 /* ==========================================================================
