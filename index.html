@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<!-- LEADS E CAMPANHAS · V1.3 — este arquivo vai no repositório kn-leads. NÃO é o do Recall nem o do KN Vendas. -->
+<!-- LEADS E CAMPANHAS · V1.4 — este arquivo vai no repositório kn-leads. NÃO é o do Recall nem o do KN Vendas. -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Leads e Campanhas</title>
@@ -101,6 +101,12 @@ textarea.in{padding:10px 12px;min-height:90px;resize:vertical}
 .lc-pe{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:13px;min-width:0}
 .lc-pe .note{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .lc.movendo{opacity:.55}
+/* V1.4 · Follow-up: cor pela proximidade da data de contato */
+.lc.fu-PERTO{border-top-color:#E8D29B;border-right-color:#E8D29B;border-bottom-color:#E8D29B;background:#FFFBEF}
+.lc.fu-HOJE{border-top-color:#E0A458;border-right-color:#E0A458;border-bottom-color:#E0A458;background:#FFF4E6}
+.fu-tag{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:800;border-radius:8px;padding:5px 8px;background:#F3EEE8;color:#4A3A3A;align-self:flex-start}
+.fu-tag.PERTO{background:#F7EBC8;color:#6E5320}.fu-tag.HOJE{background:#F9DDBA;color:#7A4510}.fu-tag.VENCIDO{background:var(--alerta-f);color:var(--alerta)}
+.atalhos-data{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.atalhos-data button{border:1px solid var(--linha);background:#fff;border-radius:999px;padding:6px 12px;font-weight:700;font-size:12.5px;cursor:pointer;color:var(--txt)}
 .tp{display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:999px;font-size:11.5px;font-weight:800;background:var(--tf,#EEE);color:var(--tc,#555);white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
 .tp::before{content:'';width:7px;height:7px;border-radius:50%;background:currentColor;flex:none}
 .tp.t-NOVA{--tc:var(--t-nova);--tf:var(--t-nova-f)}.tp.t-RECALL{--tc:var(--t-rec);--tf:var(--t-rec-f)}.tp.t-FOLLOWUP{--tc:var(--t-fu);--tf:var(--t-fu-f)}
@@ -400,7 +406,7 @@ kbd{font-family:'IBM Plex Mono',monospace;font-size:11px;border:1px solid #D8CBC
    Mesmo padrão do Recall e Follow-up: página no GitHub, dados na planilha da
    clínica via Apps Script (/exec), sessão por nome + código.
    ========================================================================== */
-const VERSAO_TELA = 'V1.3';
+const VERSAO_TELA = 'V1.4';
 let API_URL = '';
 try { API_URL = (window.KN_LEADS_API || '').trim(); } catch (e) {}
 if (!API_URL) { try { API_URL = localStorage.getItem('kassila_leads_url') || ''; } catch (e) {} }
@@ -417,8 +423,8 @@ const xr = v => (v === '' || v == null || !Number(v)) ? '—' : Number(v).toLoca
 const gestao = () => USUARIO && USUARIO.nivel === 'GESTAO';
 const rot = (tipo, v) => { const a = (CTX && CTX.listas && CTX.listas[tipo]) || []; const x = a.find(i => i.valor === v); return x ? x.rotulo : (v || ''); };
 const opcoes = (tipo, sel, vazio) => (vazio !== undefined ? `<option value="">${esc(vazio)}</option>` : '') + ((CTX && CTX.listas[tipo]) || []).map(i => `<option value="${esc(i.valor)}"${i.valor === sel ? ' selected' : ''}>${esc(i.rotulo)}</option>`).join('');
-const ROT_ETAPA = { NOVO: 'Novo · sem resposta', CONVERSA: 'Em conversa', ORCAMENTO: 'Orçamento enviado', AGENDADO: 'Agendado', FECHADO: 'Fechado', PERDIDO: 'Perdido' };
-const COR_ETAPA = { NOVO: 'alerta', CONVERSA: '', ORCAMENTO: 'ouro', AGENDADO: '', FECHADO: 'ok', PERDIDO: 'cinza' };
+const ROT_ETAPA = { NOVO: 'Novo · sem resposta', CONVERSA: 'Em conversa', ORCAMENTO: 'Orçamento enviado', AGENDADO: 'Agendado', FECHADO: 'Fechado', FOLLOWUP: 'Follow-up', PERDIDO: 'Perdido' };
+const COR_ETAPA = { NOVO: 'alerta', CONVERSA: '', ORCAMENTO: 'ouro', AGENDADO: '', FECHADO: 'ok', FOLLOWUP: 'ouro', PERDIDO: 'cinza' };
 const TIPOS = { NOVA: 'Paciente nova', RECALL: 'Paciente da base · Recall', FOLLOWUP: 'Orçamento em aberto · Follow-up' };
 const TIPO_CURTO = { NOVA: 'Nova', RECALL: 'Recall', FOLLOWUP: 'Follow-up' };
 const tipoChip = (t, longo) => t && TIPOS[t] ? `<span class="tp t-${t}" title="${esc(TIPOS[t])}">${esc(longo ? TIPOS[t] : TIPO_CURTO[t])}</span>` : '';
@@ -862,7 +868,7 @@ async function telaLeads(){
       ${filtrosComuns('ld', f)}
     </div></div>
     <section class="card" id="cad"><button class="btn cad-abrir" type="button" onclick="el('cad').classList.add('aberto');setTimeout(()=>el('q-nome').focus(),30)">+ Cadastrar lead</button>${formCadastroRapido()}</section>
-    <div class="legenda" aria-label="Legenda das cores"><b>Cor do cartão:</b>${tipoChip('NOVA', true)}${tipoChip('RECALL', true)}${tipoChip('FOLLOWUP', true)}<span>· borda vermelha = prazo estourado</span><span class="so-pc" style="margin-left:auto">atalho <kbd>N</kbd> novo lead</span></div>
+    <div class="legenda" aria-label="Legenda das cores"><b>Cor do cartão:</b>${tipoChip('NOVA', true)}${tipoChip('RECALL', true)}${tipoChip('FOLLOWUP', true)}<span>· borda vermelha = prazo estourado · follow-up: amarelo = data próxima, laranja = hoje</span><span class="so-pc" style="margin-left:auto">atalho <kbd>N</kbd> novo lead</span></div>
     <div id="ld-c">${esqueleto(5)}</div>`;
   el('ld-f').querySelectorAll('[data-visao]').forEach(b => b.onclick = () => { f.visao = b.dataset.visao; telaLeads(); });
   ligarFiltros(el('ld-f'), f, () => carregarLeads());
@@ -875,8 +881,9 @@ async function carregarLeads(fresco){
   try {
     await carregar('leads', f, d => {
       if (TELA !== 'leads') return;
-      const abertos = d.colunas.filter(c => ['FECHADO', 'PERDIDO'].indexOf(c.etapa) === -1).reduce((s, c) => s + c.qtd, 0);
-      el('ld-sub').textContent = `${d.total} lead(s) · ${abertos} em aberto`;
+      const abertos = d.colunas.filter(c => ['FECHADO', 'FOLLOWUP', 'PERDIDO'].indexOf(c.etapa) === -1).reduce((s, c) => s + c.qtd, 0);
+      const fu = (d.colunas.find(c => c.etapa === 'FOLLOWUP') || { qtd: 0 }).qtd;
+      el('ld-sub').textContent = `${d.total} lead(s) · ${abertos} em aberto` + (fu ? ` · ${fu} em follow-up` : '');
       f.visao === 'LISTA' ? pintarListaLeads(d) : pintarFunil(d);
     }, fresco);
   } catch (e) { if (el('ld-c')) el('ld-c').innerHTML = `<div class="card vazio">Não foi possível carregar: ${esc(e.message)}</div>`; }
@@ -895,26 +902,29 @@ function cartaoLead(k){
   const tipo = k.tipo || (k.existente ? 'RECALL' : 'NOVA');
   const ms = k.etapa === 'NOVO' ? msEntrada(k) : 0, cr = ms ? textoCron(ms) : null;
   const valor = k.etapa === 'FECHADO' ? brl(k.valor_fechado) : (k.valor_orcado ? brl(k.valor_orcado) : '');
-  return `<div class="lc t-${tipo}${k.alerta ? ' atrasado' : ''}" draggable="true" data-id="${esc(k.id)}" data-etapa="${esc(k.etapa)}" role="button" tabindex="0" aria-label="${esc(k.nome)} · ${esc(TIPOS[tipo])}">
+  const fuCls = k.etapa === 'FOLLOWUP' && k.followup ? ' fu-' + k.followup : '';
+  return `<div class="lc t-${tipo}${k.alerta ? ' atrasado' : ''}${fuCls}" draggable="true" data-id="${esc(k.id)}" data-etapa="${esc(k.etapa)}" role="button" tabindex="0" aria-label="${esc(k.nome)} · ${esc(TIPOS[tipo])}">
     <div class="lc-top"><p class="lc-nome">${esc(k.nome)}</p><span class="lc-hora">${esc(String(k.data_entrada || '').slice(0, 5))}${k.hora_entrada ? '<br>' + esc(k.hora_entrada) : ''}</span></div>
     <div class="lc-chips">${tipoChip(tipo)}<span class="chip" title="${esc(rot('FONTE', k.fonte))}">${esc(rot('FONTE', k.fonte))}</span>${k.campanha ? `<span class="chip ouro" title="${esc(k.campanha)}">${esc(k.campanha)}</span>` : ''}</div>
     ${k.procedimento || k.pergunta ? `<div class="lc-int">${esc(rot('PROCEDIMENTO', k.procedimento) || 'Interesse não informado')}${k.pergunta ? ' · ' + esc(rot('PERGUNTA', k.pergunta)) : ''}</div>` : ''}
     ${valor || k.responsavel ? `<div class="lc-pe"><b>${valor}</b><span class="note">${esc(k.responsavel)}</span></div>` : ''}
-    ${k.etapa === 'PERDIDO' && k.motivo_perda ? `<div class="note">Motivo: ${esc(rot('MOTIVO_PERDA', k.motivo_perda))}</div>` : ''}
+    ${k.etapa === 'PERDIDO' && k.motivo_perda ? `<div class="note">Motivo: ${esc(rot('MOTIVO_PERDA', k.motivo_perda))}${k.justificativa_perda ? ' · ' + esc(k.justificativa_perda) : ''}</div>` : ''}
+    ${k.etapa === 'FOLLOWUP' && k.proxima_acao_data ? `<span class="fu-tag ${esc(k.followup)}">Contatar em ${esc(String(k.proxima_acao_data).slice(0, 5))} · ${textoDiasFu(k.followup_dias)}</span>${k.motivo_followup ? `<div class="note">${esc(k.motivo_followup)}</div>` : ''}` : ''}
     ${k.etapa === 'AGENDADO' && k.data_agendamento ? `<div class="note">Agendado para ${esc(k.data_agendamento)}</div>` : ''}
     ${cr && !k.alerta ? `<span class="cron ${cr.cls}" data-ms="${ms}">${esc(cr.t)}</span>` : ''}
-    ${k.alerta ? `<div class="alerta">${esc(k.alerta)}</div>` : (k.proxima_acao_data ? `<div class="note">${esc(k.proxima_acao || 'Próxima ação')} · ${esc(k.proxima_acao_data)}</div>` : '')}
+    ${k.etapa === 'FOLLOWUP' ? '' : (k.alerta ? `<div class="alerta">${esc(k.alerta)}</div>` : (k.proxima_acao_data ? `<div class="note">${esc(k.proxima_acao || 'Próxima ação')} · ${esc(k.proxima_acao_data)}</div>` : ''))}
   </div>`;
 }
+function textoDiasFu(n){ n = Number(n); if (isNaN(n)) return ''; if (n < 0) return 'vencido há ' + (-n) + ' dia(s)'; if (n === 0) return 'hoje'; if (n === 1) return 'amanhã'; return 'faltam ' + n + ' dias'; }
 const celular = () => window.matchMedia('(max-width:820px)').matches;
-const ROT_CURTO = { NOVO: 'Novos', CONVERSA: 'Conversa', ORCAMENTO: 'Orçamento', AGENDADO: 'Agendado', FECHADO: 'Fechado', PERDIDO: 'Perdido' };
+const ROT_CURTO = { NOVO: 'Novos', CONVERSA: 'Conversa', ORCAMENTO: 'Orçamento', AGENDADO: 'Agendado', FECHADO: 'Fechado', FOLLOWUP: 'Follow-up', PERDIDO: 'Perdido' };
 /** No celular o funil vira abas por etapa (com a contagem) e uma lista de cartões. */
 function pintarFunilCel(d){
   const f = F.leads;
-  if (!f.etapaCel || !d.colunas.some(c => c.etapa === f.etapaCel)) f.etapaCel = (d.colunas.find(c => c.qtd && c.etapa !== 'FECHADO' && c.etapa !== 'PERDIDO') || d.colunas[0]).etapa;
+  if (!f.etapaCel || !d.colunas.some(c => c.etapa === f.etapaCel)) f.etapaCel = (d.colunas.find(c => c.qtd && ['FECHADO', 'FOLLOWUP', 'PERDIDO'].indexOf(c.etapa) === -1) || d.colunas[0]).etapa;
   const col = d.colunas.find(c => c.etapa === f.etapaCel);
   el('ld-c').innerHTML = `<div class="et-tabs" role="tablist">${d.colunas.map(c => `<button role="tab" data-et="${c.etapa}" class="${c.etapa === f.etapaCel ? 'on' : ''}">${esc(ROT_CURTO[c.etapa])}<b>${c.qtd}</b></button>`).join('')}</div>
-    <div class="note" style="margin:-4px 0 10px">${col.valor ? brl(col.valor) + ' · ' : ''}${col.etapa === 'NOVO' ? 'responder em até ' + CTX.cfg.meta_resposta_min + ' min' : esc(ROT_ETAPA[col.etapa])}</div>
+    <div class="note" style="margin:-4px 0 10px">${col.valor ? brl(col.valor) + ' · ' : ''}${col.etapa === 'NOVO' ? 'responder em até ' + CTX.cfg.meta_resposta_min + ' min' : (col.etapa === 'FOLLOWUP' ? 'data de contato mais próxima primeiro' : esc(ROT_ETAPA[col.etapa]))}</div>
     <div class="et-lista">${col.itens.map(cartaoLead).join('') || '<div class="card vazio">Nenhum lead nesta etapa.</div>'}</div>
     <p class="note mt">Toque no cartão para abrir a ficha e mudar a etapa.</p>`;
   el('ld-c').querySelectorAll('[data-et]').forEach(b => b.onclick = () => { f.etapaCel = b.dataset.et; pintarFunilCel(d); });
@@ -927,9 +937,9 @@ function pintarFunil(d){
   if (celular()) return pintarFunilCel(d);
   el('ld-c').innerHTML = `<div class="kanban">${d.colunas.map(c => `<section class="col" data-col="${c.etapa}">
     <div class="col-h"><h2 style="font-size:13.5px">${esc(c.rotulo)}</h2><span class="chip" style="background:#fff">${c.qtd}</span></div>
-    <div class="note" style="padding:0 4px;margin-top:-4px">${c.valor ? brl(c.valor) : (c.etapa === 'NOVO' ? 'responder em até ' + CTX.cfg.meta_resposta_min + ' min' : '&nbsp;')}</div>
+    <div class="note" style="padding:0 4px;margin-top:-4px">${c.etapa === 'FOLLOWUP' ? 'potencial de resgate' : (c.valor ? brl(c.valor) : (c.etapa === 'NOVO' ? 'responder em até ' + CTX.cfg.meta_resposta_min + ' min' : '&nbsp;'))}</div>
     ${c.itens.map(cartaoLead).join('') || '<div class="note" style="padding:10px 4px">—</div>'}</section>`).join('')}</div>
-    <p class="note">Arraste o cartão para mudar a etapa (no computador) ou abra a ficha. Borda vermelha = prazo de resposta ou follow-up estourado. Fechado e Perdido mostram o mês corrente.</p>`;
+    <p class="note">Arraste o cartão para mudar a etapa (no computador) ou abra a ficha. Borda vermelha = prazo estourado. Em Follow-up: amarelo = data próxima, laranja = contatar hoje, vermelho = data vencida. Fechado e Perdido mostram o mês corrente; Follow-up mostra todos.</p>`;
   const cont = el('ld-c');
   cont.querySelectorAll('.lc').forEach(c => {
     c.onclick = () => ir('lead', c.dataset.id);
@@ -1063,7 +1073,7 @@ function moverCartaoNaTela(id, para){
   const vazio = col.querySelector(':scope > .note:last-child'); if (vazio && vazio.textContent.trim() === '—') vazio.remove();
 }
 function mudarEtapa(id, para, depois, lead, doFunil){
-  const precisa = { ORCAMENTO: 1, AGENDADO: 1, FECHADO: 1, PERDIDO: 1 };
+  const precisa = { ORCAMENTO: 1, AGENDADO: 1, FECHADO: 1, FOLLOWUP: 1, PERDIDO: 1 };
   const exec = async extra => {
     if (doFunil) moverCartaoNaTela(id, para);
     fecharModal();
@@ -1081,16 +1091,30 @@ function mudarEtapa(id, para, depois, lead, doFunil){
     <div class="fl"><label for="e-data">Data do fechamento</label>${campoData('e-data', hoje)}</div>
     <div class="fl" style="grid-column:1/-1"><label for="e-proc">Procedimentos fechados</label><input id="e-proc" class="in" placeholder="Ex.: ICE CONTOURN pacote 3 áreas"></div>
     <div class="fl"><label for="e-num">Nº orçamento no ERP</label><input id="e-num" class="in"></div></div><p class="note">O orçamento aprovado no ERP, ao chegar ao KN Vendas, recebe a observação da campanha automaticamente.</p>`;
-  if (para === 'PERDIDO') corpo = `<div class="fl"><label for="e-mot">Motivo da perda</label><select id="e-mot" class="in">${opcoes('MOTIVO_PERDA', '', 'Escolha')}</select></div><div class="fl mt"><label for="e-obs">Observação</label><textarea id="e-obs" class="in"></textarea></div>`;
+  if (para === 'PERDIDO') corpo = `<p class="note" style="margin-top:0">Use Perdido só quando não houver mais chance. Se ainda houver potencial, mova para <b>Follow-up</b> com uma data de contato.</p>
+    <div class="fl"><label for="e-mot">Motivo da perda</label><select id="e-mot" class="in">${opcoes('MOTIVO_PERDA', '', 'Escolha')}</select></div>
+    <div class="fl mt"><label for="e-obs">Justificativa · obrigatória</label><textarea id="e-obs" class="in" placeholder="Por que este lead foi perdido? Ex.: disse que só queria saber o preço e não pretende fazer agora."></textarea></div>`;
+  if (para === 'FOLLOWUP') corpo = `<p class="note" style="margin-top:0">Lead sem fechamento agora, mas com potencial de resgate. Ele volta a avisar quando a data se aproximar.</p>
+    <div class="fl" style="max-width:260px"><label for="e-prox">Contatar de novo em · obrigatório</label>${campoData('e-prox', '')}</div>
+    <div class="atalhos-data" aria-label="Atalhos de data">${[7, 15, 30, 60, 90].map(n => `<button type="button" data-mais="${n}">+${n} dias</button>`).join('')}</div>
+    <div class="fl mt"><label for="e-obs">O que ficou combinado (opcional)</label><textarea id="e-obs" class="in" placeholder="Ex.: pediu para chamar depois das férias; interesse em glúteo."></textarea></div>`;
   abrirModal(`<h2>Mover para: ${esc(ROT_ETAPA[para])}</h2>${corpo}<div class="acoes"><button class="btn2" onclick="fecharModal()">Cancelar</button><button class="btn" id="e-ok">Confirmar</button></div>`);
+  document.querySelectorAll('[data-mais]').forEach(b => b.onclick = () => {
+    const d = new Date(); d.setDate(d.getDate() + Number(b.dataset.mais));
+    const v = String(d.getDate()).padStart(2, '0') + '/' + String(d.getMonth() + 1).padStart(2, '0') + '/' + d.getFullYear();
+    const i = el('e-prox'); i.value = v; i.dispatchEvent(new Event('input', { bubbles: true }));
+  });
   el('e-ok').onclick = () => {
     const g = i => el(i) ? el(i).value : '';
     if (para === 'PERDIDO' && !g('e-mot')) return toast('Escolha o motivo.');
+    if (para === 'PERDIDO' && g('e-obs').replace(/\s/g, '').length < 5) return toast('Escreva a justificativa da perda.');
     const valor = lerMoeda('e-valor');
     if (para === 'FECHADO' && !(valor > 0)) return toast('Informe o valor fechado.');
     const data = lerData('e-data'), prox = lerData('e-prox');
     if (data === null || prox === null) return;
-    exec({ valor: valor === '' ? '' : valor, data, num_orcamento: g('e-num'), procedimentos: g('e-proc'), motivo: g('e-mot'), observacao: g('e-obs'), proxima_acao_data: prox, proxima_acao: prox ? 'Follow-up do orçamento' : '' });
+    if (para === 'FOLLOWUP' && !prox) return toast('Informe a data para contatar de novo.');
+    exec({ valor: valor === '' ? '' : valor, data, num_orcamento: g('e-num'), procedimentos: g('e-proc'), motivo: g('e-mot'), observacao: g('e-obs'), justificativa: para === 'PERDIDO' ? g('e-obs') : '',
+      proxima_acao_data: prox, proxima_acao: prox ? (para === 'FOLLOWUP' ? 'Follow-up · resgate' : 'Follow-up do orçamento') : '' });
   };
 }
 
@@ -1110,7 +1134,7 @@ function preencherTexto(t, l){
 function linkWhats(tel, texto){ const d = soDig(tel); return 'https://wa.me/' + (d.length <= 11 ? '55' + d : d) + (texto ? '?text=' + encodeURIComponent(texto) : ''); }
 function pintarLead(d){
   const l = d.lead, ini = (l.nome || '').split(/\s+/).filter(Boolean).slice(0, 2).map(x => x[0]).join('').toUpperCase();
-  const etapasBt = ['NOVO', 'CONVERSA', 'ORCAMENTO', 'AGENDADO', 'FECHADO'].filter(e => e !== l.etapa);
+  const etapasBt = ['NOVO', 'CONVERSA', 'ORCAMENTO', 'AGENDADO', 'FECHADO', 'FOLLOWUP'].filter(e => e !== l.etapa);
   const r = d.recall, tv = d.trava;
   el('main').innerHTML = `<a href="#leads" onclick="ir('leads');return false" style="font-weight:700;text-decoration:none">← Voltar para Leads</a>
   <div class="topo mt" style="align-items:center">
@@ -1163,7 +1187,8 @@ function pintarLead(d){
         ${l.num_orcamento_erp ? `<dt>Nº no ERP</dt><dd>${esc(l.num_orcamento_erp)}</dd>` : ''}${l.data_agendamento ? `<dt>Agendado</dt><dd>${esc(l.data_agendamento)}</dd>` : ''}
         ${l.etapa === 'FECHADO' ? `<dt>Fechado</dt><dd>${brl2(l.valor_fechado)} em ${esc(l.data_fechamento)}</dd><dt>Procedimentos</dt><dd>${esc(l.procedimentos_fechados || '—')}</dd>` : ''}
         ${l.auditoria_venda ? `<dt>Auditoria</dt><dd style="font-weight:600;color:var(--verde)">${esc(l.auditoria_venda)}</dd>` : ''}
-        ${l.etapa === 'PERDIDO' ? `<dt>Perdido</dt><dd>${esc(rot('MOTIVO_PERDA', l.motivo_perda))} em ${esc(l.data_perda)}</dd>` : ''}</dl></section>
+        ${l.etapa === 'PERDIDO' ? `<dt>Perdido</dt><dd>${esc(rot('MOTIVO_PERDA', l.motivo_perda))} em ${esc(l.data_perda)}</dd>${l.justificativa_perda ? `<dt>Justificativa</dt><dd>${esc(l.justificativa_perda)}</dd>` : ''}` : ''}
+        ${l.etapa === 'FOLLOWUP' ? `<dt>Follow-up</dt><dd>desde ${esc(l.data_followup || '—')} · contatar em <b>${esc(l.proxima_acao_data || '—')}</b></dd>${l.motivo_followup ? `<dt>Combinado</dt><dd>${esc(l.motivo_followup)}</dd>` : ''}` : ''}</dl></section>
       <section class="card" style="background:#FBF6EE"><h2>Próxima ação</h2><div style="font-weight:700;margin-top:8px">${l.proxima_acao_data ? esc(l.proxima_acao || 'Retornar') + ' · ' + esc(l.proxima_acao_data) : 'Nenhuma marcada'}</div><div class="note">Responsável: ${esc(l.responsavel)}</div></section>
     </div>
   </div>
