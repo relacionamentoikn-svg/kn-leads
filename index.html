@@ -106,6 +106,7 @@ textarea.in{padding:10px 12px;min-height:90px;resize:vertical}
 .lc.fu-HOJE{border-top-color:#E0A458;border-right-color:#E0A458;border-bottom-color:#E0A458;background:#FFF4E6}
 .fu-tag{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:800;border-radius:8px;padding:5px 8px;background:#F3EEE8;color:#4A3A3A;align-self:flex-start}
 .fu-tag.PERTO{background:#F7EBC8;color:#6E5320}.fu-tag.HOJE{background:#F9DDBA;color:#7A4510}.fu-tag.VENCIDO{background:var(--alerta-f);color:var(--alerta)}
+.sit-l{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-top:14px}.sit{display:flex;flex-direction:column;gap:2px;padding:12px 14px;border-radius:12px;background:#F7F1EA;text-decoration:none;color:var(--txt)}.sit b{font-size:26px;line-height:1}.sit span{font-size:12.5px;color:var(--txt-2);font-weight:600}.sit.zero{opacity:.55}
 .fu-auto{display:flex;gap:10px;align-items:flex-start;margin-top:12px;padding:10px 12px;border-radius:10px;background:#F7EBC8;color:#4A3A1A;font-size:13px;line-height:1.4;cursor:pointer}.fu-auto input{width:18px;height:18px;margin:1px 0 0;accent-color:var(--vinho);flex:none}
 .atalhos-data{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.atalhos-data button{border:1px solid var(--linha);background:#fff;border-radius:999px;padding:6px 12px;font-weight:700;font-size:12.5px;cursor:pointer;color:var(--txt)}
 .tp{display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:999px;font-size:11.5px;font-weight:800;background:var(--tf,#EEE);color:var(--tc,#555);white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
@@ -426,8 +427,8 @@ const rot = (tipo, v) => { const a = (CTX && CTX.listas && CTX.listas[tipo]) || 
 const opcoes = (tipo, sel, vazio) => (vazio !== undefined ? `<option value="">${esc(vazio)}</option>` : '') + ((CTX && CTX.listas[tipo]) || []).map(i => `<option value="${esc(i.valor)}"${i.valor === sel ? ' selected' : ''}>${esc(i.rotulo)}</option>`).join('');
 const ROT_ETAPA = { NOVO: 'Novo · sem resposta', CONVERSA: 'Em conversa', ORCAMENTO: 'Orçamento enviado', AGENDADO: 'Agendado', FECHADO: 'Fechado', FOLLOWUP: 'Follow-up', PERDIDO: 'Perdido' };
 const COR_ETAPA = { NOVO: 'alerta', CONVERSA: '', ORCAMENTO: 'ouro', AGENDADO: '', FECHADO: 'ok', FOLLOWUP: 'ouro', PERDIDO: 'cinza' };
-const TIPOS = { NOVA: 'Paciente nova', RECALL: 'Paciente da base · Recall', FOLLOWUP: 'Orçamento em aberto · Follow-up' };
-const TIPO_CURTO = { NOVA: 'Nova', RECALL: 'Recall', FOLLOWUP: 'Follow-up' };
+const TIPOS = { NOVA: 'Paciente nova', RECALL: 'Paciente da base · Recall', FOLLOWUP: 'Orçamento em aberto' };
+const TIPO_CURTO = { NOVA: 'Nova', RECALL: 'Recall', FOLLOWUP: 'Orç. aberto' };
 const tipoChip = (t, longo) => t && TIPOS[t] ? `<span class="tp t-${t}" title="${esc(TIPOS[t])}">${esc(longo ? TIPOS[t] : TIPO_CURTO[t])}</span>` : '';
 function hojeBR(){ const d = new Date(); return d.toLocaleDateString('pt-BR'); }
 function paraISO(br){ const m = String(br || '').match(/^(\d{2})\/(\d{2})\/(\d{4})/); return m ? `${m[3]}-${m[2]}-${m[1]}` : ''; }
@@ -815,8 +816,8 @@ function pintarPainel(d){
   const k = d.kpis, meta = d.meta_resposta_min;
   const kpis = [
     ['Leads novos', num(k.leads), k.investimento ? 'CPL ' + brl2(k.cpl) : 'no período'],
-    ['Em conversa', num(k.conversa), pct(k.taxa_resposta) + ' responderam'],
-    ['Orçamentos', num(k.orcamentos), pct(k.leads ? k.orcamentos / k.leads : 0) + ' dos leads'],
+    ['Chegaram à conversa', num(k.conversa), pct(k.taxa_resposta) + ' responderam'],
+    ['Chegaram a orçamento', num(k.orcamentos), pct(k.leads ? k.orcamentos / k.leads : 0) + ' dos leads'],
     ['Fechamentos', num(k.fechados), 'conversão ' + pct(k.conversao)],
     ['Receita gerada', brl(k.receita), 'ticket médio ' + brl(k.ticket)],
     ['1ª resposta', k.resposta_min === '' ? '—' : k.resposta_min + ' min', 'mediana · meta ' + meta + ' min']
@@ -832,10 +833,13 @@ function pintarPainel(d){
       ${al.sem_resposta ? `<span>${al.sem_resposta} lead(s) sem 1ª resposta além do prazo</span>` : ''}
       ${al.follow ? `<span>· ${al.follow} sem follow-up</span>` : ''}${al.acao ? `<span>· ${al.acao} com próxima ação vencida</span>` : ''}
       <a href="#leads" onclick="ir('leads');return false" style="margin-left:auto;font-weight:800">Ver no funil</a></div>` : ''}
+    ${d.situacao ? `<section class="card mt"><div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px"><h2>Onde os leads estão agora</h2><span class="note">mesmas colunas do funil em Leads · ${d.total_situacao || d.situacao.reduce((s, x) => s + x.qtd, 0)} lead(s) do período</span></div>
+      <div class="sit-l">${d.situacao.map(x => `<a href="#leads" onclick="ir('leads');return false" class="sit${x.qtd ? '' : ' zero'}"><b>${num(x.qtd)}</b><span>${esc(x.rotulo)}</span></a>`).join('')}</div></section>` : ''}
     <div class="grid g-2 mt">
       <section class="card"><div style="display:flex;justify-content:space-between;align-items:baseline"><h2>Funil de conversão</h2><span class="note">% sobre os leads de entrada</span></div>
         <div style="display:flex;flex-direction:column;gap:12px;margin-top:16px">${fun.map(x => `<div class="funil-l"><span style="font-weight:600">${esc(x.etapa)}</span><div class="b"><i style="width:${Math.max(2, x.qtd / base * 100)}%"></i></div><span class="r"><b>${num(x.qtd)}</b> <span class="note">${pct(x.pct)}</span></span></div>`).join('')}</div>
-        ${ondeMaior ? `<p class="note" style="margin:14px 0 0">Maior perda: ${esc(ondeMaior)} (−${pct(maior)})</p>` : ''}</section>
+        ${ondeMaior ? `<p class="note" style="margin:14px 0 0">Maior perda: ${esc(ondeMaior)} (−${pct(maior)})</p>` : ''}
+        <p class="note" style="margin:8px 0 0">O funil conta quem <b>já passou</b> pela etapa, mesmo que hoje esteja em Perdido ou Follow-up. Por isso difere de "Onde os leads estão agora".</p></section>
       <section class="card"><div style="display:flex;justify-content:space-between;align-items:baseline"><h2>O que os leads perguntam</h2><span class="note">perguntas registradas</span></div>
         ${d.perguntas.length ? `<div style="display:flex;flex-direction:column;gap:12px;margin-top:16px">${d.perguntas.slice(0, 8).map(q => `<div><div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-weight:600">${esc(q.rotulo)}</span><b>${pct(q.pct)} <span class="note">(${q.qtd})</span></b></div><div class="bar ouro"><i style="width:${q.pct * 100}%"></i></div></div>`).join('')}</div>` : '<div class="vazio">Nenhuma pergunta registrada no período.</div>'}</section>
     </div>
