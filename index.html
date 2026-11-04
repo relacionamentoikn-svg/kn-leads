@@ -106,6 +106,7 @@ textarea.in{padding:10px 12px;min-height:90px;resize:vertical}
 .lc.fu-HOJE{border-top-color:#E0A458;border-right-color:#E0A458;border-bottom-color:#E0A458;background:#FFF4E6}
 .fu-tag{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:800;border-radius:8px;padding:5px 8px;background:#F3EEE8;color:#4A3A3A;align-self:flex-start}
 .fu-tag.PERTO{background:#F7EBC8;color:#6E5320}.fu-tag.HOJE{background:#F9DDBA;color:#7A4510}.fu-tag.VENCIDO{background:var(--alerta-f);color:var(--alerta)}
+.fu-auto{display:flex;gap:10px;align-items:flex-start;margin-top:12px;padding:10px 12px;border-radius:10px;background:#F7EBC8;color:#4A3A1A;font-size:13px;line-height:1.4;cursor:pointer}.fu-auto input{width:18px;height:18px;margin:1px 0 0;accent-color:var(--vinho);flex:none}
 .atalhos-data{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.atalhos-data button{border:1px solid var(--linha);background:#fff;border-radius:999px;padding:6px 12px;font-weight:700;font-size:12.5px;cursor:pointer;color:var(--txt)}
 .tp{display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:999px;font-size:11.5px;font-weight:800;background:var(--tf,#EEE);color:var(--tc,#555);white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
 .tp::before{content:'';width:7px;height:7px;border-radius:50%;background:currentColor;flex:none}
@@ -1172,6 +1173,7 @@ function pintarLead(d){
         <div class="fl"><label for="n-prox">Próxima ação em</label>${campoData('n-prox', '')}</div>
         <div class="fl"><label for="n-temp">Temperatura</label><select id="n-temp" class="in">${opcoes('TEMPERATURA', l.temperatura, '—')}</select></div>
       </div>
+      ${['NOVO', 'CONVERSA', 'ORCAMENTO', 'AGENDADO'].indexOf(l.etapa) > -1 ? `<label class="fu-auto" id="n-fu-box" style="display:none"><input type="checkbox" id="n-fu" ${l.etapa === 'CONVERSA' || l.etapa === 'NOVO' ? 'checked' : ''}> <span>Mover este lead para <b>Follow-up</b> e avisar em <b id="n-fu-data"></b></span></label>` : ''}
       <div style="display:grid;grid-template-columns:1fr auto;gap:10px;margin-top:10px;align-items:end"><div class="fl"><label for="n-txt">O que aconteceu</label><input id="n-txt" class="in" placeholder="Ex.: enviei valores; pediu para pensar até quarta"></div><button class="btn" id="bt-reg">Registrar</button></div>
       <ol class="tl">${d.interacoes.map(x => `<li><div class="p"><span style="background:${x.tipo === 'PERGUNTA' ? 'var(--latao)' : (x.tipo === 'ENTRADA' ? '#BFB2A8' : 'var(--vinho)')}"></span><i></i></div><div class="c">
         <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:baseline"><b>${esc(rotuloTipo(x))}</b><span class="note">${esc(x.data_hora)} · ${esc(x.autor)}${x.canal ? ' · ' + esc(rot('CANAL', x.canal)) : ''}</span></div>
@@ -1198,10 +1200,13 @@ function pintarLead(d){
   if (el('bt-perdido')) el('bt-perdido').onclick = () => mudarEtapa(l.id_lead, 'PERDIDO', recarregar, l);
   if (el('lk-camp')) el('lk-camp').onclick = ev => { ev.preventDefault(); ir('campanha', l.id_campanha); };
   if (el('bt-trava')) el('bt-trava').onclick = async () => { if (!confirm('Encerrar a trava? A paciente volta a poder ser contatada por qualquer colaboradora no Recall.')) return; try { await api('encerrarTrava', { id_trava: tv.id }); toast('Trava encerrada'); recarregar(); } catch (e) { falhar(e); } };
+  const atFu = () => { const bx = el('n-fu-box'); if (!bx) return; const v = el('n-prox').value.trim(); bx.style.display = v ? 'flex' : 'none'; if (el('n-fu-data')) el('n-fu-data').textContent = v; };
+  ['input', 'change'].forEach(ev => el('n-prox').addEventListener(ev, atFu));
   el('bt-reg').onclick = async () => {
     const txt = el('n-txt').value.trim(); if (!txt) return toast('Descreva o que aconteceu.');
     const prox = lerData('n-prox'); if (prox === null) return;
-    try { await api('registrarInteracao', { id: l.id_lead, tipo: el('n-tipo').value, canal: el('n-canal').value, texto: txt, proxima_acao_data: prox, temperatura: el('n-temp').value }); el('n-txt').value = ''; delete el('n-txt').dataset.sujo; toast('Registrado'); recarregar(); } catch (e) { falhar(e); }
+    const irFu = !!(prox && el('n-fu') && el('n-fu').checked);
+    try { await api('registrarInteracao', { id: l.id_lead, tipo: el('n-tipo').value, canal: el('n-canal').value, texto: txt, proxima_acao_data: prox, temperatura: el('n-temp').value, mover_followup: irFu ? '1' : '' }); if (irFu) toast('Movido para Follow-up'); el('n-txt').value = ''; delete el('n-txt').dataset.sujo; toast('Registrado'); recarregar(); } catch (e) { falhar(e); }
   };
   el('bt-perg').onclick = () => {
     abrirModal(`<h2>Registrar pergunta</h2><div class="fl"><label for="p-tipo">Tipo de pergunta</label><select id="p-tipo" class="in">${opcoes('PERGUNTA', '', 'Escolha')}</select></div><div class="fl mt"><label for="p-txt">Como ela perguntou (opcional)</label><input id="p-txt" class="in"></div><div class="acoes"><button class="btn2" onclick="fecharModal()">Cancelar</button><button class="btn" id="p-ok">Registrar</button></div>`);
