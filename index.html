@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<!-- LEADS E CAMPANHAS · V1.4 — este arquivo vai no repositório kn-leads. NÃO é o do Recall nem o do KN Vendas. -->
+<!-- LEADS E CAMPANHAS · V1.7 — este arquivo vai no repositório kn-leads. NÃO é o do Recall nem o do KN Vendas. -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Leads e Campanhas</title>
@@ -332,6 +332,43 @@ kbd{font-family:'IBM Plex Mono',monospace;font-size:11px;border:1px solid #D8CBC
   .dl{grid-template-columns:104px 1fr}
   .link-r{grid-template-columns:1fr}
 }
+/* V1.7 · Indica Black */
+.ib-selo{display:flex;align-items:center;gap:7px;margin:-3px -3px 2px;padding:7px 10px;border-radius:8px;background:#1F8A55;color:#fff;font-size:12.5px;font-weight:800;line-height:1.25}
+.ib-selo i{flex:none;width:9px;height:9px;border-radius:50%;background:#fff;animation:ibpulsa 1.6s infinite}
+.ib-selo.grande{margin:12px 0 4px;font-size:14px;padding:11px 14px}
+@keyframes ibpulsa{0%{box-shadow:0 0 0 0 rgba(255,255,255,.8)}70%{box-shadow:0 0 0 8px rgba(255,255,255,0)}100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}}
+.lc.ib-dest{background:linear-gradient(180deg,#FFF8E3,#fff 60%);border:2px solid #C9A35C;border-left:8px solid #1F8A55;box-shadow:0 0 0 4px rgba(201,163,92,.22),0 10px 24px rgba(120,80,10,.16)}
+.lc.ib-lib{border-left-color:#C9A35C;background:#FFFCF3}
+.ib-tag{display:inline-flex;font-size:12px;font-weight:800;border-radius:8px;padding:5px 8px;background:#EFE8F4;color:#4B2A66;align-self:flex-start;max-width:100%;overflow-wrap:anywhere}
+.ib-tag.espera{background:#F3EEE8;color:#4A3A3A}
+.ib-base{font-size:12px;font-weight:700;color:var(--alerta);line-height:1.35;overflow-wrap:anywhere}
+.ib-sess{display:flex;flex-direction:column;gap:2px;border-radius:8px;padding:7px 9px;font-size:12px;font-weight:800;line-height:1.3}
+.ib-sess small{font-weight:600;font-size:11.5px;color:#6B5757}
+.ib-sess.pend{background:#FFF3D6;border:1px solid #C9A35C;color:#6E5320}.ib-sess.ok{background:#E3EFE8;border:1px solid #9CC8B0;color:var(--verde)}
+.ib-sess.fim{background:#ECE7E3;color:#4A3A3A}.ib-sess.nao{background:#F3EEE8;color:#6B5757}.ib-sess.esp{background:#F7F1EA;color:#4A3A3A}
+.ib-acoes{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+.ib-bt{border:1.5px solid var(--vinho);background:#fff;color:var(--vinho);border-radius:8px;padding:6px 10px;font-weight:800;font-size:12.5px;cursor:pointer}
+.ib-bt.v,.btn.ib-v{background:#1F8A55;border-color:#1F8A55;color:#fff}
+.ib-faixa{background:#fff;border:1px solid var(--linha);border-radius:12px;padding:12px 14px;margin:0 0 12px}
+.ib-faixa.tem{background:#FFF8E3;border:1.5px solid #C9A35C}
+.ib-f-top{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center}
+.ib-f-tit{font-size:14px;color:var(--vinho)}
+.ib-f-num{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--txt-2)}.ib-f-num b{color:var(--txt);font-size:14px}
+.ib-f-bt{display:flex;gap:6px;margin-left:auto}
+.ib-f-pend{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;margin-top:10px;padding-top:10px;border-top:1px solid #E8D9B8}
+.ib-f-pend .pt{width:10px;height:10px;border-radius:50%;background:#1F8A55;animation:ibpulsa2 1.6s infinite}
+@keyframes ibpulsa2{0%{box-shadow:0 0 0 0 rgba(31,138,85,.55)}70%{box-shadow:0 0 0 10px rgba(31,138,85,0)}100%{box-shadow:0 0 0 0 rgba(31,138,85,0)}}
+.ib-f-lista{display:flex;flex-wrap:wrap;gap:6px}
+.ib-chip{border:1px solid #D8CBC0;background:#fff;border-radius:999px;padding:5px 11px;font-weight:700;font-size:12.5px;cursor:pointer;color:var(--txt);text-align:left}
+.ib-card{border:1.5px solid #E2CFA6}
+.ib-l{display:grid;grid-template-columns:140px 1fr;gap:10px;padding:10px 0;border-top:1px solid var(--linha-2);font-size:13.5px;line-height:1.45;align-items:start}
+.ib-l:first-of-type{border-top:0}
+.ib-l-t{font-size:12px;font-weight:800;color:var(--txt-2);text-transform:uppercase;letter-spacing:.04em;padding-top:2px}
+.ib-l .ib-chip{margin:0 6px 6px 0}
+.ib-link{font-family:'IBM Plex Mono',monospace;font-size:12.5px;overflow-wrap:anywhere}
+.ib-ok{color:var(--verde);font-weight:700}.ib-no{color:var(--alerta);font-weight:700}
+.lnk{border:0;background:none;color:var(--vinho);text-decoration:underline;cursor:pointer;font:inherit;font-size:12.5px;padding:0 4px}
+@media(max-width:820px){.ib-l{grid-template-columns:1fr;gap:4px}.ib-f-bt{margin-left:0}}
 </style>
 </head>
 <body>
@@ -408,7 +445,7 @@ kbd{font-family:'IBM Plex Mono',monospace;font-size:11px;border:1px solid #D8CBC
    Mesmo padrão do Recall e Follow-up: página no GitHub, dados na planilha da
    clínica via Apps Script (/exec), sessão por nome + código.
    ========================================================================== */
-const VERSAO_TELA = 'V1.4';
+const VERSAO_TELA = 'V1.7';
 let API_URL = '';
 try { API_URL = (window.KN_LEADS_API || '').trim(); } catch (e) {}
 if (!API_URL) { try { API_URL = localStorage.getItem('kassila_leads_url') || ''; } catch (e) {} }
@@ -502,7 +539,7 @@ async function comPrazo(url, opcoes){
   const ctrl = new AbortController(); const t = setTimeout(() => ctrl.abort(), PRAZO_MS);
   try { return await fetch(url, Object.assign({}, opcoes || {}, { signal: ctrl.signal })); } finally { clearTimeout(t); }
 }
-const GRAVAM = { salvarLead:1, atualizarLead:1, moverEtapa:1, registrarInteracao:1, salvarCampanha:1, salvarOferta:1, excluirOferta:1, salvarRoteiro:1, excluirRoteiro:1, salvarCusto:1, excluirCusto:1, encerrarTrava:1, salvarParametro:1, salvarLista:1, salvarAcesso:1, limparCache:1 };
+const GRAVAM = { salvarLead:1, atualizarLead:1, moverEtapa:1, registrarInteracao:1, salvarCampanha:1, salvarOferta:1, excluirOferta:1, salvarRoteiro:1, excluirRoteiro:1, salvarCusto:1, excluirCusto:1, encerrarTrava:1, salvarParametro:1, salvarLista:1, salvarAcesso:1, limparCache:1, ibGrupo:1, ibSessao:1, ibAviso:1, ibApagarTestes:1 };
 const EM_VOO = {};
 let LEITURAS = 0;
 function sinc(on){
@@ -873,7 +910,8 @@ async function telaLeads(){
       ${filtrosComuns('ld', f)}
     </div></div>
     <section class="card" id="cad"><button class="btn cad-abrir" type="button" onclick="el('cad').classList.add('aberto');setTimeout(()=>el('q-nome').focus(),30)">+ Cadastrar lead</button>${formCadastroRapido()}</section>
-    <div class="legenda" aria-label="Legenda das cores"><b>Cor do cartão:</b>${tipoChip('NOVA', true)}${tipoChip('RECALL', true)}${tipoChip('FOLLOWUP', true)}<span>· borda vermelha = prazo estourado · follow-up: amarelo = data próxima, laranja = hoje</span><span class="so-pc" style="margin-left:auto">atalho <kbd>N</kbd> novo lead</span></div>
+    <div id="ld-ib"></div>
+    <div class="legenda" aria-label="Legenda das cores"><b>Cor do cartão:</b>${tipoChip('NOVA', true)}${tipoChip('RECALL', true)}${tipoChip('FOLLOWUP', true)}<span>· borda vermelha = prazo estourado · follow-up: amarelo = data próxima, laranja = hoje · <b style="color:#1F8A55">selo verde</b> = indicada entrou no Grupo VIP</span><span class="so-pc" style="margin-left:auto">atalho <kbd>N</kbd> novo lead</span></div>
     <div id="ld-c">${esqueleto(5)}</div>`;
   el('ld-f').querySelectorAll('[data-visao]').forEach(b => b.onclick = () => { f.visao = b.dataset.visao; telaLeads(); });
   ligarFiltros(el('ld-f'), f, () => carregarLeads());
@@ -889,6 +927,8 @@ async function carregarLeads(fresco){
       const abertos = d.colunas.filter(c => ['FECHADO', 'FOLLOWUP', 'PERDIDO'].indexOf(c.etapa) === -1).reduce((s, c) => s + c.qtd, 0);
       const fu = (d.colunas.find(c => c.etapa === 'FOLLOWUP') || { qtd: 0 }).qtd;
       el('ld-sub').textContent = `${d.total} lead(s) · ${abertos} em aberto` + (fu ? ` · ${fu} em follow-up` : '');
+      if (d.ib_ate) IB_ATE = d.ib_ate; if (d.ib_url) IB_URL = d.ib_url;
+      ULT_LEADS = d; pintarFaixaIb(d.ib);
       f.visao === 'LISTA' ? pintarListaLeads(d) : pintarFunil(d);
     }, fresco);
   } catch (e) { if (el('ld-c')) el('ld-c').innerHTML = `<div class="card vazio">Não foi possível carregar: ${esc(e.message)}</div>`; }
@@ -905,12 +945,14 @@ function atualizarCrons(){ document.querySelectorAll('.cron[data-ms]').forEach(c
 setInterval(atualizarCrons, 30000);
 function cartaoLead(k){
   const tipo = k.tipo || (k.existente ? 'RECALL' : 'NOVA');
-  const ms = k.etapa === 'NOVO' ? msEntrada(k) : 0, cr = ms ? textoCron(ms) : null;
+  const ms = k.etapa === 'NOVO' && k.origem !== 'PAGINA' ? msEntrada(k) : 0, cr = ms ? textoCron(ms) : null;
+  const ibCls = k.ib ? (k.ib.destaque ? ' ib-dest' : (k.ib.a_liberar ? ' ib-lib' : '')) : '';
   const valor = k.etapa === 'FECHADO' ? brl(k.valor_fechado) : (k.valor_orcado ? brl(k.valor_orcado) : '');
   const fuCls = k.etapa === 'FOLLOWUP' && k.followup ? ' fu-' + k.followup : '';
-  return `<div class="lc t-${tipo}${k.alerta ? ' atrasado' : ''}${fuCls}" draggable="true" data-id="${esc(k.id)}" data-etapa="${esc(k.etapa)}" role="button" tabindex="0" aria-label="${esc(k.nome)} · ${esc(TIPOS[tipo])}">
-    <div class="lc-top"><p class="lc-nome">${esc(k.nome)}</p><span class="lc-hora">${esc(String(k.data_entrada || '').slice(0, 5))}${k.hora_entrada ? '<br>' + esc(k.hora_entrada) : ''}</span></div>
+  return `<div class="lc t-${tipo}${k.alerta ? ' atrasado' : ''}${fuCls}${ibCls}" draggable="true" data-id="${esc(k.id)}" data-etapa="${esc(k.etapa)}" role="button" tabindex="0" aria-label="${esc(k.nome)} · ${esc(TIPOS[tipo])}">
+    ${ibTopo(k)}<div class="lc-top"><p class="lc-nome">${esc(k.nome)}</p><span class="lc-hora">${esc(String(k.data_entrada || '').slice(0, 5))}${k.hora_entrada ? '<br>' + esc(k.hora_entrada) : ''}</span></div>
     <div class="lc-chips">${tipoChip(tipo)}<span class="chip" title="${esc(rot('FONTE', k.fonte))}">${esc(rot('FONTE', k.fonte))}</span>${k.campanha ? `<span class="chip ouro" title="${esc(k.campanha)}">${esc(k.campanha)}</span>` : ''}</div>
+    ${ibCorpo(k)}
     ${k.procedimento || k.pergunta ? `<div class="lc-int">${esc(rot('PROCEDIMENTO', k.procedimento) || 'Interesse não informado')}${k.pergunta ? ' · ' + esc(rot('PERGUNTA', k.pergunta)) : ''}</div>` : ''}
     ${valor || k.responsavel ? `<div class="lc-pe"><b>${valor}</b><span class="note">${esc(k.responsavel)}</span></div>` : ''}
     ${k.etapa === 'PERDIDO' && k.motivo_perda ? `<div class="note">Motivo: ${esc(rot('MOTIVO_PERDA', k.motivo_perda))}${k.justificativa_perda ? ' · ' + esc(k.justificativa_perda) : ''}</div>` : ''}
@@ -934,6 +976,7 @@ function pintarFunilCel(d){
     <p class="note mt">Toque no cartão para abrir a ficha e mudar a etapa.</p>`;
   el('ld-c').querySelectorAll('[data-et]').forEach(b => b.onclick = () => { f.etapaCel = b.dataset.et; pintarFunilCel(d); });
   el('ld-c').querySelectorAll('.lc').forEach(c => { c.removeAttribute('draggable'); c.onclick = () => ir('lead', c.dataset.id); });
+  ligarBotoesIb(el('ld-c'));
 }
 let ULT_LEADS = null;
 window.matchMedia('(max-width:820px)').addEventListener('change', () => { if (TELA === 'leads' && ULT_LEADS && F.leads.visao !== 'LISTA') pintarFunil(ULT_LEADS); });
@@ -951,6 +994,7 @@ function pintarFunil(d){
     c.onkeydown = ev => { if (ev.key === 'Enter') ir('lead', c.dataset.id); };
     c.ondragstart = ev => { ev.dataTransfer.setData('text/plain', c.dataset.id + '|' + c.dataset.etapa); };
   });
+  ligarBotoesIb(cont);
   cont.querySelectorAll('.col').forEach(col => {
     col.ondragover = ev => { ev.preventDefault(); col.classList.add('alvo'); };
     col.ondragleave = () => col.classList.remove('alvo');
@@ -960,7 +1004,7 @@ function pintarFunil(d){
 function pintarListaLeads(d){
   const itens = [].concat(...d.colunas.map(c => c.itens));
   el('ld-c').innerHTML = `<section class="card"><div class="scroll"><table class="tb"><thead><tr><th>Entrada</th><th>Nome</th><th>Tipo</th><th>Etapa</th><th>Fonte</th><th>Campanha</th><th>Interesse</th><th>Responsável</th><th class="r">Valor</th><th>Situação</th></tr></thead>
-    <tbody>${itens.map(k => `<tr class="clic" data-id="${esc(k.id)}"><td>${esc(k.data_entrada)} ${esc(k.hora_entrada)}</td><td style="font-weight:700">${esc(k.nome)}</td><td>${tipoChip(k.tipo || (k.existente ? 'RECALL' : 'NOVA'))}</td><td><span class="chip ${COR_ETAPA[k.etapa]}">${esc(ROT_ETAPA[k.etapa])}</span></td><td>${esc(rot('FONTE', k.fonte))}</td><td>${esc(k.campanha || '—')}</td><td>${esc(rot('PROCEDIMENTO', k.procedimento) || '—')}</td><td>${esc(k.responsavel)}</td><td class="r">${k.etapa === 'FECHADO' ? brl(k.valor_fechado) : (k.valor_orcado ? brl(k.valor_orcado) : '—')}</td><td>${k.alerta ? `<b style="color:var(--alerta)">${esc(k.alerta)}</b>` : ''}</td></tr>`).join('') || '<tr><td colspan="10" class="vazio">Nenhum lead com estes filtros.</td></tr>'}</tbody></table></div></section>`;
+    <tbody>${itens.map(k => `<tr class="clic" data-id="${esc(k.id)}"><td>${esc(k.data_entrada)} ${esc(k.hora_entrada)}</td><td style="font-weight:700">${esc(k.nome)}</td><td>${tipoChip(k.tipo || (k.existente ? 'RECALL' : 'NOVA'))}</td><td><span class="chip ${COR_ETAPA[k.etapa]}">${esc(ROT_ETAPA[k.etapa])}</span></td><td>${esc(rot('FONTE', k.fonte))}</td><td>${esc(k.campanha || '—')}</td><td>${esc(rot('PROCEDIMENTO', k.procedimento) || '—')}</td><td>${esc(k.responsavel)}</td><td class="r">${k.etapa === 'FECHADO' ? brl(k.valor_fechado) : (k.valor_orcado ? brl(k.valor_orcado) : '—')}</td><td>${k.alerta ? `<b style="color:var(--alerta)">${esc(k.alerta)}</b>` : ''}${k.ib && k.ib.destaque ? '<b style="color:#1F8A55">Entrou no Grupo VIP · liberar sessão</b>' : ''}</td></tr>`).join('') || '<tr><td colspan="10" class="vazio">Nenhum lead com estes filtros.</td></tr>'}</tbody></table></div></section>`;
   el('ld-c').querySelectorAll('tr.clic').forEach(r => r.onclick = () => ir('lead', r.dataset.id));
 }
 
@@ -1153,6 +1197,7 @@ function pintarLead(d){
     </div></div>
   ${l.alerta ? `<div class="aviso">${esc(l.alerta)}</div>` : ''}
   ${tv ? `<div class="selo"><b>Trava ativa no Recall</b><span>Campanha ${esc(tv.campanha)} · ${esc(tv.responsavel)} até ${esc(tv.ate)}. Nenhuma outra colaboradora contata esta paciente pelo Recall até essa data.</span>${gestao() ? `<button class="btn2 btn-min" id="bt-trava">Encerrar trava</button>` : ''}</div>` : ''}
+  ${blocoIb(d)}
   ${r && r.situacao && r.situacao !== 'SEM_CARTEIRA' ? `<div class="selo"><b>No Recall:</b><span>${r.situacao === 'ACOMPANHAMENTO' ? 'Acompanhamento' + (r.dono ? ' com ' + esc(r.dono) : '') : (r.situacao === 'FILA' ? 'fila ' + esc(String(r.faixa || '').toLowerCase()) : 'finalizada')}${r.ultimo ? ' · último contato ' + esc(r.ultimo) : ''}</span></div>` : ''}
   <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:16px;align-items:flex-start">
     <div style="flex:1 1 280px;display:flex;flex-direction:column;gap:14px;min-width:0">
@@ -1230,11 +1275,180 @@ function pintarLead(d){
     el('r-zap').onclick = () => usar(true); el('r-copiar').onclick = () => usar(false);
   });
   el('bt-editar').onclick = () => editarLead(l, recarregar);
+  ligarIb(d, recarregar);
 }
 function rotuloTipo(x){
-  return ({ ENTRADA: 'Lead criado', RESPOSTA: 'Resposta', MENSAGEM: 'Mensagem enviada', LIGACAO: 'Ligação', NOTA: 'Anotação', PERGUNTA: 'Pergunta registrada', ROTEIRO: 'Texto pronto usado',
+  return ({ INDICA: 'Indica Black', AVISO: 'Aviso enviado', ENTRADA: 'Lead criado', RESPOSTA: 'Resposta', MENSAGEM: 'Mensagem enviada', LIGACAO: 'Ligação', NOTA: 'Anotação', PERGUNTA: 'Pergunta registrada', ROTEIRO: 'Texto pronto usado',
     ETAPA: 'Etapa: ' + (ROT_ETAPA[x.etapa_para] || x.etapa_para) })[x.tipo] || x.tipo;
 }
+/* ==========================================================================
+   INDICA BLACK (V1.7) · cartão, faixa da tela Leads e bloco da ficha
+   ========================================================================== */
+let IB_ATE = '10/02/2027', IB_URL = '';
+const IB_ST = { LIBERADA: 'Sessão de Booster liberada', NEGADA: 'Sessão não concedida', AGENDADA: 'Sessão de Booster agendada', REALIZADA: 'Sessão de Booster realizada' };
+const IB_CONTA = { VALE: 'indicação válida', BASE: 'já consta na base', LINK_USADO: 'link de quem indicou já usado' };
+function ibDataMs(br){ const m = String(br || '').match(/^(\d{2})\/(\d{2})\/(\d{4})/); return m ? new Date(+m[3], +m[2] - 1, +m[1]).getTime() : 0; }
+function ibVencida(){ const a = ibDataMs(IB_ATE); return a && Date.now() > a + 86400000; }
+function ibTopo(k){
+  const b = k.ib; if (!b || !b.destaque) return '';
+  return `<div class="ib-selo"><i></i>ENTROU NO GRUPO VIP · libera a sessão de ${esc(primeiroNome(b.ref_nome))}</div>`;
+}
+function ibSessTag(b){
+  if (!b) return '';
+  if (b.sessao === 'LIBERADA') return `<div class="ib-sess ok">${IB_ST.LIBERADA}<small>${ibVencida() ? 'prazo vencido em ' + esc(IB_ATE) : 'realizar até ' + esc(IB_ATE) + ' · conforme a agenda da Dra.'}</small></div>`;
+  if (b.sessao === 'AGENDADA') return `<div class="ib-sess ok">${IB_ST.AGENDADA}<small>para ${esc(b.sessao_data)}</small></div>`;
+  if (b.sessao === 'REALIZADA') return `<div class="ib-sess fim">${IB_ST.REALIZADA}<small>em ${esc(b.sessao_data)}</small></div>`;
+  if (b.sessao === 'NEGADA') return `<div class="ib-sess nao">${IB_ST.NEGADA}<small>${esc(b.sessao_obs || '')}</small></div>`;
+  if (b.a_liberar) { const a = b.amigas.find(x => x.grupo); return `<div class="ib-sess pend">Sessão de Booster a liberar<small>${esc(a ? a.nome : '')} entrou no Grupo VIP</small></div>`; }
+  if (b.amigas && b.amigas.length) return `<div class="ib-sess esp">Indicou ${esc(b.amigas.map(a => primeiroNome(a.nome)).join(', '))}<small>aguardando entrar no Grupo VIP</small></div>`;
+  return '';
+}
+function ibCorpo(k){
+  const b = k.ib; if (!b) return '';
+  let h = '';
+  if (b.ref_id) h += `<span class="ib-tag${b.grupo ? '' : ' espera'}">Indicada por ${esc(b.ref_nome)}${b.grupo ? '' : ' · aguardando o grupo'}</span>`;
+  if (b.ref_id && b.conta && b.conta !== 'VALE') h += `<div class="ib-base">${esc(b.conta === 'BASE' ? 'Já consta na base · ' + (b.base || '') : 'Link de quem indicou já usado')} · a gestão decide</div>`;
+  if (b.ref_id && b.grupo && b.ref_sessao) h += `<div class="note">Sessão de ${esc(primeiroNome(b.ref_nome))}: ${esc((IB_ST[b.ref_sessao] || b.ref_sessao).replace('Sessão de Booster ', ''))}</div>`;
+  if (!k.procedimento && b.areas) h += `<div class="lc-int">${esc(b.areas)}</div>`;
+  h += ibSessTag(b);
+  const bts = [];
+  if (b.ref_id && !b.grupo) bts.push(`<button type="button" class="ib-bt" data-ibgrupo="${esc(k.id)}">Entrou no grupo ✓</button>`);
+  if (b.destaque && gestao()) bts.push(`<button type="button" class="ib-bt v" data-iblib="${esc(k.id)}">Liberar sessão de ${esc(primeiroNome(b.ref_nome))}</button>`);
+  if (bts.length) h += `<div class="ib-acoes">${bts.join('')}</div>`;
+  return h;
+}
+function ibItem(id){ if (!ULT_LEADS) return null; for (const c of ULT_LEADS.colunas) { const x = c.itens.find(i => i.id === id); if (x) return x; } return null; }
+/** Botões dentro do cartão: não abrem a ficha nem arrastam. */
+function ligarBotoesIb(raiz){
+  raiz.querySelectorAll('[data-ibgrupo]').forEach(b => { b.onmousedown = ev => ev.stopPropagation(); b.onclick = ev => { ev.stopPropagation(); const k = ibItem(b.dataset.ibgrupo); ibConfirmarGrupo(b.dataset.ibgrupo, k ? k.nome : '', () => carregarLeads(true)); }; });
+  raiz.querySelectorAll('[data-iblib]').forEach(b => { b.onmousedown = ev => ev.stopPropagation(); b.onclick = ev => { ev.stopPropagation(); const k = ibItem(b.dataset.iblib); if (k) ibLiberar({ refId: k.ib.ref_id, refNome: k.ib.ref_nome, refTel: k.ib.ref_tel, amigaId: k.id, amigaNome: k.nome, conta: k.ib.conta, base: k.ib.base }, () => carregarLeads(true)); }; });
+}
+function ibConfirmarGrupo(id, nome, depois){
+  abrirModal(`<h2>Entrou no Grupo VIP?</h2><p>Confira no grupo do WhatsApp se <b>${esc(nome)}</b> já está lá. Confirmar libera para a gestão a sessão de quem indicou.</p>
+    <div class="acoes"><button class="btn2" onclick="fecharModal()">Cancelar</button><button class="btn" id="ibg-ok">Sim, está no grupo</button></div>`);
+  el('ibg-ok').onclick = async () => { fecharModal(); try { await api('ibGrupo', { id }); toast('Entrada no Grupo VIP confirmada'); depois && depois(); } catch (e) { falhar(e); } };
+}
+function ibTexto(tipo, nome, amiga, link){
+  const n = primeiroNome(nome), a = primeiroNome(amiga);
+  const ini = `Olá, ${n}! Aqui é a equipe do Instituto Kássila Nasser ✨\n\n`;
+  if (tipo === 'SESSAO') return ini + `${a} entrou no Grupo VIP e a sua Sessão de Booster de Peptídeo está liberada 🎉\n\nA sessão é presencial no Instituto e pode ser realizada até ${IB_ATE}, conforme a agenda da Doutora. Responda esta mensagem para agendar. 💛`;
+  if (tipo === 'LINK') return ini + `Aqui está o seu link pessoal do Indica Black:\n${link}\n\nEnvie para uma amiga(o) que ainda não realizou procedimentos no Instituto. Quando ela(e) se cadastrar e entrar no Grupo VIP, você ganha uma Sessão de Booster de Peptídeo. 💛`;
+  return ini + `${a} se cadastrou pelo seu link. Falta só um passo: ela(e) entrar no Grupo VIP.\n\nAssim que isso acontecer, a sua Sessão de Booster de Peptídeo é liberada e avisamos você por aqui. 💛`;
+}
+/** Abre o WhatsApp de quem recebe o aviso com o texto pronto e registra no histórico dela. */
+function ibAvisar(tipo, destId, destNome, destTel, amiga, link){
+  const t = ibTexto(tipo, destNome, amiga, link);
+  abrirModal(`<h2>Aviso para ${esc(primeiroNome(destNome))}</h2><p class="note">Revise e envie pelo WhatsApp da clínica. O envio fica registrado no histórico.</p><textarea id="iba-txt" class="in" style="min-height:190px">${esc(t)}</textarea>
+    <div class="acoes"><button class="btn2" onclick="fecharModal()">Cancelar</button><button class="btn2" id="iba-cp">Copiar</button><button class="btn" id="iba-ok">Abrir no WhatsApp</button></div>`);
+  const reg = () => api('ibAviso', { id: destId, tipo_aviso: tipo, amiga: amiga || '' }, { silencioso: true }).catch(falhar);
+  el('iba-ok').onclick = () => { window.open(linkWhats(destTel, el('iba-txt').value), '_blank', 'noopener'); reg(); fecharModal(); toast('WhatsApp aberto · aviso registrado'); };
+  el('iba-cp').onclick = async () => { try { await navigator.clipboard.writeText(el('iba-txt').value); } catch (e) {} reg(); fecharModal(); toast('Copiado · aviso registrado'); };
+}
+/** Liberar (ou não conceder) a sessão de quem indicou. Só gestão. */
+function ibLiberar(o, depois){
+  const exige = o.conta !== 'VALE';
+  abrirModal(`<h2>Sessão de Booster de ${esc(o.refNome)}</h2>
+    <p class="note" style="margin-top:0"><b>${esc(o.amigaNome)}</b> entrou no Grupo VIP pela indicação de ${esc(primeiroNome(o.refNome))}. Sessão presencial, 1 por pessoa (não cumulativa), realizar até <b>${esc(IB_ATE)}</b>.</p>
+    ${exige ? `<div class="aviso" style="margin-top:10px">${o.conta === 'BASE' ? 'Esta indicação já consta na base: ' + esc(o.base || '') : 'O link de ' + esc(primeiroNome(o.refNome)) + ' já tinha sido usado por outra indicação.'} A gestão decide.</div>` : ''}
+    <div class="fl mt"><label for="ib-obs">${exige ? 'Justificativa da decisão · obrigatória' : 'Observação (obrigatória só para não conceder)'}</label><textarea id="ib-obs" class="in" placeholder="${exige ? 'Ex.: Dra. autorizou como cortesia / já é paciente, não vale' : 'Opcional'}"></textarea></div>
+    <div class="acoes"><button class="btn2" onclick="fecharModal()">Cancelar</button><button class="btn2" id="ib-nao">Não conceder</button><button class="btn" id="ib-ok">Liberar sessão</button></div>`, true);
+  const obs = () => el('ib-obs').value.trim();
+  el('ib-nao').onclick = async () => {
+    if (obs().replace(/\s/g, '').length < 5) return toast('Escreva por que a sessão não será concedida.');
+    const t = obs(); fecharModal();
+    try { await api('ibSessao', { id: o.refId, acao_sessao: 'NEGAR', amiga: o.amigaId, obs: t }); toast('Registrado: sessão não concedida'); depois && depois(); } catch (e) { falhar(e); }
+  };
+  el('ib-ok').onclick = async () => {
+    if (exige && obs().replace(/\s/g, '').length < 5) return toast('Escreva a justificativa da decisão.');
+    const t = obs(); fecharModal();
+    try {
+      await api('ibSessao', { id: o.refId, acao_sessao: 'LIBERAR', amiga: o.amigaId, obs: t });
+      toast('Sessão liberada');
+      depois && depois();
+      if (o.refTel) setTimeout(() => ibAvisar('SESSAO', o.refId, o.refNome, o.refTel, o.amigaNome), 300);
+    } catch (e) { falhar(e); }
+  };
+}
+function ibDataModal(titulo, acao, id, depois, padrao){
+  abrirModal(`<h2>${esc(titulo)}</h2><div class="fl" style="max-width:260px"><label for="ibd-d">Data</label>${campoData('ibd-d', padrao || '')}</div>
+    <p class="note">A sessão vale até ${esc(IB_ATE)}. O horário continua sendo marcado no ERP e na Agenda.</p>
+    <div class="acoes"><button class="btn2" onclick="fecharModal()">Cancelar</button><button class="btn" id="ibd-ok">Confirmar</button></div>`);
+  el('ibd-ok').onclick = async () => { const d = lerData('ibd-d'); if (d === null) return; if (!d) return toast('Informe a data.'); fecharModal();
+    try { await api('ibSessao', { id, acao_sessao: acao, data: d }); toast(acao === 'AGENDAR' ? 'Sessão agendada' : 'Sessão realizada'); depois && depois(); } catch (e) { falhar(e); } };
+}
+/** Faixa da tela Leads: números da campanha e quem espera a liberação. */
+function pintarFaixaIb(ib){
+  const alvo = el('ld-ib'); if (!alvo) return;
+  if (!ib) { alvo.innerHTML = ''; return; }
+  IB_ATE = ib.sessao_ate || IB_ATE;
+  const n = (v, t) => `<span><b>${v}</b> ${t}</span>`;
+  alvo.innerHTML = `<section class="ib-faixa${ib.a_liberar ? ' tem' : ''}">
+    <div class="ib-f-top"><b class="ib-f-tit">Indica Black</b><div class="ib-f-num">${n(ib.cadastros, 'cadastros')}${n(ib.indicacoes, 'indicações')}${n(ib.base, 'já na base')}${n(ib.grupo, 'entraram no grupo')}${n(ib.liberadas, 'sessões liberadas')}${n(ib.realizadas, 'realizadas')}</div>
+      <div class="ib-f-bt"><button class="btn2 btn-min" id="ib-so">${F.leads.campanha === ib.id_campanha ? 'Ver todos os leads' : 'Ver só o Indica Black'}</button>${gestao() ? '<button class="btn2 btn-min" id="ib-testes">Apagar testes</button>' : ''}</div></div>
+    ${ib.a_liberar ? `<div class="ib-f-pend"><span class="pt"></span><b>${ib.a_liberar} indicada(s) entraram no Grupo VIP · ${gestao() ? 'libere a sessão de quem indicou' : 'a gestão libera a sessão'}</b><div class="ib-f-lista">${ib.pendentes.map(p => `<button type="button" class="ib-chip" data-ibir="${esc(p.id)}">${esc(primeiroNome(p.nome))} → ${esc(primeiroNome(p.ref))}${p.base ? ' · base' : ''}</button>`).join('')}</div></div>` : ''}
+  </section>`;
+  alvo.querySelectorAll('[data-ibir]').forEach(b => b.onclick = () => ir('lead', b.dataset.ibir));
+  el('ib-so').onclick = () => { F.leads.campanha = F.leads.campanha === ib.id_campanha ? 'TODAS' : ib.id_campanha; telaLeads(); };
+  if (el('ib-testes')) el('ib-testes').onclick = ibApagarTestes;
+}
+async function ibApagarTestes(){
+  let r; try { carregando(true, 'conferindo os testes'); r = await apiBruta('ibApagarTestes', { conferir: '1' }); } catch (e) { carregando(false); return falhar(e); }
+  carregando(false);
+  if (!r.qtd) return abrirModal(`<h2>Apagar testes</h2><p>${esc(r.texto)}</p><p class="note">Os testes são achados pelos WhatsApp em Configurações → Indica Black → WhatsApp dos testes.</p><div class="acoes"><button class="btn" onclick="fecharModal()">Ok</button></div>`);
+  abrirModal(`<h2>Apagar testes do Indica Black</h2><p>${esc(r.texto)}.</p><p class="note">Apaga os cadastros feitos pela página com os WhatsApp de teste, o histórico deles e as indicações ligadas a eles. Não dá para desfazer.</p>
+    <div class="acoes"><button class="btn2" onclick="fecharModal()">Cancelar</button><button class="btn" id="ibt-ok" style="background:var(--alerta)">Apagar ${r.qtd}</button></div>`);
+  el('ibt-ok').onclick = async () => { fecharModal(); try { const x = await api('ibApagarTestes', {}); toast(x.texto); carregarLeads(true); } catch (e) { falhar(e); } };
+}
+/** Bloco da ficha. */
+function blocoIb(d){
+  const b = d.ib; if (!b) return '';
+  IB_ATE = (d.ib_cfg && d.ib_cfg.sessao_ate) || IB_ATE; IB_URL = (d.ib_cfg && d.ib_cfg.url) || IB_URL;
+  const l = d.lead, link = b.codigo && IB_URL ? IB_URL + (IB_URL.indexOf('?') > -1 ? '&' : '?') + 'c=' + b.codigo : '';
+  const linha = (t, c) => `<div class="ib-l"><div class="ib-l-t">${t}</div><div>${c}</div></div>`;
+  let h = '';
+  if (b.destaque) h += `<div class="ib-selo grande"><i></i>ENTROU NO GRUPO VIP · ${gestao() ? 'libere' : 'a gestão libera'} a Sessão de Booster de ${esc(b.ref_nome)}</div>`;
+  if (link) h += linha('Link pessoal', `<span class="mono ib-link">${esc(link)}</span><div class="ib-acoes"><button class="btn2 btn-min" id="ibf-copiar">Copiar</button><button class="btn2 btn-min" id="ibf-link">Reenviar pelo WhatsApp</button></div>`);
+  if (b.areas) h += linha('Áreas', esc(b.areas));
+  if (b.ref_id) {
+    h += linha('Indicada por', `<b>${esc(b.ref_nome)}</b> · <span class="${b.conta === 'VALE' ? 'ib-ok' : 'ib-no'}">${esc(IB_CONTA[b.conta] || '')}</span>${b.conta === 'BASE' ? `<div class="ib-base">${esc(b.base)}</div>` : ''}`);
+    h += linha('Grupo VIP', b.grupo ? `Entrou · confirmado por ${esc(b.grupo_por)} em ${esc(b.grupo_em)} <button class="lnk" id="ibf-desf">desfazer</button>`
+      : `<span class="ib-no">ainda não confirmado</span><div class="ib-acoes"><button class="btn btn-min" id="ibf-grupo">Confirmar entrada no Grupo VIP</button><button class="btn2 btn-min" id="ibf-av-cad">Avisar ${esc(primeiroNome(b.ref_nome))}: se cadastrou</button></div>`);
+    if (b.grupo) {
+      const st = b.ref_sessao;
+      h += linha('Sessão de ' + esc(primeiroNome(b.ref_nome)), (st ? esc(IB_ST[st] || st) + (b.ref_via_aqui ? ' (por esta indicação)' : '') : '<span class="ib-no">aguardando decisão</span>') +
+        `<div class="ib-acoes">${!st && gestao() ? '<button class="btn btn-min ib-v" id="ibf-lib">Liberar sessão</button>' : ''}${st === 'LIBERADA' && b.ref_via_aqui ? `<button class="btn2 btn-min" id="ibf-av-ses">Avisar ${esc(primeiroNome(b.ref_nome))}: sessão liberada</button>` : ''}</div>`);
+    }
+  }
+  if (b.amigas && b.amigas.length) {
+    h += linha('Indicou', b.amigas.map(a => `<button class="ib-chip" data-ibir="${esc(a.id)}">${esc(a.nome)} · ${a.grupo ? 'no grupo' : 'aguardando o grupo'}${a.conta !== 'VALE' ? ' · ' + esc(IB_CONTA[a.conta] || '') : ''}</button>`).join(''));
+    const st = b.sessao;
+    const libs = !st && gestao() ? b.amigas.filter(a => a.grupo).map(a => `<button class="btn btn-min ib-v" data-iblibf="${esc(a.id)}">Liberar (indicação de ${esc(primeiroNome(a.nome))})</button>`).join('') : '';
+    h += linha('Sua sessão', ibSessTag(b) + `<div class="ib-acoes">${libs}
+      ${st === 'LIBERADA' || st === 'AGENDADA' ? '<button class="btn2 btn-min" id="ibf-agendar">' + (st === 'AGENDADA' ? 'Remarcar' : 'Agendar sessão') + '</button><button class="btn2 btn-min" id="ibf-realizar">Marcar realizada</button>' : ''}
+      ${st === 'LIBERADA' || st === 'AGENDADA' ? '<button class="btn2 btn-min" id="ibf-av-eu">Avisar: sessão liberada</button>' : ''}
+      ${gestao() && (st === 'LIBERADA' || st === 'NEGADA') ? '<button class="lnk" id="ibf-reabrir">desfazer decisão</button>' : ''}</div>`);
+  }
+  return `<section class="card ib-card mt"><div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap"><h2>Indica Black</h2><span class="note">Sessão de Booster de Peptídeo · realizar até ${esc(IB_ATE)}</span></div>${h}</section>`;
+}
+function ligarIb(d, recarregar){
+  const b = d.ib, l = d.lead; if (!b) return;
+  const link = b.codigo && IB_URL ? IB_URL + (IB_URL.indexOf('?') > -1 ? '&' : '?') + 'c=' + b.codigo : '';
+  const on = (id, fn) => { if (el(id)) el(id).onclick = fn; };
+  on('ibf-copiar', async () => { try { await navigator.clipboard.writeText(link); toast('Link copiado'); } catch (e) { toast(link); } });
+  on('ibf-link', () => ibAvisar('LINK', l.id_lead, l.nome, l.telefone_norm || l.telefone, '', link));
+  on('ibf-grupo', () => ibConfirmarGrupo(l.id_lead, l.nome, recarregar));
+  on('ibf-desf', async () => { if (!confirm('Desfazer a confirmação de entrada no Grupo VIP?')) return; try { await api('ibGrupo', { id: l.id_lead, desfazer: '1' }); toast('Desfeito'); recarregar(); } catch (e) { falhar(e); } });
+  on('ibf-av-cad', () => ibAvisar('CADASTRO', b.ref_id, b.ref_nome, b.ref_tel, l.nome));
+  on('ibf-av-ses', () => ibAvisar('SESSAO', b.ref_id, b.ref_nome, b.ref_tel, l.nome));
+  on('ibf-lib', () => ibLiberar({ refId: b.ref_id, refNome: b.ref_nome, refTel: b.ref_tel, amigaId: l.id_lead, amigaNome: l.nome, conta: b.conta, base: b.base }, recarregar));
+  document.querySelectorAll('[data-iblibf]').forEach(x => x.onclick = () => { const a = b.amigas.find(y => y.id === x.dataset.iblibf); ibLiberar({ refId: l.id_lead, refNome: l.nome, refTel: l.telefone_norm || l.telefone, amigaId: a.id, amigaNome: a.nome, conta: a.conta, base: a.base }, recarregar); });
+  document.querySelectorAll('.ib-card [data-ibir]').forEach(x => x.onclick = () => ir('lead', x.dataset.ibir));
+  on('ibf-agendar', () => ibDataModal('Agendar a Sessão de Booster', 'AGENDAR', l.id_lead, recarregar, b.sessao_data));
+  on('ibf-realizar', () => ibDataModal('Sessão de Booster realizada', 'REALIZAR', l.id_lead, recarregar, hojeBR()));
+  on('ibf-av-eu', () => { const a = b.amigas.find(y => y.grupo) || b.amigas[0]; ibAvisar('SESSAO', l.id_lead, l.nome, l.telefone_norm || l.telefone, a ? a.nome : ''); });
+  on('ibf-reabrir', async () => { const t = prompt('Por que desfazer a decisão da sessão?'); if (t === null) return; try { await api('ibSessao', { id: l.id_lead, acao_sessao: 'REABRIR', obs: t }); toast('Decisão desfeita'); recarregar(); } catch (e) { falhar(e); } });
+}
+
 function editarLead(l, depois){
   const camps = (CTX.campanhas || []).filter(c => c.status === 'ATIVA' || c.id === l.id_campanha);
   abrirModal(`<h2>Editar lead</h2><div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
